@@ -10,65 +10,94 @@ const OnboardingStep = {
 
 // form for player setup
 const PlayerSetup = ({ gameInfo, updateGameInfo }) => {
-  return (<div className="Onboarding_players">
-    <div>Who's playing?</div>
-    <div className="Onboarding_inputRow">
-      <input type="text" defaultValue={gameInfo.playerOneName}
-        onBlur={(e) => updateGameInfo({
-          ...gameInfo,
-          playerOneName: e.target.value,
-        })} />
-      <input type="text" defaultValue={gameInfo.playerTwoName}
-        onBlur={(e) => updateGameInfo({
-          ...gameInfo,
-          playerTwoName: e.target.value,
-        })} />
+  return (
+    <div className='Onboarding_players'>
+      <div>Who's playing?</div>
+      <div className='Onboarding_inputRow'>
+        <input
+          type='text'
+          defaultValue={gameInfo.playerOneName}
+          onBlur={(e) =>
+            updateGameInfo({
+              ...gameInfo,
+              playerOneName: e.target.value,
+            })
+          }
+        />
+        <input
+          type='text'
+          defaultValue={gameInfo.playerTwoName}
+          onBlur={(e) =>
+            updateGameInfo({
+              ...gameInfo,
+              playerTwoName: e.target.value,
+            })
+          }
+        />
+      </div>
     </div>
-  </div>)
-}
+  );
+};
 
 // form for board setup
 const BoardSetup = ({ gameInfo, updateGameInfo }) => {
-  return (<div className="Onboarding_board">
-    <div>Board dimensions</div>
-    <div>
-      <div className="Onboarding_inputRow">
-        <input type="number" defaultValue={gameInfo.columnCount}
-          onBlur={(e) => updateGameInfo({
-            ...gameInfo,
-            columnCount: Number(e.target.value),
-          })}/>
-        <div className="Onbaording_board_x">x</div>
-        <input type="number" defaultValue={gameInfo.rowCount}
-          onBlur={(e) => updateGameInfo({
-            ...gameInfo,
-            rowCount: Number(e.target.value),
-          })} />
+  return (
+    <div className='Onboarding_board'>
+      <div>Board dimensions</div>
+      <div>
+        <div className='Onboarding_inputRow'>
+          <input
+            type='number'
+            defaultValue={gameInfo.columnCount}
+            onBlur={(e) =>
+              updateGameInfo({
+                ...gameInfo,
+                columnCount: Number(e.target.value),
+              })
+            }
+          />
+          <div className='Onbaording_board_x'>x</div>
+          <input
+            type='number'
+            defaultValue={gameInfo.rowCount}
+            onBlur={(e) =>
+              updateGameInfo({
+                ...gameInfo,
+                rowCount: Number(e.target.value),
+              })
+            }
+          />
+        </div>
+      </div>
+      <div>How many in a row to win?</div>
+      <div className='Onboarding_inputRow'>
+        <input
+          type='number'
+          defaultValue={gameInfo.winNumber}
+          onBlur={(e) =>
+            updateGameInfo({
+              ...gameInfo,
+              winNumber: Number(e.target.value),
+            })
+          }
+        />
       </div>
     </div>
-    <div>How many in a row to win?</div>
-    <div className="Onboarding_inputRow">
-      <input type="number" defaultValue={gameInfo.winNumber}
-        onBlur={(e) => updateGameInfo({
-          ...gameInfo,
-          winNumber: Number(e.target.value),
-        })} />
-    </div>
-  </div>)
-}
+  );
+};
 
 // Component that handles onboarding
 export class Onboarding extends Component {
   /* ~~~~~~~~~~~~~~~~
     Setup
     ~~~~~~~~~~~~~~~~~ */
-    constructor(props) {
-      super(props);
-      this.state = {
-        currentStep: OnboardingStep.Players,
-      }
-    }
-     
+  constructor(props) {
+    super(props);
+    this.state = {
+      currentStep: OnboardingStep.Players,
+    };
+  }
+
   /* ~~~~~~~~~~~~~~~~
     Updating Current Step
     ~~~~~~~~~~~~~~~~~ */
@@ -78,14 +107,14 @@ export class Onboarding extends Component {
     }
 
     this.setState({ currentStep: newCurrentStep });
-  }
+  };
 
   reset = () => {
     if (window.confirm('Are you sure? This will erase your game.')) {
       this.setState({ currentStep: OnboardingStep.Players });
       this.props.resetGame();
     }
-  }
+  };
 
   /* ~~~~~~~~~~~~~~~~
     Rendering
@@ -96,23 +125,26 @@ export class Onboarding extends Component {
 
     switch (currentStep) {
       case OnboardingStep.Players:
-        return <PlayerSetup gameInfo={gameInfo}
-          updateGameInfo={updateGameInfo}
-          />;
+        return (
+          <PlayerSetup gameInfo={gameInfo} updateGameInfo={updateGameInfo} />
+        );
       case OnboardingStep.BoardSetup:
-        return <BoardSetup gameInfo={gameInfo}
-          updateGameInfo={updateGameInfo}
-          />;
+        return (
+          <BoardSetup gameInfo={gameInfo} updateGameInfo={updateGameInfo} />
+        );
       case OnboardingStep.Complete:
       default:
-        return (<div>
-          Setup Complete, have fun!
-          (<a onClick={this.reset} className="Onboarding_resetLink">
-            reset
-          </a>)
-        </div>);
+        return (
+          <div>
+            Setup Complete, have fun! (
+            <a onClick={this.reset} className='Onboarding_resetLink'>
+              reset
+            </a>
+            )
+          </div>
+        );
     }
-  }
+  };
 
   renderButtons = () => {
     const { currentStep } = this.state;
@@ -134,22 +166,22 @@ export class Onboarding extends Component {
         break;
     }
 
-    return (<div className="Onboarding_buttons">
-      {!!prevStep && (<button onClick={() => this.setStep(prevStep)}>
-        Back
-      </button>)}
-      {!!nextStep && (<button onClick={() => this.setStep(nextStep)}>
-        {nextStepText}
-      </button>)}
-    </div>)
-  }
+    return (
+      <div className='Onboarding_buttons'>
+        {!!prevStep && (
+          <button onClick={() => this.setStep(prevStep)}>Back</button>
+        )}
+        {!!nextStep && (
+          <button onClick={() => this.setStep(nextStep)}>{nextStepText}</button>
+        )}
+      </div>
+    );
+  };
 
   render() {
     return (
-      <div className="Onboarding">
-        <label className="Onboarding_label">
-          Game Setup
-        </label>
+      <div className='Onboarding'>
+        <label className='Onboarding_label'>Game Setup</label>
         {this.renderCurrentStep()}
         {this.renderButtons()}
       </div>
@@ -168,4 +200,4 @@ Onboarding.propTypes = {
     rowCount: PropTypes.number,
     winNumber: PropTypes.number,
   }).isRequired,
-}
+};
