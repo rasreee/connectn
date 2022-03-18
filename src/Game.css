@@ -1,0 +1,50 @@
+.Game {
+  padding: 30px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.Game_onboarding {
+  margin-top: 20px;
+}
+
+.Game_placeholder {
+  width: 350px;
+  margin-top: 20px;
+  text-align: left;
+  background-color: navajowhite;
+  border: 1px dashed burlywood;
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.Game_placeholder_top {
+  padding: 10px 15px;
+  border-bottom: 1px dashed burlywood;
+}
+
+.Game_placeholder label {
+  color: darkgoldenrod;
+  font-size: 9px;
+  text-transform: uppercase;
+  display: block;
+  font-weight: bold;
+}
+
+.Game_placeholder_debugger {
+  padding: 10px 15px;
+  background-color: burlywood;
+  color: #333;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.Game_placeholder_debugger label {
+  color: black;
+  font-family: sans-serif;
+}
+
+.Game_placeholder_debugger em {
+  color: black;
+}

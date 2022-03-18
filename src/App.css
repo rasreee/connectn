@@ -1,0 +1,55 @@
+.App {
+  text-align: center;
+  line-height: 1.2em;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #ddd;
+  font-family: Futura, "Trebuchet MS", Arial, sans-serif;
+  padding: 20px;
+}
+
+.App-header h2 {
+  font-weight: 500;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.Instructions {
+  display: flex;
+  justify-content: center;
+}
+
+.Instructions-container {
+  width: 500px;
+  text-align: left;
+}
+
+.App-instructions {
+  color: darkblue;
+  cursor: pointer;
+}
+
+.App-instructions:hover {
+  color: blue;
+}
+
+li {
+  padding-bottom: 5px;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

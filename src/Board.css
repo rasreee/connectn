@@ -1,0 +1,42 @@
+
+  /** TODO(3): style the game board
+    * - what does a real connect four board look like? what stylistic changes can you make to mimic it?
+    * - use your creativity here and try to make it look as great as you can!
+    * - although this doesn't affect the functionality of the game, this section is as important as the others.
+    */
+
+.Board {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-top: 20px;
+  border: 1px solid #000;
+}
+
+.Board-Row {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  border-bottom: 1px solid #000;
+}
+
+.Board-Row:last-of-type {
+  border-bottom: none;
+}
+
+.Board-Slot {
+  flex: 1;
+  border-right: 1px solid #000;
+}
+
+.Board-Slot:last-of-type {
+  border-right: none;
+}
+
+.Board-Piece {
+  position: absolute;
+  background-color: currentColor;
+  pointer-events: none;
+}
