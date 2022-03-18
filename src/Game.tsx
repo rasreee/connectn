@@ -2,19 +2,23 @@ import React, { Component } from 'react';
 import './Game.css';
 import { Onboarding } from './Onboarding';
 import { Board } from './Board';
+import { GameInfo, GameState, GameStep } from './Game.types';
+import { DEFAULT_GAME_INFO } from './Game.constants';
 
-const GameStep = {
-  Onboarding: 'Onboarding',
-  Playing: 'Playing',
-  Complete: 'Complete',
-};
+interface GameComponentProps {}
+
+interface GameComponentState {
+  gameInfo: GameInfo;
+  gameState: GameState;
+  currentStep: GameStep;
+}
 
 // Component that holds the structure of the game
-export class Game extends Component {
+export class Game extends Component<GameComponentProps, GameComponentState> {
   /* ~~~~~~~~~~~~~~~~
     Setup
     ~~~~~~~~~~~~~~~~~ */
-  constructor(props) {
+  constructor(props: GameComponentProps) {
     super(props);
     const gameInfo = this.initializeGameInfo();
     const gameState = this.initializeGameState(gameInfo);
@@ -28,22 +32,19 @@ export class Game extends Component {
   /* ~~~~~~~~~~~~~~~~
     Game Info State
     ~~~~~~~~~~~~~~~~~ */
-  initializeGameInfo = () => ({
-    playerOneName: 'Player One',
-    playerTwoName: 'Player Two',
-    columnCount: 7,
-    rowCount: 6,
-    winNumber: 4,
-  });
+  initializeGameInfo = (): GameInfo => ({ ...DEFAULT_GAME_INFO });
 
   // TODO(1): game state
   // - what pieces are placed and where? who do they belong to?
   // - whose turn is it?
-  initializeGameState = (gameInfo) => ({});
+  initializeGameState = (gameInfo: GameInfo): GameState => ({
+    currentPlayerName: gameInfo.playerOneName,
+    pieces: [],
+  });
 
   // TODO(1): game state
   // - what needs to happen to the game state if game info changes?
-  updateGameInfo = (gameInfo) => {
+  updateGameInfo = (gameInfo: GameInfo) => {
     this.setState({ gameInfo });
   };
 
@@ -63,7 +64,7 @@ export class Game extends Component {
   // - how does the game state change when a piece is placed?
   // - how do you know if a player has won?
   // - you might need to break some of this out into multiple methods or helpers
-  placePiece = (column, row) => {
+  placePiece = (column: number, row: number) => {
     console.log(`Request piece at (${column}, ${row})`);
   };
 
@@ -77,7 +78,7 @@ export class Game extends Component {
     return (
       <div className='Game_onboarding'>
         <Onboarding
-          updateGameInfo={(gameInfo) => this.updateGameInfo(gameInfo)}
+          updateGameInfo={(gameInfo: GameInfo) => this.updateGameInfo(gameInfo)}
           resetGame={this.resetGame}
           playGame={this.playGame}
           gameInfo={gameInfo}
@@ -125,7 +126,8 @@ export class Game extends Component {
             {Object.keys(gameInfo).map((key) => {
               return (
                 <div key={key}>
-                  gameInfo.{key}: <em>{gameInfo[key]}</em>
+                  gameInfo.{key}:{' '}
+                  <em>{gameInfo[key as keyof typeof gameInfo]}</em>
                 </div>
               );
             })}

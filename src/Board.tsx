@@ -1,12 +1,13 @@
 import React, { Component, useState, useEffect } from 'react';
 import './Board.css';
+import { GameInfo, GameState } from './Game.types';
 
 // TODO(3): style the game board
 // - since pieces are dropped from the top, how can we animate that?
 // - how would gravity affect a still-dropped piece?
 // - how does the distance dropped affect the time it takes to land?
 // - there is some boiler plate here to help, but feel free to go with a different approach if you are more comfortable
-function BoardPiece(props) {
+function BoardPiece(props: any) {
   const { color, column, gameInfo, row } = props;
 
   const [isDropped, setIsDropped] = useState(false);
@@ -36,7 +37,17 @@ function BoardPiece(props) {
   );
 }
 
-export class Board extends Component {
+interface BoardProps {
+  gameInfo: GameInfo;
+  gameState: GameState;
+  placePiece: (column: number, row: number) => void;
+}
+
+export class Board extends Component<BoardProps> {
+  getPlayerColor = (isPlayerOne: boolean) => {
+    return isPlayerOne ? 'red' : 'green';
+  };
+
   render() {
     const { gameInfo, gameState } = this.props;
 
@@ -51,17 +62,17 @@ export class Board extends Component {
         {/** TODO(2): placing game pieces
          * - how do utilize the provided board piece component to visualize the game state?
          */}
-        <BoardPiece column={0} row={0} gameInfo={gameInfo} color='green' />
-        <BoardPiece column={1} row={0} gameInfo={gameInfo} color='red' />
-        <BoardPiece column={1} row={1} gameInfo={gameInfo} color='green' />
-        <BoardPiece column={2} row={0} gameInfo={gameInfo} color='red' />
-        <BoardPiece column={2} row={1} gameInfo={gameInfo} color='red' />
-        <BoardPiece column={2} row={2} gameInfo={gameInfo} color='green' />
-        <BoardPiece column={3} row={0} gameInfo={gameInfo} color='red' />
-        <BoardPiece column={3} row={1} gameInfo={gameInfo} color='red' />
-        <BoardPiece column={3} row={2} gameInfo={gameInfo} color='red' />
-        <BoardPiece column={3} row={3} gameInfo={gameInfo} color='green' />
-
+        {gameState.pieces.map((piece, i) => (
+          <BoardPiece
+            key={i}
+            column={piece.column}
+            row={piece.row}
+            gameInfo={gameInfo}
+            color={this.getPlayerColor(
+              piece.playerName === gameInfo.playerOneName
+            )}
+          />
+        ))}
         {Array.from(Array(gameInfo.rowCount), (e, row) => (
           <div key={`row-${row}`} className='Board-Row'>
             {Array.from(Array(gameInfo.columnCount), (e, column) => (
