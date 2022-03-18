@@ -4,8 +4,14 @@ import './App.css';
 import { Instructions } from './Instructions';
 import { Game } from './Game';
 
-class App extends Component {
-  constructor(props) {
+interface AppProps {}
+
+interface AppState {
+  instructionsOpen: boolean;
+}
+
+class App extends Component<AppProps, AppState> {
+  constructor(props: AppProps) {
     super(props);
     this.state = {
       instructionsOpen: false,
