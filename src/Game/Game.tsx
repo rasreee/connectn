@@ -2,19 +2,9 @@ import React, { Component } from 'react';
 import './Game.css';
 import { Onboarding } from '../Onboarding';
 import { Board } from '../Board';
-import { GameInfo, GameState, GameStep, Piece } from './types';
+import { GameInfo, GameState, GameStep } from './types';
 import { DEFAULT_GAME_INFO } from './constants';
-
-const nextAvailableRowForColumn = (
-  column: number,
-  gameState: GameState
-): number => {
-  const piecesForColumn = gameState.pieces.filter(
-    (piece) => piece.column === column
-  );
-
-  return piecesForColumn.length;
-};
+import { getNextGameState } from './helpers';
 
 interface GameComponentProps {}
 
@@ -55,8 +45,10 @@ export class Game extends Component<GameComponentProps, GameComponentState> {
 
   // TODO(1): game state
   // - what needs to happen to the game state if game info changes?
-  updateGameInfo = (gameInfo: GameInfo) => {
-    this.setState({ gameInfo });
+  updateGameInfo = (fieldsToUpdate: Partial<GameInfo>) => {
+    const { gameInfo: currentGameInfo } = this.state;
+
+    this.setState({ gameInfo: { ...currentGameInfo, ...fieldsToUpdate } });
   };
 
   // returns to blank state
@@ -79,29 +71,12 @@ export class Game extends Component<GameComponentProps, GameComponentState> {
     console.log(`Placing piece at (${column}, ${row})`);
     const { gameState, gameInfo } = this.state;
 
-    const nextAvailableRow = nextAvailableRowForColumn(column, gameState);
-
-    if (nextAvailableRow === gameInfo.rowCount) return;
-
-    const newPiece: Piece = {
-      column,
-      row: nextAvailableRow,
-      playerName: gameState.currentPlayerName,
-    };
-
-    const newCurrentPlayerName =
-      gameState.currentPlayerName === gameInfo.playerOneName
-        ? gameInfo.playerTwoName
-        : gameInfo.playerOneName;
-
-    const newGameState: GameState = {
-      ...gameState,
-      pieces: [...gameState.pieces, newPiece],
-      currentPlayerName: newCurrentPlayerName,
-    };
-
     this.setState({
-      gameState: newGameState,
+      gameState: getNextGameState({
+        column,
+        gameState,
+        gameInfo,
+      }),
     });
   };
 
@@ -115,7 +90,9 @@ export class Game extends Component<GameComponentProps, GameComponentState> {
     return (
       <div className='Game_onboarding'>
         <Onboarding
-          updateGameInfo={(gameInfo: GameInfo) => this.updateGameInfo(gameInfo)}
+          updateGameInfo={(gameInfo: Partial<GameInfo>) =>
+            this.updateGameInfo(gameInfo)
+          }
           resetGame={this.resetGame}
           playGame={this.playGame}
           gameInfo={gameInfo}
