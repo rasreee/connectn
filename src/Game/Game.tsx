@@ -21,7 +21,7 @@ export class Game extends Component<GameComponentProps, GameComponentState> {
     ~~~~~~~~~~~~~~~~~ */
   constructor(props: GameComponentProps) {
     super(props);
-    const gameInfo = this.initializeGameInfo();
+    const gameInfo = { ...DEFAULT_GAME_INFO };
     const gameState = this.initializeGameState(gameInfo);
     this.state = {
       currentStep: GameStep.Onboarding,
@@ -33,8 +33,6 @@ export class Game extends Component<GameComponentProps, GameComponentState> {
   /* ~~~~~~~~~~~~~~~~
     Game Info State
     ~~~~~~~~~~~~~~~~~ */
-  initializeGameInfo = (): GameInfo => ({ ...DEFAULT_GAME_INFO });
-
   // TODO(1): game state
   // - what pieces are placed and where? who do they belong to?
   // - whose turn is it?
@@ -53,14 +51,18 @@ export class Game extends Component<GameComponentProps, GameComponentState> {
 
   // returns to blank state
   resetGame = () => {
-    const gameInfo = this.initializeGameInfo();
+    const gameInfo = { ...DEFAULT_GAME_INFO };
     this.setState({ gameInfo, currentStep: GameStep.Onboarding });
   };
 
   // TODO(1): game state
   // - what needs to happen when the game is started?
   playGame = () => {
-    this.setState({ currentStep: GameStep.Playing });
+    const { gameInfo } = this.state;
+    this.setState({
+      currentStep: GameStep.Playing,
+      gameState: this.initializeGameState(gameInfo),
+    });
   };
 
   // TODO(2): place piece & check winner
