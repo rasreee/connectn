@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect } from 'react';
 import './Board.css';
-import { GameInfo, GameState, Piece } from './Game';
+import { GameInfo, GameState, Piece } from '../Game/types';
 
 interface BoardPieceProps {
   color: string;

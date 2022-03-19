@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import logo from './mark.png';
 import './App.css';
-import { Instructions } from './Instructions';
-import { Game } from './Game';
+import { Instructions } from '../Instruction';
+import { Game } from '../Game';
 
 interface AppProps {}
 
@@ -10,7 +10,7 @@ interface AppState {
   instructionsOpen: boolean;
 }
 
-class App extends Component<AppProps, AppState> {
+export class App extends Component<AppProps, AppState> {
   constructor(props: AppProps) {
     super(props);
     this.state = {
@@ -47,5 +47,3 @@ class App extends Component<AppProps, AppState> {
     );
   }
 }
-
-export default App;
