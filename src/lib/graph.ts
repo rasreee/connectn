@@ -47,7 +47,8 @@ export class Graph<Data> extends Grid<Data> {
   };
 
   discoverLine = (initial: Line<Data>): Line<Data> => {
-    const [a, b] = initial;
+    const list = [...initial];
+    const [a, b] = list;
     const dir = { dx: a.x - b.x, dy: a.y - b.y };
 
     const line0 = this.exploreDirection(dir, dir.dx < 0 ? a : b);
@@ -60,7 +61,7 @@ export class Graph<Data> extends Grid<Data> {
       (targetCoords) => this.points.find((point) => point.isAt(targetCoords))!
     );
 
-    return [...initial, ...rest];
+    return [...list, ...rest];
   };
 
   getLinesIncluding = (target: Point<Data>): Array<Line<Data>> => {
@@ -77,7 +78,7 @@ export class Graph<Data> extends Grid<Data> {
   };
 
   getLongestLine = (): Coords[] => {
-    const list = this.points;
+    const list = [...this.points].filter((point) => point.value !== null);
     const lines: Array<Line<Data>> = [];
 
     const isVisited = (target: Point<Data>): boolean =>
