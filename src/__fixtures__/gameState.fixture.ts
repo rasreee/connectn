@@ -1,4 +1,4 @@
-export const winningGameState = {
+export const winningGameStateAcrossBottomHorizontal = {
   currentPlayerName: 'Player Two',
   pieces: [
     {
@@ -34,6 +34,108 @@ export const winningGameState = {
     {
       column: 3,
       row: 0,
+      playerName: 'Player One',
+    },
+  ],
+};
+
+export const winningGameStateAcrossLeftVertical = {
+  currentPlayerName: 'Player Two',
+  pieces: [
+    {
+      column: 0,
+      row: 0,
+      playerName: 'Player One',
+    },
+    {
+      column: 1,
+      row: 0,
+      playerName: 'Player Two',
+    },
+    {
+      column: 0,
+      row: 1,
+      playerName: 'Player One',
+    },
+    {
+      column: 2,
+      row: 0,
+      playerName: 'Player Two',
+    },
+    {
+      column: 0,
+      row: 2,
+      playerName: 'Player One',
+    },
+    {
+      column: 1,
+      row: 1,
+      playerName: 'Player Two',
+    },
+    {
+      column: 0,
+      row: 3,
+      playerName: 'Player One',
+    },
+  ],
+};
+
+export const winningGameStateDiagonal = {
+  currentPlayerName: 'Player Two',
+  pieces: [
+    {
+      column: 0,
+      row: 0,
+      playerName: 'Player One',
+    },
+    {
+      column: 1,
+      row: 0,
+      playerName: 'Player Two',
+    },
+    {
+      column: 1,
+      row: 1,
+      playerName: 'Player One',
+    },
+    {
+      column: 2,
+      row: 0,
+      playerName: 'Player Two',
+    },
+    {
+      column: 2,
+      row: 1,
+      playerName: 'Player One',
+    },
+    {
+      column: 3,
+      row: 0,
+      playerName: 'Player Two',
+    },
+    {
+      column: 2,
+      row: 2,
+      playerName: 'Player One',
+    },
+    {
+      column: 3,
+      row: 1,
+      playerName: 'Player Two',
+    },
+    {
+      column: 3,
+      row: 2,
+      playerName: 'Player One',
+    },
+    {
+      column: 6,
+      row: 0,
+      playerName: 'Player Two',
+    },
+    {
+      column: 3,
+      row: 3,
       playerName: 'Player One',
     },
   ],
