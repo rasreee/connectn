@@ -38,12 +38,9 @@ export class Grid<Data = any> {
     this.data = data;
   }
 
-  get columns(): Point<Data>[][] {
-    return this.data.map((column) => column);
-  }
-
-  get values(): MatrixValues<Data> {
-    return this.columns.map((column) => column.map((point) => point.value));
+  get points(): Point<Data>[] {
+    const columns = this.data.map((column) => column);
+    return columns.flat();
   }
 
   areConnected = (a: Coords, b: Coords): boolean => {
@@ -74,8 +71,4 @@ export class Grid<Data = any> {
     const data = initializeMatrix<Data>(this.columnCount, this.rowCount);
     this.data = data;
   };
-
-  get points(): Point<Data>[] {
-    return this.data.flat().flat();
-  }
 }

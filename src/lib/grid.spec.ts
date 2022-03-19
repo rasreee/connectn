@@ -10,7 +10,7 @@ describe('lib/grid', () => {
 
     expect(result.columnCount).toEqual(2);
     expect(result.rowCount).toEqual(2);
-    expect(result.values.every((value) => value === null)).toBeTruthy();
+    expect(result.points.every((point) => point.value === null)).toBeTruthy();
   });
 
   it('should set value at (column, row)', () => {
