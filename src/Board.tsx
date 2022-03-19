@@ -3,13 +3,17 @@ import './Board.css';
 import { BoardInfo } from './BoardInfo';
 import { BoardPiece } from './BoardPiece';
 import { getPieceColor } from './lib/piece';
-import { slotUtils } from './lib/slot';
+import { Slot, slotUtils } from './lib/slot';
 import { useGame } from './useGame';
 import { useTryPlacePiece } from './useTryPlacePiece';
 
 export const Board = () => {
   const tryPlacePiece = useTryPlacePiece();
   const { info, state, outcome } = useGame();
+
+  const getSlotDisabled = (slot: Slot) =>
+    Boolean(outcome) ||
+    slotUtils.isTaken(slotUtils.normalize(slot, info.rowCount), state.pieces);
 
   return (
     <>
@@ -38,13 +42,7 @@ export const Board = () => {
               <button
                 key={`slot-${column}-${row}`}
                 className='Board-Slot'
-                disabled={
-                  Boolean(outcome) ||
-                  slotUtils.isTaken(
-                    slotUtils.normalize({ column, row }, info.rowCount),
-                    state.pieces
-                  )
-                }
+                disabled={getSlotDisabled({ column, row })}
                 onClick={() => tryPlacePiece(column)}
               >
                 {row}, {column}
