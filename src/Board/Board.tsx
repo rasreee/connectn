@@ -26,7 +26,7 @@ export const Board = ({ gameInfo, gameState, placePiece }: BoardProps) => {
 
   return (
     <>
-      <BoardInfo gameInfo={gameInfo} gameState={gameState} />
+      <BoardInfo />
       <div
         className='Board'
         style={{

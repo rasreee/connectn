@@ -1,15 +1,20 @@
-import { GameInfo, GameState } from 'lib/game';
+import { useGame } from 'Game/GameContext';
+import { getGameOutcome, OutcomeType } from 'lib/game';
 import { useMemo } from 'react';
 
-export interface BoardInfoProps {
-  gameInfo: GameInfo;
-  gameState: GameState;
-}
+export const BoardInfo = () => {
+  const { info, state } = useGame();
 
-export const BoardInfo = ({ gameState }: BoardInfoProps) => {
   const text = useMemo(() => {
-    return `${gameState.currentPlayerName}'s turn`;
-  }, [gameState]);
+    const outcome = getGameOutcome({ info, state });
+
+    if (outcome?.type === OutcomeType.Winner)
+      return `${outcome.winner} is ${OutcomeType.Winner}!`;
+
+    if (outcome?.type === OutcomeType.Draw) return OutcomeType.Draw;
+
+    return `${state.currentPlayerName}'s turn`;
+  }, [state, info]);
 
   return (
     <div>
