@@ -25,7 +25,7 @@ describe('lib/graph', () => {
   });
 
   it('discoverLine()', () => {
-    const grid = new Graph(2, 2);
+    const grid = new Graph(4, 4);
     const initial = [new Point(0, 0), new Point(1, 0)];
     grid.addPoint(0, 0, 'A');
     grid.addPoint(1, 0, 'B');
