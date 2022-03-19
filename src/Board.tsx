@@ -1,6 +1,6 @@
 import React, { Component, useState, useEffect } from 'react';
 import './Board.css';
-import { GameInfo, GameState } from './Game.types';
+import { GameInfo, GameState, Piece } from './Game';
 
 interface BoardPieceProps {
   color: string;
@@ -51,7 +51,9 @@ interface BoardProps {
 }
 
 export class Board extends Component<BoardProps> {
-  getPlayerColor = (isPlayerOne: boolean) => {
+  getPieceColor = (piece: Piece, gameInfo: GameInfo) => {
+    const isPlayerOne = piece.playerName === gameInfo.playerOneName;
+
     return isPlayerOne ? 'red' : 'green';
   };
 
@@ -75,9 +77,7 @@ export class Board extends Component<BoardProps> {
             column={piece.column}
             row={piece.row}
             gameInfo={gameInfo}
-            color={this.getPlayerColor(
-              piece.playerName === gameInfo.playerOneName
-            )}
+            color={this.getPieceColor(piece, gameInfo)}
           />
         ))}
         {Array.from(Array(gameInfo.rowCount), (e, row) => (

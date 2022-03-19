@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './Game.css';
-import { Onboarding } from './Onboarding';
-import { Board } from './Board';
+import { Onboarding } from '../Onboarding';
+import { Board } from '../Board';
 import { GameInfo, GameState, GameStep, Piece } from './Game.types';
 import { DEFAULT_GAME_INFO } from './Game.constants';
 
