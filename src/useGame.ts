@@ -5,8 +5,9 @@ import { initializeGameInfo } from './lib/gameInfo';
 import { computeOutcome } from './lib/gameOutcome';
 import { GameState, initializeGameState } from './lib/gameState';
 import { GameStep } from './lib/gameStep';
+import { logger } from './lib/logger';
 import { Piece } from './lib/piece';
-import { getIsSlotTaken } from './lib/slot';
+import { Slot, slotUtils } from './lib/slot';
 
 export function useGame() {
   const context = useGameContext();
@@ -18,12 +19,12 @@ export function useGame() {
   // - how does the game state change when a piece is placed?
   // - how do you know if a player has won?
   // - you might need to break some of this out into multiple methods or helpers
-  function placePiece(column: number, row: number) {
-    if (getIsSlotTaken({ column, row }, state.pieces)) {
+  function placePiece({ column, row }: Slot) {
+    logger.info(`📍 placePiece(column: ${column}, row: ${row})`);
+
+    if (slotUtils.isTaken({ column, row }, state.pieces)) {
       return;
     }
-
-    console.log(`Placing piece at (${column}, ${row})`);
 
     const nextRow = state.pieces.filter(
       (piece) => piece.slot.column === column
