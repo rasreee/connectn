@@ -2,26 +2,25 @@ import { useGameContext } from './GameContext';
 import { GameState } from './lib/gameState';
 import { logger } from './lib/logger';
 import { Piece } from './lib/piece';
-import { Slot } from './lib/slot';
 
-export function usePlacePiece() {
+export function useTryPlacePiece() {
   const { info, state, setState } = useGameContext();
 
   // TODO(2): place piece & check winner
   // - how does the game state change when a piece is placed?
   // - how do you know if a player has won?
   // - you might need to break some of this out into multiple methods or helpers
-  function placePiece({ column, row }: Slot) {
-    logger.info(`📍 placePiece(column: ${column}, row: ${row})`);
+  function tryPlacePiece(column: number) {
+    logger.info(`📍 placePiece(column: ${column})`);
 
     const nextRow = state.pieces.filter(
       (piece) => piece.slot.column === column
     ).length;
 
-    if (nextRow === info.rowCount) return state;
+    if (nextRow === info.rowCount - 1) return;
 
     const newPiece: Piece = {
-      slot: { column, row },
+      slot: { column, row: nextRow },
       playerName: state.currentPlayerName,
     };
 
@@ -39,5 +38,5 @@ export function usePlacePiece() {
     setState(nextGameState);
   }
 
-  return placePiece;
+  return tryPlacePiece;
 }

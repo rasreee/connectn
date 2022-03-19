@@ -5,10 +5,10 @@ import { BoardPiece } from './BoardPiece';
 import { getPieceColor } from './lib/piece';
 import { slotUtils } from './lib/slot';
 import { useGame } from './useGame';
-import { usePlacePiece } from './usePlacePiece';
+import { useTryPlacePiece } from './useTryPlacePiece';
 
 export const Board = () => {
-  const placePiece = usePlacePiece();
+  const tryPlacePiece = useTryPlacePiece();
   const { info, state, outcome } = useGame();
 
   return (
@@ -45,11 +45,7 @@ export const Board = () => {
                     state.pieces
                   )
                 }
-                onClick={() =>
-                  placePiece(
-                    slotUtils.normalize({ column, row }, info.rowCount)
-                  )
-                }
+                onClick={() => tryPlacePiece(column)}
               >
                 {row}, {column}
               </button>
