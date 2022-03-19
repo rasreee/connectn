@@ -2,7 +2,7 @@
   "name": "clockwise-coding-challenge",
   "version": "1.0.0",
   "description": "A front-end coding challenge for potential clockwise engineers",
-  "main": "src/index.js",
+  "main": "src/index.tsx",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rasreee/clockwise-challenge-solution.git"
