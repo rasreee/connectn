@@ -1,110 +1,92 @@
-import React, { Component } from 'react';
-import './Game.css';
-import { Onboarding } from '../Onboarding';
+import { useState } from 'react';
 import { Board } from '../Board';
-import { GameInfo, GameState, GameStep } from './types';
+import { Onboarding } from '../Onboarding';
 import { DEFAULT_GAME_INFO } from './constants';
 import { getNextGameState } from './helpers';
+import { GameInfo, GameState, GameStep } from './types';
+import './Game.css';
 
-interface GameComponentProps {}
-
-interface GameComponentState {
-  gameInfo: GameInfo;
-  gameState: GameState;
-  currentStep: GameStep;
-}
-
-// Component that holds the structure of the game
-export class Game extends Component<GameComponentProps, GameComponentState> {
-  /* ~~~~~~~~~~~~~~~~
-    Setup
-    ~~~~~~~~~~~~~~~~~ */
-  constructor(props: GameComponentProps) {
-    super(props);
-    const gameInfo = { ...DEFAULT_GAME_INFO };
-    const gameState = this.initializeGameState(gameInfo);
-    this.state = {
-      currentStep: GameStep.Onboarding,
-      gameInfo,
-      gameState,
-    };
-  }
-
-  /* ~~~~~~~~~~~~~~~~
-    Game Info State
-    ~~~~~~~~~~~~~~~~~ */
-  // TODO(1): game state
-  // - what pieces are placed and where? who do they belong to?
-  // - whose turn is it?
-  initializeGameState = (gameInfo: GameInfo): GameState => ({
+export const Game = () => {
+  const initializeGameState = (gameInfo: GameInfo): GameState => ({
     currentPlayerName: gameInfo.playerOneName,
     pieces: [],
+  });
+  const [state, setState] = useState({
+    currentStep: GameStep.Onboarding,
+    gameInfo: { ...DEFAULT_GAME_INFO },
+    gameState: initializeGameState({ ...DEFAULT_GAME_INFO }),
   });
 
   // TODO(1): game state
   // - what needs to happen to the game state if game info changes?
-  updateGameInfo = (fieldsToUpdate: Partial<GameInfo>) => {
-    const { gameInfo: currentGameInfo } = this.state;
+  const updateGameInfo = (fieldsToUpdate: Partial<GameInfo>) => {
+    const { gameInfo: currentGameInfo } = state;
 
-    this.setState({ gameInfo: { ...currentGameInfo, ...fieldsToUpdate } });
+    setState((prev) => ({
+      ...prev,
+      gameInfo: { ...currentGameInfo, ...fieldsToUpdate },
+    }));
   };
 
   // returns to blank state
-  resetGame = () => {
+  const resetGame = () => {
     const gameInfo = { ...DEFAULT_GAME_INFO };
-    this.setState({ gameInfo, currentStep: GameStep.Onboarding });
+    setState((prev) => ({
+      ...prev,
+      gameInfo,
+      currentStep: GameStep.Onboarding,
+    }));
   };
 
   // TODO(1): game state
   // - what needs to happen when the game is started?
-  playGame = () => {
-    const { gameInfo } = this.state;
-    this.setState({
+  const playGame = () => {
+    const { gameInfo } = state;
+    setState((prev) => ({
+      ...prev,
       currentStep: GameStep.Playing,
-      gameState: this.initializeGameState(gameInfo),
-    });
+      gameState: initializeGameState(gameInfo),
+    }));
   };
 
   // TODO(2): place piece & check winner
   // - how does the game state change when a piece is placed?
   // - how do you know if a player has won?
   // - you might need to break some of this out into multiple methods or helpers
-  placePiece = (column: number, row: number) => {
+  const placePiece = (column: number, row: number) => {
     console.log(`Placing piece at (${column}, ${row})`);
-    const { gameState, gameInfo } = this.state;
+    const { gameState, gameInfo } = state;
 
-    this.setState({
+    setState((prev) => ({
+      ...prev,
       gameState: getNextGameState({
         column,
         gameState,
         gameInfo,
       }),
-    });
+    }));
   };
-
   /* ~~~~~~~~~~~~~~~~
     Rendering
     ~~~~~~~~~~~~~~~~~ */
 
-  renderOnboarding() {
-    const { gameInfo } = this.state;
+  const renderOnboarding = () => {
+    const { gameInfo } = state;
 
     return (
       <div className='Game_onboarding'>
         <Onboarding
-          updateGameInfo={(gameInfo: Partial<GameInfo>) =>
-            this.updateGameInfo(gameInfo)
-          }
-          resetGame={this.resetGame}
-          playGame={this.playGame}
+          updateGameInfo={updateGameInfo}
+          resetGame={resetGame}
+          playGame={playGame}
           gameInfo={gameInfo}
         />
       </div>
     );
-  }
+  };
 
-  maybeRenderBoard() {
-    const { currentStep, gameInfo, gameState } = this.state;
+  const maybeRenderBoard = () => {
+    const { currentStep, gameInfo, gameState } = state;
 
     if (currentStep === GameStep.Onboarding) {
       return null;
@@ -114,42 +96,38 @@ export class Game extends Component<GameComponentProps, GameComponentState> {
       <Board
         gameInfo={gameInfo}
         gameState={gameState}
-        placePiece={this.placePiece}
+        placePiece={placePiece}
       />
     );
-  }
+  };
 
-  render() {
-    const { gameInfo, currentStep } = this.state;
-
-    return (
-      <div className='Game'>
-        <h1>Let's Play Connect {gameInfo.winNumber}!</h1>
-        {this.renderOnboarding()}
-        {this.maybeRenderBoard()}
-        <div className='Game_placeholder'>
-          <div className='Game_placeholder_top'>
-            <p>
-              The onboarding steps are setup for you. Use the info collected
-              during onboarding to render a board and then start a game.
-            </p>
+  return (
+    <div className='Game'>
+      <h1>Let's Play Connect {state.gameInfo.winNumber}!</h1>
+      {renderOnboarding()}
+      {maybeRenderBoard()}
+      <div className='Game_placeholder'>
+        <div className='Game_placeholder_top'>
+          <p>
+            The onboarding steps are setup for you. Use the info collected
+            during onboarding to render a board and then start a game.
+          </p>
+        </div>
+        <div className='Game_placeholder_debugger'>
+          <label>Debugging Info (remove):</label>
+          <div>
+            currentStep: <em>{state.currentStep}</em>
           </div>
-          <div className='Game_placeholder_debugger'>
-            <label>Debugging Info (remove):</label>
-            <div>
-              currentStep: <em>{currentStep}</em>
-            </div>
-            {Object.keys(gameInfo).map((key) => {
-              return (
-                <div key={key}>
-                  gameInfo.{key}:{' '}
-                  <em>{gameInfo[key as keyof typeof gameInfo]}</em>
-                </div>
-              );
-            })}
-          </div>
+          {Object.keys(state.gameInfo).map((key) => {
+            return (
+              <div key={key}>
+                gameInfo.{key}:{' '}
+                <em>{state.gameInfo[key as keyof typeof state.gameInfo]}</em>
+              </div>
+            );
+          })}
         </div>
       </div>
-    );
-  }
-}
+    </div>
+  );
+};

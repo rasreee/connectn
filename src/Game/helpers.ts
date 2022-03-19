@@ -1,13 +1,5 @@
 import { GameInfo, GameState, Piece } from './types';
 
-export const getNextRow = (column: number, gameState: GameState): number => {
-  const piecesForColumn = gameState.pieces.filter(
-    (piece) => piece.column === column
-  );
-
-  return piecesForColumn.length;
-};
-
 export const getNextGameState = ({
   gameState,
   gameInfo,
