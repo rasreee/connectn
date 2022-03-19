@@ -3,3 +3,12 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+button {
+  background: unset;
+  border: unset;
+}
+
+button[disabled], button[aria-disabled=true], button[data-disabled] {
+  cursor: default;
+}
