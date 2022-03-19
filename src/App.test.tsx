@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { GameProvider } from '../Game/GameContext';
 import { App } from './App';
+import { GameProvider } from './GameContext';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');

@@ -1,7 +1,8 @@
 import './Onboarding.css';
 
-import { GameInfo } from 'lib/game/gameInfo';
 import React, { Component } from 'react';
+
+import { GameInfo } from './lib/gameInfo';
 
 enum OnboardingStep {
   Players = 'Players',

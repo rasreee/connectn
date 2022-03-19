@@ -16,9 +16,7 @@
     "skipLibCheck": true,
     "strict": true,
     "useUnknownInCatchVariables": true,
-    "baseUrl": "src",
-    "paths": {},
-    "types": ["@types/jest"]
+    "types": ["@types/jest", "@types/node"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules", "build"]

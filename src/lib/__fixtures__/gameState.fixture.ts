@@ -1,3 +1,44 @@
+export const notFinishedGameState = {
+  currentPlayerName: 'Player Two',
+  pieces: [
+    {
+      column: 2,
+      row: 0,
+      playerName: 'Player One',
+    },
+    {
+      column: 3,
+      row: 0,
+      playerName: 'Player Two',
+    },
+    {
+      column: 2,
+      row: 1,
+      playerName: 'Player One',
+    },
+    {
+      column: 4,
+      row: 0,
+      playerName: 'Player Two',
+    },
+    {
+      column: 1,
+      row: 0,
+      playerName: 'Player One',
+    },
+    {
+      column: 5,
+      row: 0,
+      playerName: 'Player Two',
+    },
+    {
+      column: 2,
+      row: 2,
+      playerName: 'Player One',
+    },
+  ],
+};
+
 export const winningGameStateAcrossBottomHorizontal = {
   currentPlayerName: 'Player Two',
   pieces: [

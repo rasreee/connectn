@@ -1,4 +1,3 @@
-import { GameInfo, GameState, GameStep, initializeGameInfo } from 'lib/game';
 import {
   createContext,
   Dispatch,
@@ -6,6 +5,10 @@ import {
   useContext,
   useState,
 } from 'react';
+
+import { GameInfo, initializeGameInfo } from './lib/gameInfo';
+import { GameState } from './lib/gameState';
+import { GameStep } from './lib/gameStep';
 
 interface IGameContext {
   step: GameStep;

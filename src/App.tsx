@@ -2,8 +2,8 @@ import './App.css';
 
 import React, { useState } from 'react';
 
-import { Game } from '../Game';
-import { Instructions } from '../Instruction';
+import { Game } from './Game';
+import { Instructions } from './Instructions';
 import logo from './mark.png';
 
 export const App = () => {

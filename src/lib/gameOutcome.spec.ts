@@ -1,15 +1,25 @@
 import {
   drawGameState,
+  notFinishedGameState,
   winningGameStateAcrossBottomHorizontal,
   winningGameStateAcrossLeftVertical,
   winningGameStateDiagonal,
-} from '../__fixtures__/gameState.fixture';
-import { initializeGameInfo } from '../lib/game/gameInfo';
-import { getGameOutcome, OutcomeType } from '../lib/game/gameOutcome';
+} from './__fixtures__/gameState.fixture';
+import { initializeGameInfo } from './gameInfo';
+import { computeOutcome, OutcomeType } from './gameOutcome';
 
-describe('getGameOutcome', () => {
+describe('computeOutcome', () => {
+  it('notFinishedGameState', () => {
+    const result = computeOutcome({
+      info: initializeGameInfo(),
+      state: notFinishedGameState,
+    });
+
+    expect(result).toBeNull();
+  });
+
   it('drawGameState', () => {
-    const result = getGameOutcome({
+    const result = computeOutcome({
       info: initializeGameInfo(),
       state: drawGameState,
     });
@@ -19,7 +29,7 @@ describe('getGameOutcome', () => {
   });
 
   it('winningGameStateAcrossBottomHorizontal', () => {
-    const result = getGameOutcome({
+    const result = computeOutcome({
       info: initializeGameInfo(),
       state: winningGameStateAcrossBottomHorizontal,
     });
@@ -29,7 +39,7 @@ describe('getGameOutcome', () => {
   });
 
   it('winningGameStateAcrossLeftVertical', () => {
-    const result = getGameOutcome({
+    const result = computeOutcome({
       info: initializeGameInfo(),
       state: winningGameStateAcrossLeftVertical,
     });
@@ -39,7 +49,7 @@ describe('getGameOutcome', () => {
   });
 
   it('winningGameStateDiagonal', () => {
-    const result = getGameOutcome({
+    const result = computeOutcome({
       info: initializeGameInfo(),
       state: winningGameStateDiagonal,
     });

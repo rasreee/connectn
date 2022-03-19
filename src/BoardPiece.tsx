@@ -1,11 +1,11 @@
-import { GameInfo } from 'lib/game/gameInfo';
 import { useEffect, useState } from 'react';
+
+import { useGame } from './useGame';
 
 export interface BoardPieceProps {
   color: string;
   column: number;
   row: number;
-  gameInfo: GameInfo;
 }
 
 // TODO(3): style the game board
@@ -14,7 +14,8 @@ export interface BoardPieceProps {
 // - how does the distance dropped affect the time it takes to land?
 // - there is some boiler plate here to help, but feel free to go with a different approach if you are more comfortable
 export function BoardPiece(props: BoardPieceProps) {
-  const { color, column, row, gameInfo } = props;
+  const { color, column, row } = props;
+  const { info: gameInfo } = useGame();
 
   const [isDropped, setIsDropped] = useState(false);
 
