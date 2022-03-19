@@ -7,10 +7,10 @@ import { GameInfo, GameState, GameStep } from './types';
 import './Game.css';
 
 export const Game = () => {
-  const initializeGameState = (gameInfo: GameInfo): GameState => ({
-    currentPlayerName: gameInfo.playerOneName,
-    pieces: [],
-  });
+  function initializeGameState(gameInfo: GameInfo): GameState {
+    return { currentPlayerName: gameInfo.playerOneName, pieces: [] };
+  }
+
   const [state, setState] = useState({
     currentStep: GameStep.Onboarding,
     gameInfo: { ...DEFAULT_GAME_INFO },
@@ -19,41 +19,41 @@ export const Game = () => {
 
   // TODO(1): game state
   // - what needs to happen to the game state if game info changes?
-  const updateGameInfo = (fieldsToUpdate: Partial<GameInfo>) => {
+  function updateGameInfo(fieldsToUpdate: Partial<GameInfo>) {
     const { gameInfo: currentGameInfo } = state;
 
     setState((prev) => ({
       ...prev,
       gameInfo: { ...currentGameInfo, ...fieldsToUpdate },
     }));
-  };
+  }
 
   // returns to blank state
-  const resetGame = () => {
+  function resetGame() {
     const gameInfo = { ...DEFAULT_GAME_INFO };
     setState((prev) => ({
       ...prev,
       gameInfo,
       currentStep: GameStep.Onboarding,
     }));
-  };
+  }
 
   // TODO(1): game state
   // - what needs to happen when the game is started?
-  const playGame = () => {
+  function playGame() {
     const { gameInfo } = state;
     setState((prev) => ({
       ...prev,
       currentStep: GameStep.Playing,
       gameState: initializeGameState(gameInfo),
     }));
-  };
+  }
 
   // TODO(2): place piece & check winner
   // - how does the game state change when a piece is placed?
   // - how do you know if a player has won?
   // - you might need to break some of this out into multiple methods or helpers
-  const placePiece = (column: number, row: number) => {
+  function placePiece(column: number, row: number) {
     console.log(`Placing piece at (${column}, ${row})`);
     const { gameState, gameInfo } = state;
 
@@ -65,12 +65,13 @@ export const Game = () => {
         gameInfo,
       }),
     }));
-  };
+  }
+
   /* ~~~~~~~~~~~~~~~~
     Rendering
     ~~~~~~~~~~~~~~~~~ */
 
-  const renderOnboarding = () => {
+  function renderOnboarding() {
     const { gameInfo } = state;
 
     return (
@@ -83,9 +84,9 @@ export const Game = () => {
         />
       </div>
     );
-  };
+  }
 
-  const maybeRenderBoard = () => {
+  function maybeRenderBoard() {
     const { currentStep, gameInfo, gameState } = state;
 
     if (currentStep === GameStep.Onboarding) {
@@ -99,7 +100,7 @@ export const Game = () => {
         placePiece={placePiece}
       />
     );
-  };
+  }
 
   return (
     <div className='Game'>
