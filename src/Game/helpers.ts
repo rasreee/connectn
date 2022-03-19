@@ -1,34 +1,34 @@
 import { GameInfo, GameState, Piece } from './types';
 
 export const getNextGameState = ({
-  gameState,
-  gameInfo,
+  state,
+  info,
   column,
 }: {
   column: number;
-  gameState: GameState;
-  gameInfo: GameInfo;
+  state: GameState;
+  info: GameInfo;
 }): GameState => {
-  const nextRow = gameState.pieces.filter(
+  const nextRow = state.pieces.filter(
     (piece) => piece.column === column
   ).length;
 
-  if (nextRow === gameInfo.rowCount) return gameState;
+  if (nextRow === info.rowCount) return state;
 
   const newPiece: Piece = {
     column,
     row: nextRow,
-    playerName: gameState.currentPlayerName,
+    playerName: state.currentPlayerName,
   };
 
   const newCurrentPlayerName =
-    gameState.currentPlayerName === gameInfo.playerOneName
-      ? gameInfo.playerTwoName
-      : gameInfo.playerOneName;
+    state.currentPlayerName === info.playerOneName
+      ? info.playerTwoName
+      : info.playerOneName;
 
   const nextGameState: GameState = {
-    ...gameState,
-    pieces: [...gameState.pieces, newPiece],
+    ...state,
+    pieces: [...state.pieces, newPiece],
     currentPlayerName: newCurrentPlayerName,
   };
 

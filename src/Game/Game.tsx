@@ -1,110 +1,41 @@
-import { useState } from 'react';
 import { Board } from '../Board';
 import { Onboarding } from '../Onboarding';
-import { DEFAULT_GAME_INFO } from './constants';
-import { getNextGameState } from './helpers';
-import { GameInfo, GameState, GameStep } from './types';
+import { GameStep } from './types';
 import './Game.css';
+import { useGame } from './GameContext';
 
 export const Game = () => {
-  function initializeGameState(gameInfo: GameInfo): GameState {
-    return { currentPlayerName: gameInfo.playerOneName, pieces: [] };
-  }
-
-  const [state, setState] = useState({
-    currentStep: GameStep.Onboarding,
-    gameInfo: { ...DEFAULT_GAME_INFO },
-    gameState: initializeGameState({ ...DEFAULT_GAME_INFO }),
-  });
-
-  // TODO(1): game state
-  // - what needs to happen to the game state if game info changes?
-  function updateGameInfo(fieldsToUpdate: Partial<GameInfo>) {
-    const { gameInfo: currentGameInfo } = state;
-
-    setState((prev) => ({
-      ...prev,
-      gameInfo: { ...currentGameInfo, ...fieldsToUpdate },
-    }));
-  }
-
-  // returns to blank state
-  function resetGame() {
-    const gameInfo = { ...DEFAULT_GAME_INFO };
-    setState((prev) => ({
-      ...prev,
-      gameInfo,
-      currentStep: GameStep.Onboarding,
-    }));
-  }
-
-  // TODO(1): game state
-  // - what needs to happen when the game is started?
-  function playGame() {
-    const { gameInfo } = state;
-    setState((prev) => ({
-      ...prev,
-      currentStep: GameStep.Playing,
-      gameState: initializeGameState(gameInfo),
-    }));
-  }
-
-  // TODO(2): place piece & check winner
-  // - how does the game state change when a piece is placed?
-  // - how do you know if a player has won?
-  // - you might need to break some of this out into multiple methods or helpers
-  function placePiece(column: number, row: number) {
-    console.log(`Placing piece at (${column}, ${row})`);
-    const { gameState, gameInfo } = state;
-
-    setState((prev) => ({
-      ...prev,
-      gameState: getNextGameState({
-        column,
-        gameState,
-        gameInfo,
-      }),
-    }));
-  }
+  const { updateGameInfo, resetGame, playGame, placePiece, step, info, state } =
+    useGame();
 
   /* ~~~~~~~~~~~~~~~~
     Rendering
     ~~~~~~~~~~~~~~~~~ */
 
   function renderOnboarding() {
-    const { gameInfo } = state;
-
     return (
       <div className='Game_onboarding'>
         <Onboarding
           updateGameInfo={updateGameInfo}
           resetGame={resetGame}
           playGame={playGame}
-          gameInfo={gameInfo}
+          gameInfo={info}
         />
       </div>
     );
   }
 
   function maybeRenderBoard() {
-    const { currentStep, gameInfo, gameState } = state;
-
-    if (currentStep === GameStep.Onboarding) {
+    if (step === GameStep.Onboarding) {
       return null;
     }
 
-    return (
-      <Board
-        gameInfo={gameInfo}
-        gameState={gameState}
-        placePiece={placePiece}
-      />
-    );
+    return <Board gameInfo={info} gameState={state} placePiece={placePiece} />;
   }
 
   return (
     <div className='Game'>
-      <h1>Let's Play Connect {state.gameInfo.winNumber}!</h1>
+      <h1>Let's Play Connect {info.winNumber}!</h1>
       {renderOnboarding()}
       {maybeRenderBoard()}
       <div className='Game_placeholder'>
@@ -117,13 +48,12 @@ export const Game = () => {
         <div className='Game_placeholder_debugger'>
           <label>Debugging Info (remove):</label>
           <div>
-            currentStep: <em>{state.currentStep}</em>
+            currentStep: <em>{step}</em>
           </div>
-          {Object.keys(state.gameInfo).map((key) => {
+          {Object.keys(info).map((key) => {
             return (
               <div key={key}>
-                gameInfo.{key}:{' '}
-                <em>{state.gameInfo[key as keyof typeof state.gameInfo]}</em>
+                gameInfo.{key}: <em>{info[key as keyof typeof info]}</em>
               </div>
             );
           })}
