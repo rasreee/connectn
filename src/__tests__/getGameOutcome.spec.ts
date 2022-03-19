@@ -1,6 +1,9 @@
 import { initializeGameInfo } from '../lib/game/gameInfo';
 import { getGameOutcome, OutcomeType } from '../lib/game/getGameOutcome';
-import { drawGameState, winningGameState } from '../__fixtures__/gameState';
+import {
+  drawGameState,
+  winningGameState,
+} from '../__fixtures__/gameState.fixture';
 
 describe('getGameOutcome', () => {
   it('should return Draw outcome', () => {
