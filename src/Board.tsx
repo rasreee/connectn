@@ -2,13 +2,20 @@ import React, { Component, useState, useEffect } from 'react';
 import './Board.css';
 import { GameInfo, GameState } from './Game.types';
 
+interface BoardPieceProps {
+  color: string;
+  column: number;
+  row: number;
+  gameInfo: GameInfo;
+}
+
 // TODO(3): style the game board
 // - since pieces are dropped from the top, how can we animate that?
 // - how would gravity affect a still-dropped piece?
 // - how does the distance dropped affect the time it takes to land?
 // - there is some boiler plate here to help, but feel free to go with a different approach if you are more comfortable
-function BoardPiece(props: any) {
-  const { color, column, gameInfo, row } = props;
+function BoardPiece(props: BoardPieceProps) {
+  const { color, column, row, gameInfo } = props;
 
   const [isDropped, setIsDropped] = useState(false);
 
@@ -82,7 +89,9 @@ export class Board extends Component<BoardProps> {
                 onClick={() =>
                   this.props.placePiece(column, gameInfo.rowCount - row - 1)
                 }
-              />
+              >
+                ({row}, {column})
+              </div>
             ))}
           </div>
         ))}

@@ -17,7 +17,7 @@ export interface GameInfo {
   winNumber: number;
 }
 
-interface Piece {
+export interface Piece {
   playerName: string;
   column: number;
   row: number;

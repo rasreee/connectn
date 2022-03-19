@@ -2,8 +2,19 @@ import React, { Component } from 'react';
 import './Game.css';
 import { Onboarding } from './Onboarding';
 import { Board } from './Board';
-import { GameInfo, GameState, GameStep } from './Game.types';
+import { GameInfo, GameState, GameStep, Piece } from './Game.types';
 import { DEFAULT_GAME_INFO } from './Game.constants';
+
+const nextAvailableRowForColumn = (
+  column: number,
+  gameState: GameState
+): number => {
+  const piecesForColumn = gameState.pieces.filter(
+    (piece) => piece.column === column
+  );
+
+  return piecesForColumn.length;
+};
 
 interface GameComponentProps {}
 
@@ -65,7 +76,33 @@ export class Game extends Component<GameComponentProps, GameComponentState> {
   // - how do you know if a player has won?
   // - you might need to break some of this out into multiple methods or helpers
   placePiece = (column: number, row: number) => {
-    console.log(`Request piece at (${column}, ${row})`);
+    console.log(`Placing piece at (${column}, ${row})`);
+    const { gameState, gameInfo } = this.state;
+
+    const nextAvailableRow = nextAvailableRowForColumn(column, gameState);
+
+    if (nextAvailableRow === gameInfo.rowCount) return;
+
+    const newPiece: Piece = {
+      column,
+      row: nextAvailableRow,
+      playerName: gameState.currentPlayerName,
+    };
+
+    const newCurrentPlayerName =
+      gameState.currentPlayerName === gameInfo.playerOneName
+        ? gameInfo.playerTwoName
+        : gameInfo.playerOneName;
+
+    const newGameState: GameState = {
+      ...gameState,
+      pieces: [...gameState.pieces, newPiece],
+      currentPlayerName: newCurrentPlayerName,
+    };
+
+    this.setState({
+      gameState: newGameState,
+    });
   };
 
   /* ~~~~~~~~~~~~~~~~
