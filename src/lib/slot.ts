@@ -5,6 +5,10 @@ export interface Slot {
   column: number;
 }
 
+export function createSlot(column: number, row: number): Slot {
+  return { column, row };
+}
+
 const isEqual = (a: Slot, b: Slot): boolean =>
   a.column === b.column && a.row === b.row;
 

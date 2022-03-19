@@ -1,9 +1,16 @@
-import { GameInfo } from './gameInfo';
-import { Slot, slotUtils } from './slot';
+import { DEFAULT_GAME_INFO, GameInfo } from './gameInfo';
+import { createSlot, Slot, slotUtils } from './slot';
 
 export interface Piece {
   playerName: string;
   slot: Slot;
+}
+
+export function createPiece(
+  slot: [number, number],
+  playerName = DEFAULT_GAME_INFO.playerOneName
+): Piece {
+  return { playerName, slot: createSlot(...slot) };
 }
 
 export const getPieceColor = (piece: Piece, info: GameInfo) => {
@@ -33,7 +40,7 @@ export const getLinesIncluding = (
   const lines: Array<Piece[]> = [];
 
   adjacents.forEach((adjacentPiece) => {
-    // if (lines.some(line => line.))
+    lines.push([target, adjacentPiece]);
   });
 
   return lines;
@@ -42,14 +49,14 @@ export const getLinesIncluding = (
 export const getLongestLine = (list: Piece[]): Piece[] => {
   const lines: Array<Piece[]> = [];
 
-  const visitedSlot: Slot[] = [];
-
-  const isVisited = (coords: Slot): boolean =>
-    visitedSlot.some((visited) => slotUtils.isEqual(visited, coords));
+  const isVisited = (slot: Slot): boolean =>
+    lines.some((line) =>
+      line.some((item) => slotUtils.isEqual(item.slot, slot))
+    );
 
   list.forEach((piece) => {
     if (isVisited(piece.slot)) return;
-    visitedSlot.push(piece.slot);
+
     lines.push(...getLinesIncluding(piece, list));
   });
 

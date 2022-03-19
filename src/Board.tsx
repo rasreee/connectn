@@ -23,7 +23,9 @@ export const Board = () => {
 
   return (
     <>
-      <BoardInfo />
+      <div className='flex'>
+        <BoardInfo />
+      </div>
       <div
         className='Board'
         style={{

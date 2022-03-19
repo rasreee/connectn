@@ -1,5 +1,6 @@
 /** @type {import('@jest/types').Config.InitialOptions} */
 module.exports = {
+  verbose: true,
   preset: 'ts-jest',
   moduleNameMapper: {
     '\\.(png|svg|pdf|jpg|jpeg)$': '<rootDir>/jest/fileMock.js',
@@ -14,5 +15,6 @@ module.exports = {
     '^.+\\.ts?$': 'ts-jest',
     '^.+\\.(js|jsx)$': 'babel-jest',
   },
+  runner: 'groups',
   transformIgnorePatterns: ['\\.css$', '\\.png$'],
 };
