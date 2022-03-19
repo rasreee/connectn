@@ -1,15 +1,20 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import './Onboarding.css';
+import { GameInfo } from './Game.types';
 
-const OnboardingStep = {
-  Players: 'Players',
-  BoardSetup: 'BoardSetup',
-  Complete: 'Complete',
-};
+enum OnboardingStep {
+  Players = 'Players',
+  BoardSetup = 'BoardSetup',
+  Complete = 'Complete',
+}
+
+interface SetupProps {
+  gameInfo: GameInfo;
+  updateGameInfo: (args: GameInfo) => void;
+}
 
 // form for player setup
-const PlayerSetup = ({ gameInfo, updateGameInfo }) => {
+const PlayerSetup = ({ gameInfo, updateGameInfo }: SetupProps) => {
   return (
     <div className='Onboarding_players'>
       <div>Who's playing?</div>
@@ -40,7 +45,7 @@ const PlayerSetup = ({ gameInfo, updateGameInfo }) => {
 };
 
 // form for board setup
-const BoardSetup = ({ gameInfo, updateGameInfo }) => {
+const BoardSetup = ({ gameInfo, updateGameInfo }: SetupProps) => {
   return (
     <div className='Onboarding_board'>
       <div>Board dimensions</div>
@@ -86,12 +91,23 @@ const BoardSetup = ({ gameInfo, updateGameInfo }) => {
   );
 };
 
+interface OnboardingProps {
+  playGame: () => void;
+  resetGame: () => void;
+  updateGameInfo: (args: GameInfo) => void;
+  gameInfo: GameInfo;
+}
+
+interface OnboardingState {
+  currentStep: OnboardingStep;
+}
+
 // Component that handles onboarding
-export class Onboarding extends Component {
+export class Onboarding extends Component<OnboardingProps, OnboardingState> {
   /* ~~~~~~~~~~~~~~~~
     Setup
     ~~~~~~~~~~~~~~~~~ */
-  constructor(props) {
+  constructor(props: OnboardingProps) {
     super(props);
     this.state = {
       currentStep: OnboardingStep.Players,
@@ -101,7 +117,7 @@ export class Onboarding extends Component {
   /* ~~~~~~~~~~~~~~~~
     Updating Current Step
     ~~~~~~~~~~~~~~~~~ */
-  setStep = (newCurrentStep) => {
+  setStep = (newCurrentStep: OnboardingStep) => {
     if (newCurrentStep === OnboardingStep.Complete) {
       this.props.playGame();
     }
@@ -148,8 +164,8 @@ export class Onboarding extends Component {
 
   renderButtons = () => {
     const { currentStep } = this.state;
-    let prevStep = null;
-    let nextStep = null;
+    let prevStep: OnboardingStep | null = null;
+    let nextStep: OnboardingStep | null = null;
     let nextStepText = 'Next';
 
     switch (currentStep) {
@@ -168,11 +184,15 @@ export class Onboarding extends Component {
 
     return (
       <div className='Onboarding_buttons'>
-        {!!prevStep && (
-          <button onClick={() => this.setStep(prevStep)}>Back</button>
+        {prevStep && (
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          <button onClick={() => this.setStep(prevStep!)}>Back</button>
         )}
-        {!!nextStep && (
-          <button onClick={() => this.setStep(nextStep)}>{nextStepText}</button>
+        {nextStep && (
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          <button onClick={() => this.setStep(nextStep!)}>
+            {nextStepText}
+          </button>
         )}
       </div>
     );
@@ -188,16 +208,3 @@ export class Onboarding extends Component {
     );
   }
 }
-
-Onboarding.propTypes = {
-  updateGameInfo: PropTypes.func.isRequired,
-  resetGame: PropTypes.func.isRequired,
-  playGame: PropTypes.func.isRequired,
-  gameInfo: PropTypes.shape({
-    playerOneName: PropTypes.string,
-    playerTwoName: PropTypes.string,
-    columnCount: PropTypes.number,
-    rowCount: PropTypes.number,
-    winNumber: PropTypes.number,
-  }).isRequired,
-};
