@@ -6,6 +6,7 @@ import { computeOutcome } from './lib/gameOutcome';
 import { GameState, initializeGameState } from './lib/gameState';
 import { GameStep } from './lib/gameStep';
 import { Piece } from './lib/piece';
+import { getIsSlotTaken } from './lib/slot';
 
 export function useGame() {
   const context = useGameContext();
@@ -18,16 +19,20 @@ export function useGame() {
   // - how do you know if a player has won?
   // - you might need to break some of this out into multiple methods or helpers
   function placePiece(column: number, row: number) {
+    if (getIsSlotTaken({ column, row }, state.pieces)) {
+      return;
+    }
+
     console.log(`Placing piece at (${column}, ${row})`);
 
     const nextRow = state.pieces.filter(
-      (piece) => piece.coords.x === column
+      (piece) => piece.slot.column === column
     ).length;
 
     if (nextRow === info.rowCount) return state;
 
     const newPiece: Piece = {
-      coords: { x: column, y: row },
+      slot: { column, row },
       playerName: state.currentPlayerName,
     };
 

@@ -1,9 +1,9 @@
-import { Coords, coordsUtils } from './coords';
 import { GameInfo } from './gameInfo';
+import { Slot, slotUtils } from './slot';
 
 export interface Piece {
   playerName: string;
-  coords: { x: number; y: number };
+  slot: Slot;
 }
 
 export const getPieceColor = (piece: Piece, info: GameInfo) => {
@@ -16,11 +16,11 @@ export const getAdjacentPieces = (target: Piece, list: Piece[]): Piece[] => {
   const relevantPieces = list.filter(
     (piece) =>
       piece.playerName === target.playerName &&
-      !coordsUtils.isEqual(piece.coords, target.coords)
+      !slotUtils.isEqual(piece.slot, target.slot)
   );
 
   return relevantPieces.filter((piece) =>
-    coordsUtils.isAdjacent(piece.coords, target.coords)
+    slotUtils.isAdjacent(piece.slot, target.slot)
   );
 };
 
@@ -42,15 +42,15 @@ export const getLinesIncluding = (
 export const getLongestLine = (list: Piece[]): Piece[] => {
   const lines: Array<Piece[]> = [];
 
-  const visitedCoords: Coords[] = [];
+  const visitedSlot: Slot[] = [];
 
-  const isVisited = (coords: Coords): boolean =>
-    visitedCoords.some((visited) => coordsUtils.isEqual(visited, coords));
+  const isVisited = (coords: Slot): boolean =>
+    visitedSlot.some((visited) => slotUtils.isEqual(visited, coords));
 
-  list.forEach((currentPiece) => {
-    if (isVisited(currentPiece.coords)) return;
-    visitedCoords.push(currentPiece.coords);
-    lines.push(...getLinesIncluding(currentPiece, list));
+  list.forEach((piece) => {
+    if (isVisited(piece.slot)) return;
+    visitedSlot.push(piece.slot);
+    lines.push(...getLinesIncluding(piece, list));
   });
 
   const longestLine = lines.sort((a, b) => a.length - b.length).at(0) ?? [];

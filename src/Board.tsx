@@ -3,6 +3,7 @@ import './Board.css';
 import { BoardInfo } from './BoardInfo';
 import { BoardPiece } from './BoardPiece';
 import { getPieceColor } from './lib/piece';
+import { getIsSlotTaken } from './lib/slot';
 import { useGame } from './useGame';
 
 export const Board = () => {
@@ -24,8 +25,8 @@ export const Board = () => {
         {state.pieces.map((piece, i) => (
           <BoardPiece
             key={i}
-            column={piece.coords.x}
-            row={piece.coords.y}
+            column={piece.slot.column}
+            row={piece.slot.row}
             color={getPieceColor(piece, info)}
           />
         ))}
@@ -35,7 +36,10 @@ export const Board = () => {
               <button
                 key={`slot-${column}-${row}`}
                 className='Board-Slot'
-                disabled={Boolean(outcome)}
+                disabled={
+                  Boolean(outcome) ||
+                  getIsSlotTaken({ column, row }, state.pieces)
+                }
                 onClick={() => placePiece(column, info.rowCount - row - 1)}
               >
                 {row}, {column}
