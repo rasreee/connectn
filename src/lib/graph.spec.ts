@@ -8,7 +8,7 @@ import { Point } from './point';
  */
 describe('lib/graph', () => {
   let grid = new Graph(4, 4);
-  beforeEach(() => {
+  beforeAll(() => {
     grid = new Graph(4, 4);
     grid.addPoint(0, 0, 'A');
     grid.addPoint(1, 0, 'B');
@@ -32,6 +32,7 @@ describe('lib/graph', () => {
     const initial = [new Point(0, 0), new Point(1, 0)];
     const result = grid.discoverLine(initial);
     const coordsTuples = result.map((point) => toCoordsTuple(point.coords));
+    expect(coordsTuples).toHaveLength(4);
     expect(coordsTuples).toEqual([
       [0, 0],
       [1, 0],
