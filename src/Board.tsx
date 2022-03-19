@@ -15,6 +15,12 @@ export const Board = () => {
     Boolean(outcome) ||
     slotUtils.isTaken(slotUtils.normalize(slot, info.rowCount), state.pieces);
 
+  const renderSlotText = (slotIndices: Slot) => {
+    const slot = slotUtils.normalize(slotIndices, info.rowCount);
+
+    return `(${slot.column}, ${slot.row})`;
+  };
+
   return (
     <>
       <BoardInfo />
@@ -45,7 +51,7 @@ export const Board = () => {
                 disabled={getSlotDisabled({ column, row })}
                 onClick={() => tryPlacePiece(column)}
               >
-                {row}, {column}
+                {renderSlotText({ column, row })}
               </button>
             ))}
           </div>
