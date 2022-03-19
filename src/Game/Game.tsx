@@ -1,7 +1,6 @@
+import { GameStep } from 'lib/game';
 import { Board } from '../Board';
 import { Onboarding } from '../Onboarding';
-import { GameStep } from './types';
-import './Game.css';
 import { useGame } from './GameContext';
 
 export const Game = () => {

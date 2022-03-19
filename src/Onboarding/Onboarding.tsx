@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { GameInfo } from '../Game/types';
+import { GameInfo } from 'lib/game/gameInfo';
 import './Onboarding.css';
 
 enum OnboardingStep {

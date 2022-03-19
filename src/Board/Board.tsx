@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Board.css';
-import { GameInfo, GameState, Piece } from '../Game/types';
 import { BoardPiece } from './BoardPiece';
 import { BoardInfo } from './BoardInfo';
+import { Piece, GameInfo, GameState, getGameOutcome } from 'lib/game';
 
 const getPieceColor = (piece: Piece, gameInfo: GameInfo) => {
   const isPlayerOne = piece.playerName === gameInfo.playerOneName;
@@ -17,6 +17,13 @@ interface BoardProps {
 }
 
 export const Board = ({ gameInfo, gameState, placePiece }: BoardProps) => {
+  useEffect(() => {
+    const outcome = getGameOutcome({ info: gameInfo, state: gameState });
+    if (!outcome) return;
+
+    console.log('OUTCOME: ', outcome);
+  }, [gameInfo, gameState]);
+
   return (
     <>
       <BoardInfo gameInfo={gameInfo} gameState={gameState} />

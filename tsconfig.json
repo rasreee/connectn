@@ -15,7 +15,10 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "strict": true,
-    "useUnknownInCatchVariables": true
+    "useUnknownInCatchVariables": true,
+    "baseUrl": "src",
+    "paths": {
+    }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules", "build"]

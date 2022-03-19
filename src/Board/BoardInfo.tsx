@@ -1,5 +1,5 @@
+import { GameInfo, GameState } from 'lib/game';
 import { useMemo } from 'react';
-import { GameInfo, GameState } from '../Game/types';
 
 export interface BoardInfoProps {
   gameInfo: GameInfo;

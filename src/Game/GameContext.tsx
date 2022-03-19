@@ -1,7 +1,11 @@
+import {
+  GameStep,
+  GameInfo,
+  GameState,
+  initializeGameInfo,
+  Piece,
+} from 'lib/game';
 import { createContext, useContext, useState } from 'react';
-import { DEFAULT_GAME_INFO } from './constants';
-import { getNextGameState } from './helpers';
-import { GameInfo, GameState, GameStep } from './types';
 
 interface IGameContext {
   step: GameStep;
@@ -23,7 +27,7 @@ export const GameProvider: React.FC = ({ children }) => {
   }
 
   const [step, setStep] = useState(GameStep.Onboarding);
-  const [info, setInfo] = useState({ ...DEFAULT_GAME_INFO });
+  const [info, setInfo] = useState(initializeGameInfo());
   const [state, setState] = useState(initializeState(info));
 
   // TODO(1): game state
@@ -35,7 +39,7 @@ export const GameProvider: React.FC = ({ children }) => {
   // returns to blank state
   function resetGame() {
     setStep(GameStep.Onboarding);
-    setInfo({ ...DEFAULT_GAME_INFO });
+    setInfo(initializeGameInfo());
     setState(initializeState(info));
   }
 
@@ -52,13 +56,30 @@ export const GameProvider: React.FC = ({ children }) => {
   function placePiece(column: number, row: number) {
     console.log(`Placing piece at (${column}, ${row})`);
 
-    setState(
-      getNextGameState({
-        column,
-        state,
-        info,
-      })
-    );
+    const nextRow = state.pieces.filter(
+      (piece) => piece.column === column
+    ).length;
+
+    if (nextRow === info.rowCount) return state;
+
+    const newPiece: Piece = {
+      column,
+      row: nextRow,
+      playerName: state.currentPlayerName,
+    };
+
+    const newCurrentPlayerName =
+      state.currentPlayerName === info.playerOneName
+        ? info.playerTwoName
+        : info.playerOneName;
+
+    const nextGameState: GameState = {
+      ...state,
+      pieces: [...state.pieces, newPiece],
+      currentPlayerName: newCurrentPlayerName,
+    };
+
+    setState(nextGameState);
   }
 
   const handlers = { updateGameInfo, resetGame, playGame, placePiece };
