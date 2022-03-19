@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import times from 'lodash.times';
 
-import { AdjacencyMatrix } from './adjacencyMatrix';
 import { Coords } from './coords';
 import { Point } from './point';
 
@@ -29,19 +28,14 @@ function initializeMatrix<Data>(
 
 export class Grid<Data = any> {
   data: Matrix<Data>;
-  adj: AdjacencyMatrix;
   rowCount: number;
   columnCount: number;
-
-  isInitialized = false;
 
   constructor(columnCount: number, rowCount: number) {
     this.columnCount = columnCount;
     this.rowCount = rowCount;
     const data = initializeMatrix<Data>(columnCount, rowCount);
     this.data = data;
-    this.adj = new AdjacencyMatrix(this);
-    this.isInitialized = true;
   }
 
   get columns(): Point<Data>[][] {
@@ -66,13 +60,11 @@ export class Grid<Data = any> {
   addPoint = (x: number, y: number, value: Data) => {
     const newPoint = new Point(x, y, value);
     this.data[x][y] = newPoint;
-    this.adj.update(newPoint);
   };
 
   removePoint = (x: number, y: number) => {
     const newPoint = new Point(x, y);
     this.data[x][y] = newPoint;
-    this.adj.update(newPoint);
   };
 
   getPoint = (x: number, y: number): Point<Data> =>
@@ -81,7 +73,6 @@ export class Grid<Data = any> {
   clear = () => {
     const data = initializeMatrix<Data>(this.columnCount, this.rowCount);
     this.data = data;
-    this.adj.reset(this);
   };
 
   get points(): Point<Data>[] {
