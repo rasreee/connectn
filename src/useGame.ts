@@ -21,14 +21,13 @@ export function useGame() {
     console.log(`Placing piece at (${column}, ${row})`);
 
     const nextRow = state.pieces.filter(
-      (piece) => piece.column === column
+      (piece) => piece.coords.x === column
     ).length;
 
     if (nextRow === info.rowCount) return state;
 
     const newPiece: Piece = {
-      column,
-      row: nextRow,
+      coords: { x: column, y: row },
       playerName: state.currentPlayerName,
     };
 

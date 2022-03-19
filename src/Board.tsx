@@ -24,8 +24,8 @@ export const Board = () => {
         {state.pieces.map((piece, i) => (
           <BoardPiece
             key={i}
-            column={piece.column}
-            row={piece.row}
+            column={piece.coords.x}
+            row={piece.coords.y}
             color={getPieceColor(piece, info)}
           />
         ))}

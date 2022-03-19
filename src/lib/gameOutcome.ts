@@ -1,11 +1,17 @@
 import { GameInfo } from './gameInfo';
 import { GameState } from './gameState';
 import { logger } from './logger';
-import { Piece } from './piece';
+import { getLongestLine, Piece } from './piece';
 
-const getLongestLine = (pieces: Piece[]): Piece[] => {
-  return pieces;
-};
+export enum OutcomeType {
+  Draw = 'Draw',
+  Winner = 'Winner',
+}
+
+export interface GameOutcome {
+  type: OutcomeType;
+  winner?: number;
+}
 
 const isWinningPieces = ({
   pieces,
@@ -18,16 +24,6 @@ const isWinningPieces = ({
 
   return longestLine.length === info.winNumber;
 };
-
-export enum OutcomeType {
-  Draw = 'Draw',
-  Winner = 'Winner',
-}
-
-export interface GameOutcome {
-  type: OutcomeType;
-  winner?: number;
-}
 
 export const computeOutcome = ({
   info,
