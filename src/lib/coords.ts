@@ -64,9 +64,10 @@ export function getCoordsStrings(
   return coordsStrings;
 }
 
-export function isAdjacentCoords(a: Coords, b: Coords): boolean {
-  const aValues = toCoordsObject(a);
-  const bValues = toCoordsObject(b);
+export function toCoordsTuple(coords: Coords): CoordsTuple {
+  if (Array.isArray(coords)) return coords;
 
-  return aValues.x - bValues.x === 1 || aValues.y - bValues.y === 1;
+  const coordsObj = toCoordsObject(coords);
+
+  return [coordsObj.x, coordsObj.y];
 }

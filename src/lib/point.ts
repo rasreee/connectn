@@ -45,3 +45,5 @@ export class Point<Data = any> {
     return this.x === x && this.y === y;
   };
 }
+
+export type Line<Data> = Array<Point<Data>>;
