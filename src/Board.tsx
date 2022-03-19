@@ -5,9 +5,11 @@ import { BoardPiece } from './BoardPiece';
 import { getPieceColor } from './lib/piece';
 import { slotUtils } from './lib/slot';
 import { useGame } from './useGame';
+import { usePlacePiece } from './usePlacePiece';
 
 export const Board = () => {
-  const { info, state, outcome, placePiece } = useGame();
+  const placePiece = usePlacePiece();
+  const { info, state, outcome } = useGame();
 
   return (
     <>
