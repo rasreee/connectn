@@ -9,6 +9,7 @@ import {
 import { Board } from '../Board';
 import { Onboarding } from '../Onboarding';
 import { useGame } from './GameContext';
+import './Game.css';
 
 export const Game = () => {
   const { step, info, state, setStep, setInfo, setState } = useGame();
