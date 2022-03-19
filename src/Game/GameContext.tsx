@@ -17,9 +17,13 @@ interface IGameContext {
   placePiece: (column: number, row: number) => void;
 }
 
-export const GameContext = createContext<IGameContext>({} as IGameContext);
+export const GameContext = createContext<IGameContext | undefined>(undefined);
 
-export const useGame = () => useContext(GameContext);
+export const useGame = () => {
+  const context = useContext(GameContext);
+  if (!context) throw new Error('context was undefined');
+  return context;
+};
 
 export const GameProvider: React.FC = ({ children }) => {
   function initializeState(gameInfo: GameInfo): GameState {

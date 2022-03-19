@@ -9,7 +9,7 @@
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "moduleResolution": "node",
     "noEmit": true,
     "resolveJsonModule": true,
@@ -17,8 +17,8 @@
     "strict": true,
     "useUnknownInCatchVariables": true,
     "baseUrl": "src",
-    "paths": {
-    }
+    "paths": {},
+    "types": ["@types/jest"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules", "build"]

@@ -1,6 +1,7 @@
-import { GameState } from 'lib/game/gameState';
+import { initializeGameInfo } from '../lib/game/gameInfo';
+import { getGameOutcome, OutcomeType } from '../lib/game/getGameOutcome';
 
-export const winningGameState: GameState = {
+const winningGameState = {
   currentPlayerName: 'Player Two',
   pieces: [
     {
@@ -60,3 +61,14 @@ export const winningGameState: GameState = {
     },
   ],
 };
+
+describe('getGameOutcome', () => {
+  it('should return winning outcome', () => {
+    const result = getGameOutcome({
+      info: initializeGameInfo(),
+      state: winningGameState,
+    });
+
+    expect(result?.type).toEqual(OutcomeType.Winner);
+  });
+});
