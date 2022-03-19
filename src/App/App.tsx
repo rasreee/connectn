@@ -5,15 +5,11 @@ import { Instructions } from '../Instruction';
 import { Game } from '../Game';
 
 export const App = () => {
-  const [state, setState] = useState({
-    instructionsOpen: false,
-  });
+  const [isInstructionsOpen, setIsInstructionsOpen] = useState(false);
 
   function toggleInstructions() {
-    setState({ instructionsOpen: !state.instructionsOpen });
+    setIsInstructionsOpen((prev) => !prev);
   }
-
-  const { instructionsOpen } = state;
 
   return (
     <div className='App'>
@@ -23,9 +19,9 @@ export const App = () => {
         <p>
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        {instructionsOpen && <Instructions />}
+        {isInstructionsOpen && <Instructions />}
         <a className='App-instructions' onClick={() => toggleInstructions()}>
-          {instructionsOpen ? 'Hide' : 'View'} Detailed Instructions
+          {isInstructionsOpen ? 'Hide' : 'View'} Detailed Instructions
         </a>
       </div>
 
