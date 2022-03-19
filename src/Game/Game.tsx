@@ -1,32 +1,19 @@
 import './Game.css';
 
-import {
-  GameInfo,
-  GameState,
-  GameStep,
-  initializeGameInfo,
-  initializeGameState,
-  Piece,
-} from 'lib/game';
+import { GameInfo, GameState, GameStep, Piece } from 'lib/game';
 
 import { Board } from '../Board';
 import { Onboarding } from '../Onboarding';
-import { useGame } from './GameContext';
+import { useGame } from './useGame';
 
 export const Game = () => {
-  const { step, info, state, setStep, setInfo, setState } = useGame();
+  const { step, info, state, setStep, setInfo, setState, resetGame } =
+    useGame();
 
   // TODO(1): game state
   // - what needs to happen to the game state if game info changes?
   function updateGameInfo(fieldsToUpdate: Partial<GameInfo>) {
     setInfo({ ...info, ...fieldsToUpdate });
-  }
-
-  // returns to blank state
-  function resetGame() {
-    setStep(GameStep.Onboarding);
-    setInfo(initializeGameInfo());
-    setState(initializeGameState(info));
   }
 
   // TODO(1): game state

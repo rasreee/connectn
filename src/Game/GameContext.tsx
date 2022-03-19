@@ -18,9 +18,10 @@ interface IGameContext {
 
 export const GameContext = createContext<IGameContext | undefined>(undefined);
 
-export const useGame = () => {
+export const useGameContext = () => {
   const context = useContext(GameContext);
   if (!context) throw new Error('context was undefined');
+
   return context;
 };
 
@@ -32,6 +33,7 @@ export const GameProvider: React.FC = ({ children }) => {
   const [step, setStep] = useState(GameStep.Onboarding);
   const [info, setInfo] = useState(initializeGameInfo());
   const [state, setState] = useState(initializeState(info));
+
   return (
     <GameContext.Provider
       value={{ step, info, state, setStep, setInfo, setState }}
