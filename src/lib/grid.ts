@@ -1,11 +1,6 @@
 import times from 'lodash.times';
 
-export interface Coords {
-  x: number;
-  y: number;
-}
-
-export type CoordsString = `(${string},${string})`;
+import { AdjacencyMatrix, initializeAdjacencyMatrix } from './adjacencyMatrix';
 
 export class Point<Data = any> {
   value: Data | null;
@@ -30,64 +25,6 @@ function initializeMatrix<Data>(
   return times(columnCount, () => initializeColumn(rowCount));
 }
 
-export type AdjacencyString = `${CoordsString} <> ${CoordsString}`;
-
-export type AdjacencyMatrix = Record<AdjacencyString, boolean>;
-
-export type CoordsTuple = [number, number];
-
-export function getCoordsString(x: number, y: number): CoordsString {
-  return `(${x},${y})`;
-}
-
-export function toCoordsString(
-  value: CoordsString | CoordsTuple
-): CoordsString {
-  if (Array.isArray(value)) return getCoordsString(...value);
-
-  return value;
-}
-
-export function getAdjacencyKey(
-  coords: CoordsString | CoordsTuple,
-  other: CoordsString | CoordsTuple
-): AdjacencyString {
-  return `${toCoordsString(coords)} <> ${toCoordsString(other)}`;
-}
-
-export function getCoordsStrings(
-  columnCount: number,
-  rowCount: number
-): CoordsString[] {
-  const coordsStrings: CoordsString[] = [];
-
-  for (let x = 0; x < columnCount; x += 1) {
-    for (let y = 0; y < rowCount; y += 1) {
-      coordsStrings.push(getCoordsString(x, y));
-    }
-  }
-
-  return coordsStrings;
-}
-
-export function initializeAdjacencyMatrix(
-  columnCount: number,
-  rowCount: number
-): AdjacencyMatrix {
-  const coordsStrings = getCoordsStrings(columnCount, rowCount);
-
-  const adjacencyMatrix = {} as AdjacencyMatrix;
-
-  coordsStrings.forEach((coords) => {
-    const rest = coordsStrings.filter((value) => value !== coords);
-    rest.forEach((other) => {
-      adjacencyMatrix[getAdjacencyKey(coords, other)] = false;
-    });
-  });
-
-  return adjacencyMatrix;
-}
-
 export class Grid<Data = any> {
   data: Matrix<Data>;
   adjacents: AdjacencyMatrix;
@@ -95,6 +32,10 @@ export class Grid<Data = any> {
   constructor(columnCount: number, rowCount: number) {
     this.data = initializeMatrix<Data>(columnCount, rowCount);
     this.adjacents = initializeAdjacencyMatrix(columnCount, rowCount);
+  }
+
+  get values(): MatrixValues<Data> {
+    return this.data.map((column) => column.map((point) => point.value));
   }
 
   get columnCount(): number {
