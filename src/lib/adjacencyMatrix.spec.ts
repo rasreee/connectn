@@ -1,4 +1,4 @@
-import { createAdjacencyMap, initializeAdjacencyMap } from './adjacencyMatrix';
+import { initializeAdjacencyMap } from './adjacencyMatrix';
 import { toCoordsString } from './coords';
 import { Grid } from './grid';
 
@@ -18,19 +18,15 @@ describe('lib/adjacencyMatrix', () => {
     });
   });
 
-  it('createAdjacencyMap()', () => {
+  it('AdjacencyMatrix', () => {
     const grid = new Grid(2, 2);
-    grid.setPoint(0, 0, 'A');
-    grid.setPoint(0, 1, 'B');
+    grid.addPoint(0, 0, 'A');
+    grid.addPoint(0, 1, 'B');
 
-    const result = createAdjacencyMap(grid);
+    expect(grid.areConnected('(0,0)', '(0,1)')).toBeTruthy();
+    expect(grid.areConnected('(0,0)', '(1,1)')).toBeFalsy();
 
-    expect(result['(0,0)']).toEqual(['(0,1)']);
-    expect(result['(0,1)']).toEqual(['(0,0)']);
-    Object.entries(result)
-      .filter(([key]) => key !== '(0,0)' && key !== '(0,1)')
-      .forEach(([_, list]) => {
-        expect(list).toHaveLength(0);
-      });
+    grid.clear();
+    expect(grid.areConnected('(0,0)', '(0,1)')).toBeFalsy();
   });
 });

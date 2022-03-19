@@ -10,26 +10,26 @@ describe('lib/grid', () => {
 
     expect(result.columnCount).toEqual(2);
     expect(result.rowCount).toEqual(2);
-    expect(result.values.flat().every((value) => value === null)).toBeTruthy();
+    expect(result.values.every((value) => value === null)).toBeTruthy();
   });
 
   it('should set value at (column, row)', () => {
     const grid = new Grid(2, 2);
 
-    grid.setPoint(0, 0, 'foo');
+    grid.addPoint(0, 0, 'foo');
     expect(grid.getPoint(0, 0).value).toEqual('foo');
 
-    grid.setPoint(0, 0, null);
+    grid.addPoint(0, 0, null);
     expect(grid.getPoint(0, 0).value).toEqual(null);
   });
 
   it('should clear grid', () => {
     const grid = new Grid(2, 2);
 
-    grid.setPoint(0, 0, 'foo');
-    grid.setPoint(1, 0, 'foo');
-    grid.setPoint(0, 1, 'foo');
-    grid.setPoint(1, 1, 'foo');
+    grid.addPoint(0, 0, 'foo');
+    grid.addPoint(1, 0, 'foo');
+    grid.addPoint(0, 1, 'foo');
+    grid.addPoint(1, 1, 'foo');
 
     grid.clear();
 

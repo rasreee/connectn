@@ -1,12 +1,8 @@
-import {
-  CoordsString,
-  getCoordsStrings,
-  isAdjacentCoords,
-  toCoordsObject,
-} from './coords';
-import { Grid, Point } from './grid';
+import { CoordString, getCoordsStrings } from './coords';
+import { Grid } from './grid';
+import { Point } from './point';
 
-export type AdjacencyMap = Record<CoordsString, CoordsString[]>;
+export type AdjacencyMap = Record<CoordString, CoordString[]>;
 
 export function initializeAdjacencyMap(
   columnCount: number,
@@ -23,62 +19,69 @@ export function initializeAdjacencyMap(
   return adjacencyMatrix;
 }
 
-export function createAdjacencyMap(grid: Grid): AdjacencyMap {
-  const adjacencyMatrix = initializeAdjacencyMap(
-    grid.columnCount,
-    grid.rowCount
-  );
+export function createAdjacencyMap({ data }: GridData): AdjacencyMap {
+  const points = data.flat().filter((point) => point.value !== null);
 
-  grid.points.forEach((point) => {
+  const coordsStrings = points.map((point) => point.coordString);
+
+  const adjacencyMatrix = {} as AdjacencyMap;
+
+  coordsStrings.forEach((coords) => {
+    points
+      .filter((item) => !item.isAt(coords))
+      .forEach((other) => {
+        if (!other.isAdjacentTo(coords)) return;
+
+        adjacencyMatrix[coords] = [other.coordString];
+        adjacencyMatrix[other.coordString] = [coords];
+      });
+    adjacencyMatrix[coords] = [];
+  });
+
+  points.forEach((point) => {
     if (!point.value) return;
 
-    grid.points
-      .filter((item) => !item.isEqual(point))
+    points
+      .filter((item) => !item.isEqualTo(point))
       .forEach((other) => {
         if (!other.isAdjacentTo(point.coords)) return;
 
-        adjacencyMatrix[point.coordsString] = [other.coordsString];
-        adjacencyMatrix[other.coordsString] = [point.coordsString];
+        adjacencyMatrix[point.coordString] = [other.coordString];
+        adjacencyMatrix[other.coordString] = [point.coordString];
       });
   });
 
   return adjacencyMatrix;
 }
 
+export type GridData = Pick<Grid, 'data'>;
+
 export class AdjacencyMatrix {
   data: AdjacencyMap;
 
-  constructor(grid: Grid) {
+  constructor(private grid: GridData) {
     this.data = createAdjacencyMap(grid);
   }
 
-  refresh = (point: Point) => {
-    if (!point.value) {
-      Object.keys(this.data).forEach((coordsString) => {
-        const key = coordsString as keyof typeof this.data;
-        const adjs = this.data[key].filter((item) => item !== coordsString);
+  update = (updatedPoint: Point) => {
+    const data = { ...this.data };
+    const points = this.grid.data.flat();
 
-        this.data[key] = adjs;
+    points
+      .filter((item) => item.isAdjacentTo(updatedPoint))
+      .forEach((point) => {
+        const list = this.data[point.coordString] ?? [];
+        const newList = [...list.filter((item) => item !== point.coordString)];
+        if (point.value) {
+          newList.push(point.coordString);
+        }
+        data[point.coordString] = newList;
       });
-    } else {
-      Object.keys(this.data)
-        .filter((item) => item !== point.coordsString)
-        .forEach((coordsString) => {
-          const coords = toCoordsObject(coordsString);
-          const key = coordsString as keyof typeof this.data;
+    this.data = data;
+  };
 
-          const oldList = this.data[key];
-          let newList: CoordsString[] = [];
-          if (oldList.includes(point.coordsString)) {
-            newList = [
-              ...oldList.filter((item) => item === point.coordsString),
-              point.coordsString,
-            ];
-          } else if (isAdjacentCoords(coords, point.coords)) {
-            newList = [...oldList, point.coordsString];
-          }
-          this.data[key] = newList;
-        });
-    }
+  reset = (grid: Grid) => {
+    this.grid = grid;
+    this.data = createAdjacencyMap(grid);
   };
 }

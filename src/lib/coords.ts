@@ -1,8 +1,8 @@
 import { invariant } from './invariant';
 
-export type CoordsObject = { x: number; y: number };
+export type CoordObject = { x: number; y: number };
 
-export function isCoordsObject(o: any): o is CoordsObject {
+export function isCoordsObject(o: any): o is CoordObject {
   return (
     typeof o === 'object' &&
     'x' in o &&
@@ -12,23 +12,23 @@ export function isCoordsObject(o: any): o is CoordsObject {
   );
 }
 
-export type CoordsString = `(${string},${string})` | string;
+export type CoordString = `(${string},${string})` | string;
 
 export type CoordsTuple = [number, number];
 
-export type Coords = CoordsObject | CoordsString | CoordsTuple;
+export type Coords = CoordObject | CoordString | CoordsTuple;
 
-export function isCoordsString(o: any): o is CoordsString {
+export function isCoordsString(o: any): o is CoordString {
   const re = new RegExp('(\\d+,\\d+)');
 
   return typeof o === 'string' && re.test(o);
 }
 
-export function toCoordsObject(coords: Coords): CoordsObject {
+export function toCoordsObject(coords: Coords): CoordObject {
   if (isCoordsObject(coords)) return coords;
   if (Array.isArray(coords)) return { x: coords[0], y: coords[1] };
 
-  invariant(isCoordsString(coords), `invalid coordsString: ${coords}`);
+  invariant(isCoordsString(coords), `invalid coordString: ${coords}`);
 
   let s = coords.replace('(', '');
   s = s.replace(')', '');
@@ -37,11 +37,11 @@ export function toCoordsObject(coords: Coords): CoordsObject {
   return { x: parseInt(x), y: parseInt(y) };
 }
 
-export function getCoordsString(x: number, y: number): CoordsString {
+export function getCoordsString(x: number, y: number): CoordString {
   return `(${x},${y})`;
 }
 
-export function toCoordsString(value: Coords): CoordsString {
+export function toCoordsString(value: Coords): CoordString {
   if (typeof value === 'string') return value;
 
   if (Array.isArray(value)) return getCoordsString(...value);
@@ -52,8 +52,8 @@ export function toCoordsString(value: Coords): CoordsString {
 export function getCoordsStrings(
   columnCount: number,
   rowCount: number
-): CoordsString[] {
-  const coordsStrings: CoordsString[] = [];
+): CoordString[] {
+  const coordsStrings: CoordString[] = [];
 
   for (let x = 0; x < columnCount; x += 1) {
     for (let y = 0; y < rowCount; y += 1) {
