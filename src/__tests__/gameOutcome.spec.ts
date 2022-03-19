@@ -1,5 +1,5 @@
 import { initializeGameInfo } from '../lib/game/gameInfo';
-import { getGameOutcome, OutcomeType } from '../lib/game/getGameOutcome';
+import { getGameOutcome, OutcomeType } from '../lib/game/gameOutcome';
 import {
   drawGameState,
   winningGameStateAcrossBottomHorizontal,

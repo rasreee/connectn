@@ -2,11 +2,11 @@ import { GameInfo } from './gameInfo';
 import { GameState } from './gameState';
 import { Piece } from './piece';
 
-export const getLongestLine = (pieces: Piece[]): Piece[] => {
+const getLongestLine = (pieces: Piece[]): Piece[] => {
   return pieces;
 };
 
-export const isWinningPieces = ({
+const isWinningPieces = ({
   pieces,
   info,
 }: {
