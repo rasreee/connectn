@@ -1,4 +1,4 @@
-import { GameStep, GameInfo, GameState, initializeGameInfo } from 'lib/game';
+import { GameInfo, GameState, GameStep, initializeGameInfo } from 'lib/game';
 import {
   createContext,
   Dispatch,

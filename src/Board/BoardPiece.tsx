@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
 import { GameInfo } from 'lib/game/gameInfo';
+import { useEffect, useState } from 'react';
 
 export interface BoardPieceProps {
   color: string;

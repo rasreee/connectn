@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
 import './Board.css';
-import { BoardPiece } from './BoardPiece';
+
+import { GameInfo, GameState, getGameOutcome, Piece } from 'lib/game';
+import React, { useMemo } from 'react';
+
 import { BoardInfo } from './BoardInfo';
-import { Piece, GameInfo, GameState, getGameOutcome } from 'lib/game';
+import { BoardPiece } from './BoardPiece';
 
 const getPieceColor = (piece: Piece, gameInfo: GameInfo) => {
   const isPlayerOne = piece.playerName === gameInfo.playerOneName;
@@ -17,11 +19,12 @@ interface BoardProps {
 }
 
 export const Board = ({ gameInfo, gameState, placePiece }: BoardProps) => {
-  useEffect(() => {
+  const gameOutcome = useMemo(() => {
     const outcome = getGameOutcome({ info: gameInfo, state: gameState });
-    if (!outcome) return;
 
     console.log('OUTCOME: ', outcome);
+
+    return outcome;
   }, [gameInfo, gameState]);
 
   return (
@@ -49,13 +52,14 @@ export const Board = ({ gameInfo, gameState, placePiece }: BoardProps) => {
         {Array.from(Array(gameInfo.rowCount), (e, row) => (
           <div key={`row-${row}`} className='Board-Row'>
             {Array.from(Array(gameInfo.columnCount), (e, column) => (
-              <div
+              <button
                 key={`slot-${column}-${row}`}
                 className='Board-Slot'
+                disabled={Boolean(gameOutcome)}
                 onClick={() => placePiece(column, gameInfo.rowCount - row - 1)}
               >
                 {row}, {column}
-              </div>
+              </button>
             ))}
           </div>
         ))}

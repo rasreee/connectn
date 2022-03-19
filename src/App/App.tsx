@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import logo from './mark.png';
 import './App.css';
-import { Instructions } from '../Instruction';
+
+import React, { useState } from 'react';
+
 import { Game } from '../Game';
+import { Instructions } from '../Instruction';
+import logo from './mark.png';
 
 export const App = () => {
   const [isInstructionsOpen, setIsInstructionsOpen] = useState(false);

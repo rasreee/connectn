@@ -1,6 +1,7 @@
-import { GameProvider } from '../Game/GameContext';
 import React from 'react';
 import ReactDOM from 'react-dom';
+
+import { GameProvider } from '../Game/GameContext';
 import { App } from './App';
 
 it('renders without crashing', () => {

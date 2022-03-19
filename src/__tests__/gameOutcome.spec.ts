@@ -1,11 +1,11 @@
-import { initializeGameInfo } from '../lib/game/gameInfo';
-import { getGameOutcome, OutcomeType } from '../lib/game/gameOutcome';
 import {
   drawGameState,
   winningGameStateAcrossBottomHorizontal,
   winningGameStateAcrossLeftVertical,
   winningGameStateDiagonal,
 } from '../__fixtures__/gameState.fixture';
+import { initializeGameInfo } from '../lib/game/gameInfo';
+import { getGameOutcome, OutcomeType } from '../lib/game/gameOutcome';
 
 describe('getGameOutcome', () => {
   it('drawGameState', () => {
