@@ -7,11 +7,7 @@ module.exports = {
     // Handle absolute import and module path alias
     '^lib/(.*)$': '<rootDir>/src/lib/$1',
   },
-  testPathIgnorePatterns: [
-    '<rootDir>/node_modules/',
-    '<rootDir>/build/',
-    '<rootDir>/__tests__/fixtures/',
-  ],
+  testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/build/'],
   testEnvironment: 'jsdom',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   transform: {
