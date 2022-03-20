@@ -67,7 +67,7 @@
   Theme
 */
 :root {
-  --bg-app: var(--color-gray-100);
+  --bg-app: var(--color-gray-50);
   --bg-surface: var(--color-white);
   --color-primary: var(--color-indigo-500);
 }

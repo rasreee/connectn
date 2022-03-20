@@ -5,9 +5,3 @@
   gap: 0.5rem;
   border-radius: var(--rounded-md);
 }
-
-.text {
-  font-size: var(--text-base);
-  font-weight: var(--font-medium);
-  line-height: var(--leading-none);
-}

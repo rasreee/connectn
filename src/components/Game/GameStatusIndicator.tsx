@@ -29,7 +29,7 @@ export const GameStatusIndicator = observer(function GameStatusIndicator() {
   return (
     <div className={styles.container}>
       <Circle color={getPlayerColor(gameState.currentPlayer)} />
-      <span className={styles.text}>{text}</span>
+      <span className='text'>{text}</span>
     </div>
   );
 });

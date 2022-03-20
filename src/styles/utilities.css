@@ -1,0 +1,15 @@
+.rounded-full {
+  border-radius: var(--rounded-full) !important;
+}
+
+.p-0\.5 {
+  padding: 0.125rem;
+}
+
+.p-1 {
+  padding: 0.25rem;
+}
+
+.hidden {
+  visibility: hidden;
+}

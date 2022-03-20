@@ -11,7 +11,7 @@ export const Logo = observer(() => {
   const winNumber = useGameInfo().winNumber;
 
   return (
-    <h1 className={styles.container}>
+    <h1 className={styles.logo}>
       <span className={styles.prefix}>Connect </span>
       <span className={styles.winNumber}>{winNumber}</span>
     </h1>

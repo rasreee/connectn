@@ -10,7 +10,6 @@ export const ControlPanel = observer(() => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.title}>Players</div>
       <ul>
         <li>
           <div className={styles.playerInfo}>

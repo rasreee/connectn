@@ -12,6 +12,7 @@
   border-radius: var(--rounded-lg);
   border: 2px solid var(--color-classic-blue);
   background: var(--bg-surface);
+  flex: 1;
 }
 
 .gridRow {
