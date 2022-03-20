@@ -1,41 +1,25 @@
 import './Game.css';
 
+import { useGameInfo, useGameState } from 'stores/hooks';
+
 import { Board } from './Board';
-import { GameInfo } from './lib/gameInfo';
 import { GameStep } from './lib/gameStep';
 import { Onboarding } from './Onboarding';
-import { useGame } from './useGame';
 
 export const Game = () => {
-  const { step, info, setStep, setInfo, resetGame } = useGame();
-
-  // TODO(1): game state
-  // - what needs to happen to the game state if game info changes?
-  const updateGameInfo = (fieldsToUpdate: Partial<GameInfo>) => {
-    setInfo({ ...info, ...fieldsToUpdate });
-  };
-
-  // TODO(1): game state
-  // - what needs to happen when the game is started?
-  const playGame = () => {
-    setStep(GameStep.Playing);
-  };
+  const gameInfo = useGameInfo();
+  const gameState = useGameState();
 
   const renderOnboarding = () => {
     return (
       <div className='Game_onboarding'>
-        <Onboarding
-          updateGameInfo={updateGameInfo}
-          resetGame={resetGame}
-          playGame={playGame}
-          gameInfo={info}
-        />
+        <Onboarding />
       </div>
     );
   };
 
   const maybeRenderBoard = () => {
-    if (step === GameStep.Onboarding) {
+    if (gameState.model.currentStep === GameStep.Onboarding) {
       return null;
     }
 
@@ -44,7 +28,7 @@ export const Game = () => {
 
   return (
     <div className='Game'>
-      <h1>Let's Play Connect {info.winNumber}!</h1>
+      <h1>Let's Play Connect {gameInfo.model.winNumber}!</h1>
       {renderOnboarding()}
       {maybeRenderBoard()}
       <div className='Game_placeholder'>
@@ -57,12 +41,13 @@ export const Game = () => {
         <div className='Game_placeholder_debugger'>
           <label>Debugging Info (remove):</label>
           <div>
-            currentStep: <em>{step}</em>
+            currentStep: <em>{gameState.model.currentStep}</em>
           </div>
-          {Object.keys(info).map((key) => {
+          {Object.keys(gameInfo.model).map((key) => {
             return (
               <div key={key}>
-                gameInfo.{key}: <em>{info[key as keyof typeof info]}</em>
+                gameInfo.{key}:{' '}
+                <em>{gameInfo.model[key as keyof typeof gameInfo.model]}</em>
               </div>
             );
           })}

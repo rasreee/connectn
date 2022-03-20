@@ -1,6 +1,6 @@
+import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
-
-import { useGame } from './useGame';
+import { useGameInfo } from 'stores/hooks';
 
 export interface BoardPieceProps {
   color: string;
@@ -13,23 +13,23 @@ export interface BoardPieceProps {
 // - how would gravity affect a still-dropped piece?
 // - how does the distance dropped affect the time it takes to land?
 // - there is some boiler plate here to help, but feel free to go with a different approach if you are more comfortable
-export function BoardPiece(props: BoardPieceProps) {
+export const BoardPiece = observer((props: BoardPieceProps) => {
   const { color, column, row } = props;
-  const { info: gameInfo } = useGame();
+  const gameInfo = useGameInfo();
 
   const [isDropped, setIsDropped] = useState(false);
 
   const baseStyle = {
     color,
     top: 0,
-    left: `${(column / gameInfo.dimensions.cols) * 100}%`,
-    height: `${(1 / gameInfo.dimensions.cols) * 100}%`,
-    width: `${(1 / gameInfo.dimensions.cols) * 100}%`,
+    left: `${(column / gameInfo.model.dimensions.cols) * 100}%`,
+    height: `${(1 / gameInfo.model.dimensions.cols) * 100}%`,
+    width: `${(1 / gameInfo.model.dimensions.cols) * 100}%`,
   };
 
   const droppedStyle = {
     ...baseStyle,
-    top: `${100 - ((row + 1) / gameInfo.dimensions.cols) * 100}%`,
+    top: `${100 - ((row + 1) / gameInfo.model.dimensions.cols) * 100}%`,
   };
 
   // change the style chosen after it initially renders
@@ -42,4 +42,4 @@ export function BoardPiece(props: BoardPieceProps) {
   return (
     <div className='Board-Piece' style={isDropped ? droppedStyle : baseStyle} />
   );
-}
+});

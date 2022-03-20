@@ -1,60 +1,42 @@
-import { DEFAULT_GAME_INFO, GameInfo } from './gameInfo';
-import { createSlot, Slot, slotUtils } from './slot';
+import { Slot } from './slot';
+import { Player } from './types';
 
-export interface Piece {
-  playerName: string;
-  slot: Slot;
+export interface PieceData {
+  column: number;
+  row: number;
+  player: Player;
 }
 
-export function createPiece(
-  slot: [number, number],
-  playerName = DEFAULT_GAME_INFO.playerOneName
-): Piece {
-  return { playerName, slot: createSlot(...slot) };
-}
+export class Piece implements PieceData {
+  column: number;
+  row: number;
+  player: Player;
 
-export const getAdjacentPieces = (target: Piece, list: Piece[]): Piece[] => {
-  const relevantPieces = list.filter(
-    (piece) =>
-      piece.playerName === target.playerName &&
-      !slotUtils.isEqual(piece.slot, target.slot)
-  );
+  constructor(column: number, row: number, player = Player.PlayerOne) {
+    this.column = column;
+    this.row = row;
+    this.player = player;
+  }
 
-  return relevantPieces.filter((piece) =>
-    slotUtils.isAdjacent(piece.slot, target.slot)
-  );
-};
+  get slot(): Slot {
+    return { column: this.column, row: this.row };
+  }
 
-export const getLinesIncluding = (
-  target: Piece,
-  list: Piece[]
-): Array<Piece[]> => {
-  const adjacents = getAdjacentPieces(target, list);
-
-  const lines: Array<Piece[]> = [];
-
-  adjacents.forEach((adjacentPiece) => {
-    lines.push([target, adjacentPiece]);
-  });
-
-  return lines;
-};
-
-export const getLongestLine = (list: Piece[]): Piece[] => {
-  const lines: Array<Piece[]> = [];
-
-  const isVisited = (slot: Slot): boolean =>
-    lines.some((line) =>
-      line.some((item) => slotUtils.isEqual(item.slot, slot))
+  isAdjacentTo = (target: Slot): boolean => {
+    const aValues = this.slot;
+    const xDel = Math.abs(aValues.row - target.row);
+    const yDel = Math.abs(aValues.column - target.column);
+    return (
+      (xDel === 1 && yDel === 0) ||
+      (yDel === 1 && xDel === 0) ||
+      (yDel === 1 && xDel === 1)
     );
+  };
 
-  list.forEach((piece) => {
-    if (isVisited(piece.slot)) return;
+  isEqualTo = (point: Piece): boolean =>
+    this.slot.row === point.slot.row && this.slot.column === point.slot.column;
 
-    lines.push(...getLinesIncluding(piece, list));
-  });
-
-  const longestLine = lines.sort((a, b) => a.length - b.length).at(0) ?? [];
-
-  return longestLine;
-};
+  isAt = (target: Piece): boolean => {
+    return this.column === target.column && this.row === target.row;
+  };
+}

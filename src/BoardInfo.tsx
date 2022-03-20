@@ -1,28 +1,31 @@
-import { useMemo } from 'react';
+import { Player } from 'lib/types';
+import { computed } from 'mobx';
+import { observer } from 'mobx-react-lite';
+import { useGameInfo, useGameState } from 'stores/hooks';
 
-import { OutcomeType } from './lib/gameOutcome';
-import { useGame } from './useGame';
-
-export const BoardInfo = () => {
-  const { info, state, outcome, resetGame } = useGame();
+export const BoardInfo = observer(() => {
+  const gameInfo = useGameInfo();
+  const gameState = useGameState();
 
   const getPlayerName = (playerIndex: number | undefined) =>
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    [info.playerOneName, info.playerTwoName][playerIndex!];
+    [gameInfo.model.playerOneName, gameInfo.model.playerTwoName][playerIndex!];
 
-  const text = useMemo(() => {
-    if (outcome?.type === OutcomeType.Winner)
-      return `${getPlayerName(outcome?.winner)} is ${OutcomeType.Winner}!`;
+  const text = computed(() => {
+    if (gameState.model.winner !== Player.None)
+      return `${getPlayerName(gameState.model.winner)} is Winner!`;
 
-    if (outcome?.type === OutcomeType.Draw) return OutcomeType.Draw;
+    if (gameState.isDraw) return 'Draw';
 
-    return `${state.currentPlayerName}'s turn`;
-  }, [state, outcome]);
+    return `${getPlayerName(gameState.model.currentPlayer)}'s turn`;
+  }).get();
 
   return (
     <div>
       <div>{text}</div>
-      {outcome && <button onClick={resetGame}>New Game</button>}
+      {gameState.isComplete && (
+        <button onClick={gameState.reset}>New Game</button>
+      )}
     </div>
   );
-};
+});

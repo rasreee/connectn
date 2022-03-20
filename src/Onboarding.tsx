@@ -1,8 +1,11 @@
 import './Onboarding.css';
 
-import React, { Component } from 'react';
+import { runInAction } from 'mobx';
+import { observer } from 'mobx-react-lite';
+import { useEffect, useState } from 'react';
+import { useGameInfo, useGameState } from 'stores/hooks';
 
-import { GameInfo } from './lib/gameInfo';
+import { Dimensions } from './lib/matrix';
 
 enum OnboardingStep {
   Players = 'Players',
@@ -10,44 +13,49 @@ enum OnboardingStep {
   Complete = 'Complete',
 }
 
-interface SetupProps {
-  gameInfo: GameInfo;
-  updateGameInfo: (args: GameInfo) => void;
-}
-
 // form for player setup
-const PlayerSetup = ({ gameInfo, updateGameInfo }: SetupProps) => {
+const PlayerSetup = observer(() => {
+  const gameInfo = useGameInfo();
+
   return (
     <div className='Onboarding_players'>
       <div>Who's playing?</div>
       <div className='Onboarding_inputRow'>
         <input
           type='text'
-          defaultValue={gameInfo.playerOneName}
+          defaultValue={gameInfo.model.playerOneName}
           onBlur={(e) =>
-            updateGameInfo({
-              ...gameInfo,
-              playerOneName: e.target.value,
-            })
+            runInAction(
+              () =>
+                (gameInfo.model.dimensions = {
+                  ...gameInfo.model.dimensions,
+                  column: parseInt(e.currentTarget.value),
+                } as Dimensions)
+            )
           }
         />
         <input
           type='text'
-          defaultValue={gameInfo.playerTwoName}
+          defaultValue={gameInfo.model.playerTwoName}
           onBlur={(e) =>
-            updateGameInfo({
-              ...gameInfo,
-              playerTwoName: e.target.value,
-            })
+            runInAction(
+              () =>
+                (gameInfo.model.dimensions = {
+                  ...gameInfo.model.dimensions,
+                  row: parseInt(e.currentTarget.value),
+                } as Dimensions)
+            )
           }
         />
       </div>
     </div>
   );
-};
+});
 
 // form for board setup
-const BoardSetup = ({ gameInfo, updateGameInfo }: SetupProps) => {
+const BoardSetup = observer(() => {
+  const gameInfo = useGameInfo();
+
   return (
     <div className='Onboarding_board'>
       <div>Board dimensions</div>
@@ -55,23 +63,29 @@ const BoardSetup = ({ gameInfo, updateGameInfo }: SetupProps) => {
         <div className='Onboarding_inputRow'>
           <input
             type='number'
-            defaultValue={gameInfo.dimensions.cols}
+            defaultValue={gameInfo.model.dimensions.cols}
             onBlur={(e) =>
-              updateGameInfo({
-                ...gameInfo,
-                columnCount: Number(e.target.value),
-              })
+              runInAction(
+                () =>
+                  (gameInfo.model.dimensions = {
+                    ...gameInfo.model.dimensions,
+                    row: parseInt(e.currentTarget.value),
+                  } as Dimensions)
+              )
             }
           />
-          <div className='Onbaording_board_x'>x</div>
+          <div className='Onboarding_board_x'>x</div>
           <input
             type='number'
-            defaultValue={gameInfo.dimensions.cols}
+            defaultValue={gameInfo.model.dimensions.cols}
             onBlur={(e) =>
-              updateGameInfo({
-                ...gameInfo,
-                rowCount: Number(e.target.value),
-              })
+              runInAction(
+                () =>
+                  (gameInfo.model.dimensions = {
+                    ...gameInfo.model.dimensions,
+                    column: parseInt(e.currentTarget.value),
+                  } as Dimensions)
+              )
             }
           />
         </div>
@@ -80,82 +94,55 @@ const BoardSetup = ({ gameInfo, updateGameInfo }: SetupProps) => {
       <div className='Onboarding_inputRow'>
         <input
           type='number'
-          defaultValue={gameInfo.winNumber}
+          defaultValue={gameInfo.model.winNumber}
           onBlur={(e) =>
-            updateGameInfo({
-              ...gameInfo,
-              winNumber: Number(e.target.value),
-            })
+            runInAction(
+              () => (gameInfo.model.winNumber = parseInt(e.currentTarget.value))
+            )
           }
         />
       </div>
     </div>
   );
-};
-
-interface OnboardingProps {
-  playGame: () => void;
-  resetGame: () => void;
-  updateGameInfo: (args: GameInfo) => void;
-  gameInfo: GameInfo;
-}
-
-interface OnboardingState {
-  currentStep: OnboardingStep;
-}
+});
 
 // Component that handles onboarding
-export class Onboarding extends Component<OnboardingProps, OnboardingState> {
-  /* ~~~~~~~~~~~~~~~~
-    Setup
-    ~~~~~~~~~~~~~~~~~ */
-  constructor(props: OnboardingProps) {
-    super(props);
-    this.state = {
-      currentStep: OnboardingStep.Players,
-    };
-  }
+export const Onboarding = () => {
+  const [currentStep, setStep] = useState(OnboardingStep.Players);
+
+  const gameState = useGameState();
+
+  useEffect(() => {
+    if (currentStep === OnboardingStep.Complete) {
+      gameState.play();
+    }
+  }, [currentStep]);
 
   /* ~~~~~~~~~~~~~~~~
     Updating Current Step
     ~~~~~~~~~~~~~~~~~ */
-  setStep = (newCurrentStep: OnboardingStep) => {
-    if (newCurrentStep === OnboardingStep.Complete) {
-      this.props.playGame();
-    }
-
-    this.setState({ currentStep: newCurrentStep });
-  };
-
-  reset = () => {
+  const handleReset = () => {
     if (window.confirm('Are you sure? This will erase your game.')) {
-      this.setState({ currentStep: OnboardingStep.Players });
-      this.props.resetGame();
+      setStep(OnboardingStep.Players);
+      gameState.reset();
     }
   };
 
   /* ~~~~~~~~~~~~~~~~
     Rendering
     ~~~~~~~~~~~~~~~~~ */
-  renderCurrentStep = () => {
-    const { currentStep } = this.state;
-    const { gameInfo, updateGameInfo } = this.props;
-
+  const renderCurrentStep = () => {
     switch (currentStep) {
       case OnboardingStep.Players:
-        return (
-          <PlayerSetup gameInfo={gameInfo} updateGameInfo={updateGameInfo} />
-        );
+        return <PlayerSetup />;
       case OnboardingStep.BoardSetup:
-        return (
-          <BoardSetup gameInfo={gameInfo} updateGameInfo={updateGameInfo} />
-        );
+        return <BoardSetup />;
       case OnboardingStep.Complete:
       default:
         return (
           <div>
             Setup Complete, have fun! (
-            <a onClick={this.reset} className='Onboarding_resetLink'>
+            <a onClick={handleReset} className='Onboarding_resetLink'>
               reset
             </a>
             )
@@ -164,8 +151,7 @@ export class Onboarding extends Component<OnboardingProps, OnboardingState> {
     }
   };
 
-  renderButtons = () => {
-    const { currentStep } = this.state;
+  const renderButtons = () => {
     let prevStep: OnboardingStep | null = null;
     let nextStep: OnboardingStep | null = null;
     let nextStepText = 'Next';
@@ -188,25 +174,21 @@ export class Onboarding extends Component<OnboardingProps, OnboardingState> {
       <div className='Onboarding_buttons'>
         {prevStep && (
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          <button onClick={() => this.setStep(prevStep!)}>Back</button>
+          <button onClick={() => setStep(prevStep!)}>Back</button>
         )}
         {nextStep && (
           // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          <button onClick={() => this.setStep(nextStep!)}>
-            {nextStepText}
-          </button>
+          <button onClick={() => setStep(nextStep!)}>{nextStepText}</button>
         )}
       </div>
     );
   };
 
-  render() {
-    return (
-      <div className='Onboarding'>
-        <label className='Onboarding_label'>Game Setup</label>
-        {this.renderCurrentStep()}
-        {this.renderButtons()}
-      </div>
-    );
-  }
-}
+  return (
+    <div className='Onboarding'>
+      <label className='Onboarding_label'>Game Setup</label>
+      {renderCurrentStep()}
+      {renderButtons()}
+    </div>
+  );
+};

@@ -4,11 +4,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { App } from './App';
-import { GameProvider } from './GameContext';
+import { RootStoreProvider } from './RootStoreProvider';
 
 ReactDOM.render(
-  <GameProvider>
+  <RootStoreProvider>
     <App />
-  </GameProvider>,
+  </RootStoreProvider>,
   document.getElementById('root')
 );

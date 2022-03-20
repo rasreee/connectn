@@ -10,12 +10,3 @@ export interface GameInfo {
   // number of dots in a row required to win
   winNumber: number;
 }
-
-export const DEFAULT_GAME_INFO: GameInfo = {
-  playerOneName: 'Player One',
-  playerTwoName: 'Player Two',
-  dimensions: { width: 7, height: 6 },
-  winNumber: 4,
-};
-
-export const initializeGameInfo = (): GameInfo => ({ ...DEFAULT_GAME_INFO });

@@ -1,510 +1,372 @@
 export const notFinishedGameState = {
-  currentPlayerName: 'Player Two',
+  currentPlayer: 'Player Two',
   pieces: [],
 };
 
 export const winningGameStateAcrossBottomHorizontal = {
-  currentPlayerName: 'Player Two',
+  currentPlayer: 'Player Two',
   pieces: [
     {
-      slot: {
-        column: 0,
-        row: 0,
-      },
+      column: 0,
+      row: 0,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 6,
-        row: 0,
-      },
+      column: 6,
+      row: 0,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 1,
-        row: 0,
-      },
+      column: 1,
+      row: 0,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 5,
-        row: 0,
-      },
+      column: 5,
+      row: 0,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 2,
-        row: 0,
-      },
+      column: 2,
+      row: 0,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 4,
-        row: 0,
-      },
+      column: 4,
+      row: 0,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 3,
-        row: 0,
-      },
+      column: 3,
+      row: 0,
       playerName: 'Player One',
     },
   ],
 };
 
 export const winningGameStateAcrossLeftVertical = {
-  currentPlayerName: 'Player Two',
+  currentPlayer: 'Player Two',
   pieces: [
     {
-      slot: {
-        column: 0,
-        row: 0,
-      },
+      column: 0,
+      row: 0,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 1,
-        row: 0,
-      },
+      column: 1,
+      row: 0,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 0,
-        row: 1,
-      },
+      column: 0,
+      row: 1,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 2,
-        row: 0,
-      },
+      column: 2,
+      row: 0,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 1,
-        row: 1,
-      },
+      column: 1,
+      row: 1,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 3,
-        row: 0,
-      },
+      column: 3,
+      row: 0,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 0,
-        row: 2,
-      },
+      column: 0,
+      row: 2,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 2,
-        row: 1,
-      },
+      column: 2,
+      row: 1,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 0,
-        row: 3,
-      },
+      column: 0,
+      row: 3,
       playerName: 'Player One',
     },
   ],
 };
 
 export const winningGameStateDiagonal = {
-  currentPlayerName: 'Player Two',
+  currentPlayer: 'Player Two',
   pieces: [
     {
-      slot: {
-        column: 0,
-        row: 0,
-      },
+      column: 0,
+      row: 0,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 1,
-        row: 0,
-      },
+      column: 1,
+      row: 0,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 1,
-        row: 1,
-      },
+      column: 1,
+      row: 1,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 2,
-        row: 0,
-      },
+      column: 2,
+      row: 0,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 2,
-        row: 1,
-      },
+      column: 2,
+      row: 1,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 3,
-        row: 0,
-      },
+      column: 3,
+      row: 0,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 2,
-        row: 2,
-      },
+      column: 2,
+      row: 2,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 3,
-        row: 1,
-      },
+      column: 3,
+      row: 1,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 3,
-        row: 2,
-      },
+      column: 3,
+      row: 2,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 6,
-        row: 0,
-      },
+      column: 6,
+      row: 0,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 3,
-        row: 3,
-      },
+      column: 3,
+      row: 3,
       playerName: 'Player One',
     },
   ],
 };
 
 export const drawGameState = {
-  currentPlayerName: 'Player One',
+  currentPlayer: 'Player One',
   pieces: [
     {
-      slot: {
-        column: 0,
-        row: 0,
-      },
+      column: 0,
+      row: 0,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 1,
-        row: 0,
-      },
+      column: 1,
+      row: 0,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 2,
-        row: 0,
-      },
+      column: 2,
+      row: 0,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 3,
-        row: 0,
-      },
+      column: 3,
+      row: 0,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 4,
-        row: 0,
-      },
+      column: 4,
+      row: 0,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 6,
-        row: 0,
-      },
+      column: 6,
+      row: 0,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 5,
-        row: 0,
-      },
+      column: 5,
+      row: 0,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 5,
-        row: 1,
-      },
+      column: 5,
+      row: 1,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 6,
-        row: 1,
-      },
+      column: 6,
+      row: 1,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 3,
-        row: 1,
-      },
+      column: 3,
+      row: 1,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 4,
-        row: 1,
-      },
+      column: 4,
+      row: 1,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 2,
-        row: 1,
-      },
+      column: 2,
+      row: 1,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 1,
-        row: 1,
-      },
+      column: 1,
+      row: 1,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 0,
-        row: 1,
-      },
+      column: 0,
+      row: 1,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 0,
-        row: 2,
-      },
+      column: 0,
+      row: 2,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 1,
-        row: 2,
-      },
+      column: 1,
+      row: 2,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 2,
-        row: 2,
-      },
+      column: 2,
+      row: 2,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 3,
-        row: 2,
-      },
+      column: 3,
+      row: 2,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 4,
-        row: 2,
-      },
+      column: 4,
+      row: 2,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 6,
-        row: 2,
-      },
+      column: 6,
+      row: 2,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 5,
-        row: 2,
-      },
+      column: 5,
+      row: 2,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 6,
-        row: 3,
-      },
+      column: 6,
+      row: 3,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 5,
-        row: 3,
-      },
+      column: 5,
+      row: 3,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 4,
-        row: 3,
-      },
+      column: 4,
+      row: 3,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 3,
-        row: 3,
-      },
+      column: 3,
+      row: 3,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 2,
-        row: 3,
-      },
+      column: 2,
+      row: 3,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 1,
-        row: 3,
-      },
+      column: 1,
+      row: 3,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 0,
-        row: 3,
-      },
+      column: 0,
+      row: 3,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 0,
-        row: 4,
-      },
+      column: 0,
+      row: 4,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 1,
-        row: 4,
-      },
+      column: 1,
+      row: 4,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 2,
-        row: 4,
-      },
+      column: 2,
+      row: 4,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 3,
-        row: 4,
-      },
+      column: 3,
+      row: 4,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 4,
-        row: 4,
-      },
+      column: 4,
+      row: 4,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 5,
-        row: 4,
-      },
+      column: 5,
+      row: 4,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 6,
-        row: 4,
-      },
+      column: 6,
+      row: 4,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 6,
-        row: 5,
-      },
+      column: 6,
+      row: 5,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 5,
-        row: 5,
-      },
+      column: 5,
+      row: 5,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 4,
-        row: 5,
-      },
+      column: 4,
+      row: 5,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 3,
-        row: 5,
-      },
+      column: 3,
+      row: 5,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 2,
-        row: 5,
-      },
+      column: 2,
+      row: 5,
       playerName: 'Player Two',
     },
     {
-      slot: {
-        column: 1,
-        row: 5,
-      },
+      column: 1,
+      row: 5,
       playerName: 'Player One',
     },
     {
-      slot: {
-        column: 0,
-        row: 5,
-      },
+      column: 0,
+      row: 5,
       playerName: 'Player Two',
     },
   ],

@@ -1,37 +1,35 @@
 import times from 'lodash.times';
 
-import { Point } from './point';
-
-export type Matrix<Data = any> = Point<Data>[][];
-
-export type MatrixValues<Data = any> = (Data | null)[][];
+export type Matrix<Data = any> = Data[][];
 
 export interface Dimensions {
   cols: number;
   rows: number;
 }
 
-function createColumn(rowCount: number) {
-  return times(rowCount, (x) => {
-    return new Point(x, rowCount);
+function createColumn(rowCount: number, classType: any) {
+  return times(rowCount, () => {
+    return new classType();
   });
 }
 
-export function createMatrix<Data>(dimensions: Dimensions): Matrix<Data> {
-  return times(dimensions.cols, (num) => {
-    return createColumn(dimensions.rows).map((item) => {
-      item.y = num;
-      return item;
-    });
+export function createMatrix<D = any>(
+  dimensions: Dimensions,
+  classType: D
+): Matrix<D> {
+  return times(dimensions.cols, () => {
+    return createColumn(dimensions.rows, classType);
   });
 }
 
-export class Grid<D> {
+export class Grid<D = any> {
   data: Matrix<D>;
   dimensions: Dimensions;
 
-  constructor(dimensions: Dimensions) {
+  constructor(dimensions: Dimensions, classType: D) {
     this.dimensions = dimensions;
-    this.data = createMatrix<D>(dimensions);
+    this.data = createMatrix<D>(dimensions, classType);
   }
+
+  setPoint = (x: number, y: number, value: D) => (this.data[x][y] = value);
 }
