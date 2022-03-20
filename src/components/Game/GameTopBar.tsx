@@ -11,7 +11,7 @@ export const GameTopBar = observer(() => {
     <div className={styles.container}>
       <GameStatusIndicator />
       {gameState.winner && (
-        <button className={styles.button} onClick={gameState.reset}>
+        <button className='button button-secondary' onClick={gameState.reset}>
           New Game
         </button>
       )}

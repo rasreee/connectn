@@ -1,18 +1,32 @@
-button, a {
+button {
   background: unset;
   border: none;
   outline: none;
   cursor: pointer;
+}
+
+button[disabled], button[aria-disabled=true], button[data-disabled] {
+  cursor: default;
+}
+
+.button {
   font-weight: var(--font-semibold);
   line-height: var(--leading-none);
   padding: .625rem 1.25rem;
+  border-radius: var(--rounded);
+  font-weight: var(--font-semibold);
   transition-property: all;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   transition-duration: 150ms;
 }
 
-button[disabled], button[aria-disabled=true], button[data-disabled], a[disabled], a[aria-disabled=true], a[data-disabled] {
-  cursor: default;
+.button.button-secondary {
+  background: var(--color-indigo-50);
+  color: var(--color-indigo-700);
+}
+
+.button.button-secondary:hover {
+  background: var(--color-indigo-100);
 }
 
 button:focus, button[data-focus] {
