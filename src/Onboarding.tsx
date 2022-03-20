@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 import { useGameInfo, useGameState } from 'stores/hooks';
 
-import { Dimensions } from './models/matrix';
+import { Dimensions } from './models/dimensions';
 
 enum OnboardingStep {
   Players = 'Players',

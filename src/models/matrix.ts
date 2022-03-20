@@ -1,11 +1,8 @@
 import times from 'lodash.times';
 
-export type Matrix<Data = any> = Data[][];
+import { Dimensions } from './dimensions';
 
-export interface Dimensions {
-  cols: number;
-  rows: number;
-}
+export type Matrix<Data = any> = Data[][];
 
 export type CreateItem<D = any, Model = any> = (
   column: number,

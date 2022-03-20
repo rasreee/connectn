@@ -2,7 +2,6 @@ import { action, computed, makeAutoObservable, observable } from 'mobx';
 import { GameStateModel, GameStep, initGameState } from 'models/gameState';
 import { Piece } from 'models/piece';
 
-import { createMatrix } from '../models/matrix';
 import { Player } from '../models/player';
 import { RootStore } from './RootStore';
 
@@ -50,10 +49,7 @@ export class GameStateStore {
   reset = () => {
     this.currentPlayer = Player.None;
     this.nextPlayer = Player.None;
-    this.board = createMatrix(
-      this.store.gameInfo.dimensions,
-      (col, row, player) => new Piece(col, row, player)
-    );
+    this.board = [];
     this.currentStep = GameStep.Onboarding;
     this.winner = Player.None;
   };

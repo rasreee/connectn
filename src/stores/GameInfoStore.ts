@@ -1,6 +1,6 @@
 import { makeAutoObservable, observable } from 'mobx';
+import { Dimensions } from 'models/dimensions';
 import { GameInfo, initGameInfo } from 'models/gameInfo';
-import { Dimensions } from 'models/matrix';
 
 import { RootStore } from './RootStore';
 
