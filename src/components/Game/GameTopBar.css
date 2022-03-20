@@ -8,8 +8,11 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: var(--rounded-md);
+  background: #000;
+  padding: 1.5rem;
 }
 
 .GameStatus > .text {
-  font-size: var(--cw-text-base);
+  font-size: var(--text-base);
 }

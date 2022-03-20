@@ -1,29 +1,56 @@
 :root {
-  --cw-color-white: #fff;
+  --color-white: #fff;
+  --color-gray-50: #f9fafb;
+  --color-gray-100: #f3f4f6;
+  --color-gray-200: #e5e7eb;
+  --color-gray-300: #d1d5db;
+  --color-gray-400: #9ca3af;
+  --color-gray-500: #6b7280;
+  --color-gray-600: #4b5563;
+  --color-gray-700: #374151;
+  --color-gray-800: #1f2937;
+  --color-gray-900: #111827;
+
   /* Classic Connect 4 Color Scheme */
-  --cw-color-blue: #1B6DFC;
-  --cw-color-yellow: #FDE711;
-  --cw-color-red: #E61A2D;
+  --color-blue: #1B6DFC;
+  --color-yellow: #FDE711;
+  --color-red: #E61A2D;
 
   /* Typography */
-  --cw-font-primary: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+  --font-primary: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
   Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
-  --cw-font-heading: 'Jost', sans-serif;
+  --font-heading: 'Jost', sans-serif;
 
-  --cw-font-normal: 400;
-  --cw-font-medium: 500;
-  --cw-font-semibold: 600;
-  --cw-font-bold: 700;
-  --cw-font-extrabold: 800;
-  --cw-font-black: 900;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+  --font-black: 900;
 
-  --cw-text-xs: 0.75rem;
-  --cw-text-sm: 0.875rem;
-  --cw-text-base: 1rem;
-  --cw-text-lg: 1.125rem;
-  --cw-text-xl: 1.25rem;
-  --cw-text-2xl: 1.5rem;
-  --cw-text-3xl: 1.875rem;
-  --cw-text-4xl: 2.25rem;
-  --cw-text-5xl: 3rem;
+  --text-xs: 0.75rem;
+  --text-sm: 0.875rem;
+  --text-base: 1rem;
+  --text-lg: 1.125rem;
+  --text-xl: 1.25rem;
+  --text-2xl: 1.5rem;
+  --text-3xl: 1.875rem;
+  --text-4xl: 2.25rem;
+  --text-5xl: 3rem;
+
+  /* Border Radius */
+  --rounded-sm: 0.125rem;
+  --rounded: 0.25rem;
+  --rounded-md: 0.325rem;
+  --rounded-lg: 0.5rem;
+  --rounded-xl: 0.625rem;
+  --rounded-2xl: 0.75rem;
+  --rounded-3xl: 1.5rem;
+  --rounded-full: 9999px;
+}
+
+:root {
+  /* Theming */
+  --bg-app: var(--color-gray-200);
+  --bg-surface: var(--color-white);
 }

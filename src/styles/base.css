@@ -17,9 +17,9 @@ h4,
 h5,
 h6,
 .heading {
-  font-weight: var(--cw-font-weight-bold);
+  font-weight: var(--font-weight-bold);
   line-height: 1.25;
-  font-family: var(--cw-font-primary);
+  font-family: var(--font-primary);
 }
 
 body,
@@ -28,14 +28,14 @@ input,
 optgroup,
 select,
 textarea {
-  font-family: var(--cw-font-primary);
+  font-family: var(--font-primary);
 }
 
 button, a {
   background: unset;
   border: unset;
   cursor: pointer;
-  font-weight: var(--cw-font-medium);
+  font-weight: var(--font-medium);
 }
 
 button[disabled], button[aria-disabled=true], button[data-disabled], a[disabled], a[aria-disabled=true], a[data-disabled] {
