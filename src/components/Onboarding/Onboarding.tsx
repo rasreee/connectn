@@ -2,7 +2,6 @@ import './Onboarding.css';
 
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import { Dimensions } from 'models/dimensions';
 import { useEffect, useState } from 'react';
 import { useGameInfo, useGameState } from 'stores/hooks';
 
@@ -24,26 +23,14 @@ const PlayerSetup = observer(() => {
           type='text'
           defaultValue={gameInfo.playerOneName}
           onBlur={(e) =>
-            runInAction(
-              () =>
-                (gameInfo.dimensions = {
-                  ...gameInfo.dimensions,
-                  column: parseInt(e.currentTarget.value),
-                } as Dimensions)
-            )
+            gameInfo.updateDimensions('cols', parseInt(e.currentTarget.value))
           }
         />
         <input
           type='text'
           defaultValue={gameInfo.playerTwoName}
           onBlur={(e) =>
-            runInAction(
-              () =>
-                (gameInfo.dimensions = {
-                  ...gameInfo.dimensions,
-                  row: parseInt(e.currentTarget.value),
-                } as Dimensions)
-            )
+            gameInfo.updateDimensions('rows', parseInt(e.currentTarget.value))
           }
         />
       </div>
@@ -64,27 +51,15 @@ const BoardSetup = observer(() => {
             type='number'
             defaultValue={gameInfo.dimensions.cols}
             onBlur={(e) =>
-              runInAction(
-                () =>
-                  (gameInfo.dimensions = {
-                    ...gameInfo.dimensions,
-                    row: parseInt(e.currentTarget.value),
-                  } as Dimensions)
-              )
+              gameInfo.updateDimensions('cols', parseInt(e.currentTarget.value))
             }
           />
           <div className='Onboarding_board_x'>x</div>
           <input
             type='number'
-            defaultValue={gameInfo.dimensions.cols}
+            defaultValue={gameInfo.dimensions.rows}
             onBlur={(e) =>
-              runInAction(
-                () =>
-                  (gameInfo.dimensions = {
-                    ...gameInfo.dimensions,
-                    column: parseInt(e.currentTarget.value),
-                  } as Dimensions)
-              )
+              gameInfo.updateDimensions('rows', parseInt(e.currentTarget.value))
             }
           />
         </div>

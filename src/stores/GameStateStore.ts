@@ -1,4 +1,5 @@
 import { action, computed, makeObservable, observable } from 'mobx';
+import { initGameInfo } from 'models/gameInfo';
 import { GameOutcome, GameStep, initGameState } from 'models/gameState';
 import { cloneMatrix, Matrix } from 'models/matrix';
 
@@ -33,7 +34,7 @@ export class GameStateStore {
   }
 
   constructor(private store: GlobalStore) {
-    const data = initGameState(store.gameInfo);
+    const data = initGameState(initGameInfo());
     this.currentPlayer = data.currentPlayer;
     this.board = data.board;
     this.currentStep = data.currentStep;

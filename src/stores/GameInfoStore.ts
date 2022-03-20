@@ -1,6 +1,6 @@
 import { computed, makeObservable, observable } from 'mobx';
 import { Dimensions } from 'models/dimensions';
-import { GameInfo, initGameInfo } from 'models/gameInfo';
+import { initGameInfo } from 'models/gameInfo';
 import { Player } from 'models/player';
 
 import { GlobalStore } from './GlobalStore';
@@ -20,15 +20,21 @@ export class GameInfoStore {
   winNumber: number;
 
   constructor(private store: GlobalStore) {
-    this.updateFromJson(initGameInfo());
-    makeObservable(this);
-  }
-
-  private updateFromJson = (data: GameInfo) => {
+    const data = initGameInfo();
     this.playerOneName = data.playerOneName;
     this.playerTwoName = data.playerTwoName;
     this.dimensions = data.dimensions;
     this.winNumber = data.winNumber;
+    makeObservable(this);
+  }
+
+  updateDimensions = (key: keyof Dimensions, value: number) => {
+    const oldDimensions = this.dimensions;
+
+    this.dimensions = {
+      ...oldDimensions,
+      [key]: value,
+    };
   };
 
   getPlayerName = (player: Player) =>
