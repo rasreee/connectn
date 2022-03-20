@@ -2,6 +2,7 @@ import { observer } from 'mobx-react-lite';
 import { useEffect, useState } from 'react';
 import { useGameInfo } from 'stores/hooks';
 
+import styles from './Board.module.css';
 export interface BoardPieceProps {
   color: string;
   column: number;
@@ -40,6 +41,9 @@ export const BoardPiece = observer(function BoardPiece(props: BoardPieceProps) {
   }, [isDropped]);
 
   return (
-    <div className='Board-Piece' style={isDropped ? droppedStyle : baseStyle} />
+    <div
+      className={styles.board_piece}
+      style={isDropped ? droppedStyle : baseStyle}
+    />
   );
 });

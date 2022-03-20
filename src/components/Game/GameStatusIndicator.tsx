@@ -1,6 +1,8 @@
+import { Circle } from 'components/Circle';
 import { computed } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { GameOutcome } from 'models/gameState';
+import { getPlayerColor } from 'models/player';
 import { useGameInfo, useGameState } from 'stores/hooks';
 
 import styles from './GameStatusIndicator.module.css';
@@ -26,7 +28,7 @@ export const GameStatusIndicator = observer(function GameStatusIndicator() {
 
   return (
     <div className={styles.container}>
-      <div className={styles.circle} />
+      <Circle color={getPlayerColor(gameState.currentPlayer)} />
       <span className={styles.text}>{text}</span>
     </div>
   );

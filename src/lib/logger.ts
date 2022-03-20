@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 const initLogger = () => ({
   info: console.log,
 });
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 // eslint-disable-next-line @typescript-eslint/no-empty-function
-const noop = (..._: any[]) => {};
+const noop = (...args: any[]) => {};
 
 const initMutedLogger = () => ({ info: noop });
 

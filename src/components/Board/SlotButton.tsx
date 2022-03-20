@@ -3,6 +3,8 @@ import { observer } from 'mobx-react-lite';
 import { Player } from 'models/player';
 import { useGameState } from 'stores/hooks';
 
+import styles from './Board.module.css';
+
 export interface SlotButtonProps {
   column: number;
   row: number;
@@ -18,7 +20,7 @@ export const SlotButton = observer(function SlotButton({
 
   return (
     <button
-      className='Board-Slot'
+      className={styles.board_slot}
       disabled={isDisabled}
       onClick={handleClick}
     />

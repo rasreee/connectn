@@ -1,20 +1,13 @@
-import './Game.css';
-
 import { Board } from 'components/Board';
-import { Logo } from 'components/Logo';
-import { observer } from 'mobx-react-lite';
-import { useGameInfo } from 'stores/hooks';
 
-import { GameTopBar } from './GameTopBar';
+import { ControlPanel } from './ControlPanel';
+import styles from './Game.module.css';
 
-export const Game = observer(function Game() {
-  const gameInfo = useGameInfo();
-
+export const Game = function Game() {
   return (
-    <div className='Game'>
-      <Logo winNumber={gameInfo.winNumber} />
-      <GameTopBar />
+    <div className={styles.container}>
+      <ControlPanel />
       <Board />
     </div>
   );
-});
+};

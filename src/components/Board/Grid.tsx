@@ -1,5 +1,6 @@
 import times from 'lodash.times';
 
+import styles from './Board.module.css';
 import { SlotButton } from './SlotButton';
 
 export const GridBackdrop = function GridBackdrop({
@@ -13,7 +14,7 @@ export const GridBackdrop = function GridBackdrop({
     <>
       {/* Grid backdrop */}
       {times(rows, (row) => (
-        <div key={`row-${row}`} className='Board-Row'>
+        <div key={`row-${row}`}>
           <GridRow row={row} cols={cols} />
         </div>
       ))}
@@ -29,10 +30,10 @@ export const GridRow = function GridRow({
   cols: number;
 }) {
   return (
-    <>
+    <div className={styles.gridRow}>
       {times(cols, (column) => (
         <SlotButton key={`slot-${column}-${row}`} column={column} row={row} />
       ))}
-    </>
+    </div>
   );
 };

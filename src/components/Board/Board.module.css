@@ -5,15 +5,16 @@
     * - although this doesn't affect the functionality of the game, this section is as important as the others.
     */
 
-.Board {
+.container {
   display: flex;
   flex-direction: column;
   position: relative;
-  margin-top: 20px;
-  border: 1px solid #000;
+  border-radius: var(--rounded-lg);
+  border: 2px solid var(--color-classic-blue);
+  background: var(--bg-surface);
 }
 
-.Board-Row {
+.gridRow {
   position: relative;
   z-index: 1;
   display: flex;
@@ -22,21 +23,21 @@
   border-bottom: 1px solid #000;
 }
 
-.Board-Row:last-of-type {
+.gridRow:last-of-type {
   border-bottom: none;
 }
 
-.Board-Slot {
+.board_slot {
   border-right: 1px solid #000;
   cursor: pointer;
   flex: 1;
 }
 
-.Board-Slot:last-of-type {
+.board_slot:last-of-type {
   border-right: none;
 }
 
-.Board-Piece {
+.board_piece {
   position: absolute;
   background-color: currentColor;
   pointer-events: none;

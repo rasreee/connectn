@@ -62,3 +62,12 @@
   --rounded-3xl: 1.5rem;
   --rounded-full: 9999px;
 }
+
+/*
+  Theme
+*/
+:root {
+  --bg-app: var(--color-gray-100);
+  --bg-surface: var(--color-white);
+  --color-primary: var(--color-indigo-500);
+}

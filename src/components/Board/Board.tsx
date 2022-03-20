@@ -1,9 +1,8 @@
-import './Board.css';
-
 import { observer } from 'mobx-react-lite';
 import { getPlayerColor, Player } from 'models/player';
 import { useGameInfo, useGameState } from 'stores/hooks';
 
+import styles from './Board.module.css';
 import { BoardPiece } from './BoardPiece';
 import { GridBackdrop } from './Grid';
 
@@ -40,7 +39,7 @@ export const Board = observer(function Board() {
 
   return (
     <div
-      className='Board'
+      className={styles.container}
       style={{
         width: cols * 50,
         height: cols * 50,
