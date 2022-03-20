@@ -1,9 +1,11 @@
+import './GameTopBar.css';
+
 import { computed } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import { GameOutcome } from 'stores/GameStateStore';
+import { GameOutcome } from 'models/gameState';
 import { useGameInfo, useGameState } from 'stores/hooks';
 
-export const BoardInfo = observer(() => {
+export const GameStatus = observer(function GameStatus() {
   const gameInfo = useGameInfo();
   const gameState = useGameState();
 
@@ -23,8 +25,18 @@ export const BoardInfo = observer(() => {
   }).get();
 
   return (
-    <div>
-      <div>{text}</div>
+    <div className='GameStatus'>
+      <div className='text'>{text}</div>
+    </div>
+  );
+});
+
+export const GameTopBar = observer(() => {
+  const gameState = useGameState();
+
+  return (
+    <div className='GameTopBar'>
+      <GameStatus />
       {gameState.winner && <button onClick={gameState.reset}>New Game</button>}
     </div>
   );

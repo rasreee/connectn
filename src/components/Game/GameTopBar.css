@@ -1,0 +1,15 @@
+.GameTopBar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.GameStatus {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.GameStatus > .text {
+  font-size: var(--cw-text-base);
+}

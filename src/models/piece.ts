@@ -12,7 +12,7 @@ export class Piece implements PieceData {
   row: number;
   player: Player;
 
-  constructor(column: number, row: number, player = Player.PlayerOne) {
+  constructor(column: number, row: number, player: Player = Player.None) {
     this.column = column;
     this.row = row;
     this.player = player;

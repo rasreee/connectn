@@ -1,35 +1,11 @@
 import './Board.css';
 
-import times from 'lodash.times';
 import { observer } from 'mobx-react-lite';
-import { getPlayerColor } from 'models/player';
+import { getPlayerColor, Player } from 'models/player';
 import { useGameInfo, useGameState } from 'stores/hooks';
 
-import { BoardInfo } from './BoardInfo';
 import { BoardPiece } from './BoardPiece';
-import { SlotButton } from './SlotButton';
-
-export const Board = observer(function Board() {
-  const gameInfo = useGameInfo();
-
-  const { cols, rows } = gameInfo.dimensions;
-
-  return (
-    <>
-      <BoardInfo />
-      <div
-        className='Board'
-        style={{
-          width: cols * 50,
-          height: cols * 50,
-        }}
-      >
-        <PiecesOverlay />
-        <GridBackdrop cols={cols} rows={rows} />
-      </div>
-    </>
-  );
-});
+import { GridBackdrop } from './Grid';
 
 export const PiecesOverlay = observer(function BoardGrid() {
   const gameState = useGameState();
@@ -40,49 +16,38 @@ export const PiecesOverlay = observer(function BoardGrid() {
        * - how do utilize the provided board piece component to visualize the game state?
        */}
       {/* Pieces overlay */}
-      {gameState.board.map((piece, i) => (
-        <BoardPiece
-          key={i}
-          column={piece.column}
-          row={piece.row}
-          color={getPlayerColor(piece.player)}
-        />
-      ))}
+      {gameState.board.map((column, columnIndex) =>
+        column.map(
+          (value, rowIndex) =>
+            value !== Player.None && (
+              <BoardPiece
+                key={`col${columnIndex}-row${rowIndex}`}
+                column={columnIndex}
+                row={columnIndex}
+                color={getPlayerColor(value)}
+              />
+            )
+        )
+      )}
     </>
   );
 });
 
-export const GridBackdrop = function GridBackdrop({
-  rows,
-  cols,
-}: {
-  rows: number;
-  cols: number;
-}) {
-  return (
-    <>
-      {/* Grid backdrop */}
-      {times(rows, (row) => (
-        <div key={`row-${row}`} className='Board-Row'>
-          <GridRow row={row} cols={cols} />
-        </div>
-      ))}
-    </>
-  );
-};
+export const Board = observer(function Board() {
+  const gameInfo = useGameInfo();
 
-export const GridRow = function GridRow({
-  row,
-  cols,
-}: {
-  row: number;
-  cols: number;
-}) {
+  const { cols, rows } = gameInfo.dimensions;
+
   return (
-    <>
-      {times(cols, (column) => (
-        <SlotButton key={`slot-${column}-${row}`} column={column} row={row} />
-      ))}
-    </>
+    <div
+      className='Board'
+      style={{
+        width: cols * 50,
+        height: cols * 50,
+      }}
+    >
+      <PiecesOverlay />
+      <GridBackdrop cols={cols} rows={rows} />
+    </div>
   );
-};
+});

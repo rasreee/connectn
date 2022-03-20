@@ -1,4 +1,5 @@
-import { Piece } from './piece';
+import { GameInfo } from './gameInfo';
+import { initMatrix } from './matrix';
 import { Player } from './player';
 
 export enum GameStep {
@@ -7,11 +8,17 @@ export enum GameStep {
   Complete = 'Complete',
 }
 
-export interface GameStateModel {
+export enum GameOutcome {
+  Win,
+  Draw,
+  None,
+}
+
+export interface GameState {
   // name of current player to place a piece
   currentPlayer: Player;
-  // list of pieces currently placed
-  board: Piece[];
+  // 2d matrix to represent the board/grid
+  board: number[][];
   // next player to go
   nextPlayer: Player;
   // step in the flow
@@ -20,11 +27,13 @@ export interface GameStateModel {
   winner: Player;
 }
 
-export function initGameState(): GameStateModel {
+export function initGameState(gameInfo: GameInfo): GameState {
+  const { cols, rows } = gameInfo.dimensions;
+
   return {
     currentPlayer: Player.None,
     nextPlayer: Player.None,
-    board: [],
+    board: initMatrix(cols, rows, Player.None),
     currentStep: GameStep.Onboarding,
     winner: Player.None,
   };

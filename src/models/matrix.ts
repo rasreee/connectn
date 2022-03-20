@@ -1,28 +1,27 @@
 import times from 'lodash.times';
 
-import { Dimensions } from './dimensions';
+export type Matrix<Data extends any = any> = Data[][];
 
-export type Matrix<Data = any> = Data[][];
-
-export type CreateItem<D = any, Model = any> = (
-  column: number,
-  row: number,
-  value: D | null
-) => Model;
-
-function createColumn<D = any, Model = any>(
-  column: number,
-  rowCount: number,
-  createItem: CreateItem<D, Model>
-) {
-  return times(rowCount, (row) => createItem(column, row, null));
+function createColumn<Data>(rowCount: number, initialData: Data) {
+  return times(rowCount, () => initialData);
 }
 
-export function createMatrix<D = any, Model = any>(
-  dimensions: Dimensions,
-  createItem: CreateItem<D, Model>
-): Model[] {
-  return times(dimensions.cols, (col) =>
-    createColumn<D, Model>(col, dimensions.rows, createItem)
-  ).flat();
+export function initMatrix<Data extends any = any>(
+  cols: number,
+  rows: number,
+  initialData: Data
+): Matrix<Data> {
+  return times(cols, () => createColumn<Data>(rows, initialData));
+}
+
+export function cloneMatrix(initialMatrix: Matrix): Matrix {
+  const columnCount = initialMatrix.length;
+
+  const matrix: Matrix = [];
+
+  for (let column = 0; column < columnCount; column += 1) {
+    matrix[column] = [...initialMatrix[column]];
+  }
+
+  return matrix;
 }
