@@ -1,4 +1,4 @@
-import { useStore } from 'lib/mobx/store-context';
+import { useStore } from 'lib/mobx/StoreContext';
 
 import { GlobalStore } from './GlobalStore';
 

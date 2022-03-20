@@ -1,4 +1,4 @@
-import { StoreProvider } from 'lib/mobx/store-context';
+import { StoreProvider } from 'lib/mobx/StoreContext';
 import { useState } from 'react';
 import { GlobalStore } from 'stores/GlobalStore';
 
