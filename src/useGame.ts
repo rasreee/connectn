@@ -13,11 +13,11 @@ export function useGame() {
   const outcome = useMemo(() => computeOutcome({ info, state }), [info, state]);
 
   // returns to blank state
-  function resetGame() {
+  const resetGame = () => {
     setStep(GameStep.Onboarding);
     setInfo(initializeGameInfo());
     setState(initializeGameState(info));
-  }
+  };
 
   return { ...context, outcome, resetGame };
 }

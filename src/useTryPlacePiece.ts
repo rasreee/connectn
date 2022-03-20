@@ -17,7 +17,7 @@ export function useTryPlacePiece() {
       (piece) => piece.slot.column === column
     ).length;
 
-    if (nextRow === info.rowCount - 1) return;
+    if (nextRow === info.dimensions.cols - 1) return;
 
     const newPiece: Piece = {
       slot: { column, row: nextRow },

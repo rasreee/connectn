@@ -44,7 +44,7 @@ export const computeOutcome = ({
 
   if (
     playerOnePieces.length + playerTwoPieces.length ===
-    info.columnCount * info.rowCount
+    info.dimensions.cols * info.dimensions.cols
   ) {
     outcome = { type: OutcomeType.Draw };
   }

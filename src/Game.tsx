@@ -11,17 +11,17 @@ export const Game = () => {
 
   // TODO(1): game state
   // - what needs to happen to the game state if game info changes?
-  function updateGameInfo(fieldsToUpdate: Partial<GameInfo>) {
+  const updateGameInfo = (fieldsToUpdate: Partial<GameInfo>) => {
     setInfo({ ...info, ...fieldsToUpdate });
-  }
+  };
 
   // TODO(1): game state
   // - what needs to happen when the game is started?
-  function playGame() {
+  const playGame = () => {
     setStep(GameStep.Playing);
-  }
+  };
 
-  function renderOnboarding() {
+  const renderOnboarding = () => {
     return (
       <div className='Game_onboarding'>
         <Onboarding
@@ -32,15 +32,15 @@ export const Game = () => {
         />
       </div>
     );
-  }
+  };
 
-  function maybeRenderBoard() {
+  const maybeRenderBoard = () => {
     if (step === GameStep.Onboarding) {
       return null;
     }
 
     return <Board />;
-  }
+  };
 
   return (
     <div className='Game'>

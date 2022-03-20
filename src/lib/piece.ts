@@ -13,12 +13,6 @@ export function createPiece(
   return { playerName, slot: createSlot(...slot) };
 }
 
-export const getPieceColor = (piece: Piece, info: GameInfo) => {
-  const isPlayerOne = piece.playerName === info.playerOneName;
-
-  return isPlayerOne ? 'red' : 'green';
-};
-
 export const getAdjacentPieces = (target: Piece, list: Piece[]): Piece[] => {
   const relevantPieces = list.filter(
     (piece) =>
@@ -61,5 +55,6 @@ export const getLongestLine = (list: Piece[]): Piece[] => {
   });
 
   const longestLine = lines.sort((a, b) => a.length - b.length).at(0) ?? [];
+
   return longestLine;
 };

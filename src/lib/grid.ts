@@ -1,30 +1,8 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import times from 'lodash.times';
 
 import { Coords } from './coords';
+import { createMatrix, Matrix } from './matrix';
 import { Point } from './point';
-
-export type Matrix<Data> = Point<Data>[][];
-
-export type MatrixValues<Data> = (Data | null)[][];
-
-function initializeColumn(rowCount: number) {
-  return times(rowCount, (x) => {
-    return new Point(x, rowCount);
-  });
-}
-
-function initializeMatrix<Data>(
-  columnCount: number,
-  rowCount: number
-): Matrix<Data> {
-  return times(columnCount, (num) => {
-    return initializeColumn(rowCount).map((item) => {
-      item.y = num;
-      return item;
-    });
-  });
-}
 
 export class Grid<Data = any> {
   data: Matrix<Data>;
@@ -34,8 +12,7 @@ export class Grid<Data = any> {
   constructor(columnCount: number, rowCount: number) {
     this.columnCount = columnCount;
     this.rowCount = rowCount;
-    const data = initializeMatrix<Data>(columnCount, rowCount);
-    this.data = data;
+    this.data = createMatrix<Data>({ width: columnCount, height: rowCount });
   }
 
   get points(): Point<Data>[] {
@@ -68,7 +45,7 @@ export class Grid<Data = any> {
     this.points.find((point) => point.isAt([x, y]))!;
 
   clear = () => {
-    const data = initializeMatrix<Data>(this.columnCount, this.rowCount);
+    const data = createMatrix<Data>(this.columnCount, this.rowCount);
     this.data = data;
   };
 }

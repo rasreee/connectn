@@ -55,7 +55,7 @@ const BoardSetup = ({ gameInfo, updateGameInfo }: SetupProps) => {
         <div className='Onboarding_inputRow'>
           <input
             type='number'
-            defaultValue={gameInfo.columnCount}
+            defaultValue={gameInfo.dimensions.cols}
             onBlur={(e) =>
               updateGameInfo({
                 ...gameInfo,
@@ -66,7 +66,7 @@ const BoardSetup = ({ gameInfo, updateGameInfo }: SetupProps) => {
           <div className='Onbaording_board_x'>x</div>
           <input
             type='number'
-            defaultValue={gameInfo.rowCount}
+            defaultValue={gameInfo.dimensions.cols}
             onBlur={(e) =>
               updateGameInfo({
                 ...gameInfo,

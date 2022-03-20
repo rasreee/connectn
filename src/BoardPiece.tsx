@@ -22,14 +22,14 @@ export function BoardPiece(props: BoardPieceProps) {
   const baseStyle = {
     color,
     top: 0,
-    left: `${(column / gameInfo.columnCount) * 100}%`,
-    height: `${(1 / gameInfo.rowCount) * 100}%`,
-    width: `${(1 / gameInfo.columnCount) * 100}%`,
+    left: `${(column / gameInfo.dimensions.cols) * 100}%`,
+    height: `${(1 / gameInfo.dimensions.cols) * 100}%`,
+    width: `${(1 / gameInfo.dimensions.cols) * 100}%`,
   };
 
   const droppedStyle = {
     ...baseStyle,
-    top: `${100 - ((row + 1) / gameInfo.rowCount) * 100}%`,
+    top: `${100 - ((row + 1) / gameInfo.dimensions.cols) * 100}%`,
   };
 
   // change the style chosen after it initially renders

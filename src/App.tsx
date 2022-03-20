@@ -9,9 +9,7 @@ import logo from './mark.png';
 export const App = () => {
   const [isInstructionsOpen, setIsInstructionsOpen] = useState(false);
 
-  function toggleInstructions() {
-    setIsInstructionsOpen((prev) => !prev);
-  }
+  const toggleInstructions = () => setIsInstructionsOpen((prev) => !prev);
 
   return (
     <div className='App'>

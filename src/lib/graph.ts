@@ -16,10 +16,6 @@ function getNextPoint(last: CoordObject, dir: Direction) {
 }
 
 export class Graph<Data> extends Grid<Data> {
-  constructor(columnCount: number, rowCount: number) {
-    super(columnCount, rowCount);
-  }
-
   isWithinBounds(coords: CoordObject): boolean {
     return (
       coords.x > 0 &&
