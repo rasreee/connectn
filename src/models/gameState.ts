@@ -31,8 +31,8 @@ export function initGameState(gameInfo: GameInfo): GameState {
   const { cols, rows } = gameInfo.dimensions;
 
   return {
-    currentPlayer: Player.None,
-    nextPlayer: Player.None,
+    currentPlayer: Player.PlayerOne,
+    nextPlayer: Player.PlayerTwo,
     board: initMatrix(cols, rows, Player.None),
     currentStep: GameStep.Onboarding,
     winner: Player.None,

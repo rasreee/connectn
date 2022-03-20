@@ -20,9 +20,18 @@ export class GameStateStore {
   @observable
   winner: Player;
 
+  constructor(private store: GlobalStore) {
+    const data = initGameState(initGameInfo());
+    this.currentPlayer = data.currentPlayer;
+    this.board = data.board;
+    this.currentStep = data.currentStep;
+    this.winner = data.winner;
+    makeObservable(this);
+  }
+
   @computed
   get outcome(): GameOutcome {
-    if (this.winner) return GameOutcome.Win;
+    if (this.winner !== Player.None) return GameOutcome.Win;
 
     const dimensions = this.store.gameInfo.dimensions;
     const { cols, rows } = dimensions;
@@ -31,15 +40,6 @@ export class GameStateStore {
     if (isDraw) return GameOutcome.Draw;
 
     return GameOutcome.None;
-  }
-
-  constructor(private store: GlobalStore) {
-    const data = initGameState(initGameInfo());
-    this.currentPlayer = data.currentPlayer;
-    this.board = data.board;
-    this.currentStep = data.currentStep;
-    this.winner = data.winner;
-    makeObservable(this);
   }
 
   @action

@@ -5,7 +5,7 @@ import { observer } from 'mobx-react-lite';
 import { GameOutcome } from 'models/gameState';
 import { useGameInfo, useGameState } from 'stores/hooks';
 
-export const GameStatus = observer(function GameStatus() {
+const StatusIndicator = observer(function StatusIndicator() {
   const gameInfo = useGameInfo();
   const gameState = useGameState();
 
@@ -25,7 +25,7 @@ export const GameStatus = observer(function GameStatus() {
   }).get();
 
   return (
-    <div className='GameStatus'>
+    <div className='StatusIndicator'>
       <div className='text'>{text}</div>
     </div>
   );
@@ -36,7 +36,7 @@ export const GameTopBar = observer(() => {
 
   return (
     <div className='GameTopBar'>
-      <GameStatus />
+      <StatusIndicator />
       {gameState.winner && <button onClick={gameState.reset}>New Game</button>}
     </div>
   );
