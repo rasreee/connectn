@@ -2,18 +2,3 @@
   text-align: center;
   background: var(--bg-app);
 }
-
-.Instructions {
-  display: flex;
-  justify-content: center;
-}
-
-.Instructions-container {
-  width: 500px;
-  text-align: left;
-}
-
-.App-instructions {
-  color: darkblue;
-  cursor: pointer;
-}
