@@ -71,23 +71,20 @@ export const SlotButton = observer(({ column, row }: SlotButtonProps) => {
   const gameState = useGameState();
   const gameInfo = useGameInfo();
 
-  const getIsSlotDisabled = (slot: Slot) =>
-    computed(
-      () =>
-        Boolean(gameState.winner) ||
-        slotUtils.isTaken(
-          slotUtils.normalize(
-            slot,
-            gameInfo.dimensions.cols
-          ) /* todo shouldn't have to pass in width */,
-          gameState.board
-        )
-    ).get();
+  const isDisabled =
+    Boolean(gameState.winner) ||
+    slotUtils.isTaken(
+      slotUtils.normalize(
+        { column, row },
+        gameInfo.dimensions.cols
+      ) /* todo shouldn't have to pass in width */,
+      gameState.board
+    );
 
   return (
     <button
       className='Board-Slot'
-      disabled={getIsSlotDisabled({ column, row })}
+      disabled={isDisabled}
       onClick={() => gameState.placePiece({ column })}
     />
   );
