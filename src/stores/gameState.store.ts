@@ -29,7 +29,7 @@ export class GameStateStore {
     makeAutoObservable(this, {}, { name: 'GameStateStore' });
   }
 
-  updateFromJson = (data: GameStateModel) => {
+  private updateFromJson = (data: GameStateModel) => {
     this.currentPlayer = data.currentPlayer;
     this.nextPlayer = data.nextPlayer;
     this.board = data.board;
