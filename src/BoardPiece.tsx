@@ -13,7 +13,7 @@ export interface BoardPieceProps {
 // - how would gravity affect a still-dropped piece?
 // - how does the distance dropped affect the time it takes to land?
 // - there is some boiler plate here to help, but feel free to go with a different approach if you are more comfortable
-export const BoardPiece = observer((props: BoardPieceProps) => {
+export const BoardPiece = observer(function BoardPiece(props: BoardPieceProps) {
   const { color, column, row } = props;
   const gameInfo = useGameInfo();
 

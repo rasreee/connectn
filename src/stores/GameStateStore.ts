@@ -50,19 +50,20 @@ export class GameStateStore {
 
   placePiece = ({ column: columnIndex }: { column: number }) => {
     const currentPlayer = this.currentPlayer;
-    const cols = this.store.gameInfo.dimensions.cols;
+    const rows = this.store.gameInfo.dimensions.rows;
+
     const board = this.board;
 
     let nextRow = 0;
     while (
-      nextRow < cols &&
+      nextRow < rows &&
       board.find(
         (item) => item.column === columnIndex && item.row === nextRow
       ) !== null
     ) {
       nextRow += 1;
     }
-    if (nextRow >= cols) return;
+    if (nextRow >= rows) return;
 
     this.board = [...board, new Piece(columnIndex, nextRow, currentPlayer)];
     this.currentPlayer =

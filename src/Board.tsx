@@ -2,22 +2,15 @@ import './Board.css';
 
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import { Piece } from 'models/piece';
 import { Player } from 'models/player';
 import { useGameInfo, useGameState } from 'stores/hooks';
 
 import { BoardInfo } from './BoardInfo';
 import { BoardPiece } from './BoardPiece';
 
-export const Board = observer(() => {
+export const Board = observer(function Board() {
   const gameState = useGameState();
   const gameInfo = useGameInfo();
-
-  const getPieceColor = (piece: Piece) => {
-    const isPlayerOne = piece.player === Player.PlayerOne;
-
-    return isPlayerOne ? 'red' : 'black';
-  };
 
   return (
     <>
@@ -34,17 +27,14 @@ export const Board = observer(() => {
         {/** TODO(2): placing game pieces
          * - how do utilize the provided board piece component to visualize the game state?
          */}
-        {gameState.board.map(
-          (piece, i) =>
-            piece && (
-              <BoardPiece
-                key={i}
-                column={piece.column}
-                row={piece.row}
-                color={getPieceColor(piece)}
-              />
-            )
-        )}
+        {gameState.board.map((piece, i) => (
+          <BoardPiece
+            key={i}
+            column={piece.column}
+            row={piece.row}
+            color={piece.player === Player.PlayerOne ? 'red' : 'black'}
+          />
+        ))}
         {Array.from(Array(gameInfo.dimensions.rows), (_, row) => (
           <div key={`row-${row}`} className='Board-Row'>
             {Array.from(Array(gameInfo.dimensions.cols), (_, column) => (
@@ -73,13 +63,7 @@ export const SlotButton = observer(function SlotButton({
   const gameState = useGameState();
   const gameInfo = useGameInfo();
 
-  const isDisabled =
-    gameState.winner !== Player.None ||
-    gameState.board.some((piece) => {
-      const row = gameInfo.dimensions.rows - rowIndex - 1;
-      return piece.column === column && piece.row === row;
-    }); /* todo shouldn't have to pass in width */
-
+  const isDisabled = gameState.winner !== Player.None;
   const handleClick = () => runInAction(() => gameState.placePiece({ column }));
 
   return (
