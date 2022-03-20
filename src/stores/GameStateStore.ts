@@ -10,8 +10,6 @@ export class GameStateStore {
   currentPlayer: Player;
   // list of pieces currently placed
   board: Piece[];
-  // next player to go
-  nextPlayer: Player;
   // step in the flow
   currentStep: GameStep;
   // winner if any
@@ -24,7 +22,6 @@ export class GameStateStore {
 
   updateFromJson = (data: GameStateModel) => {
     this.currentPlayer = data.currentPlayer;
-    this.nextPlayer = data.nextPlayer;
     this.board = data.board;
     this.currentStep = data.currentStep;
     this.winner = data.winner;
@@ -40,7 +37,6 @@ export class GameStateStore {
 
   reset = () => {
     this.currentPlayer = Player.None;
-    this.nextPlayer = Player.None;
     this.board = [];
     this.currentStep = GameStep.Onboarding;
     this.winner = Player.None;
@@ -49,18 +45,15 @@ export class GameStateStore {
   play = () => {
     this.reset();
     this.currentPlayer = Player.PlayerOne;
-    this.nextPlayer = Player.PlayerTwo;
     this.currentStep = GameStep.Playing;
   };
 
   placePiece = ({ column: columnIndex }: { column: number }) => {
     const currentPlayer = this.currentPlayer;
     const cols = this.store.gameInfo.dimensions.cols;
-
     const board = this.board;
 
     let nextRow = 0;
-
     while (
       nextRow < cols &&
       board.find(
@@ -69,8 +62,10 @@ export class GameStateStore {
     ) {
       nextRow += 1;
     }
-    if (nextRow >= cols - 1) return;
+    if (nextRow >= cols) return;
 
     this.board = [...board, new Piece(columnIndex, nextRow, currentPlayer)];
+    this.currentPlayer =
+      currentPlayer === Player.PlayerOne ? Player.PlayerTwo : Player.PlayerOne;
   };
 }
