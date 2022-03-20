@@ -9,20 +9,16 @@ import { useGameInfo, useGameState } from 'stores/hooks';
 
 import { BoardInfo } from './BoardInfo';
 import { BoardPiece } from './BoardPiece';
-import { GameInfo } from './models/gameInfo';
-
-const getPlayerName = (player: Player, info: GameInfo) =>
-  player === Player.PlayerOne ? info.playerOneName : info.playerTwoName;
-
-const getPieceColor = (piece: Piece, info: GameInfo) => {
-  const isPlayerOne = getPlayerName(piece.player, info) === info.playerOneName;
-
-  return isPlayerOne ? 'red' : 'black';
-};
 
 export const Board = observer(() => {
   const gameState = useGameState();
   const gameInfo = useGameInfo();
+
+  const getPieceColor = (piece: Piece) => {
+    const isPlayerOne = piece.player === Player.PlayerOne;
+
+    return isPlayerOne ? 'red' : 'black';
+  };
 
   const getIsSlotDisabled = (slot: Slot) =>
     computed(
@@ -61,7 +57,7 @@ export const Board = observer(() => {
                   key={i}
                   column={piece.column}
                   row={piece.row}
-                  color={getPieceColor(piece, gameInfo)}
+                  color={getPieceColor(piece)}
                 />
               )
           )}

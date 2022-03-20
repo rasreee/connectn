@@ -3,7 +3,6 @@ import './Game.css';
 import { toJS } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { GameStep } from 'models/gameState';
-import { GameInfoStore } from 'stores/GameInfoStore';
 import { useGameInfo, useGameState } from 'stores/hooks';
 
 import { Board } from './Board';
@@ -13,9 +12,7 @@ export const Game = observer(() => {
   const gameInfo = useGameInfo();
   const gameState = useGameState();
 
-  const stringify = (
-    value: GameInfoStore[keyof GameInfoStore]
-  ): string | number => {
+  const stringify = (value: any): string | number => {
     if (typeof value === 'string' || typeof value === 'number') return value;
 
     return `(${value.cols},${value.rows})`;

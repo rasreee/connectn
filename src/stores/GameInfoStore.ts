@@ -1,6 +1,7 @@
-import { makeAutoObservable, observable } from 'mobx';
+import { computed, makeAutoObservable, observable } from 'mobx';
 import { Dimensions } from 'models/dimensions';
 import { GameInfo, initGameInfo } from 'models/gameInfo';
+import { Player } from 'models/player';
 
 import { RootStore } from './RootStore';
 
@@ -29,4 +30,9 @@ export class GameInfoStore {
     this.dimensions = data.dimensions;
     this.winNumber = data.winNumber;
   };
+
+  getPlayerName = (player: Player) =>
+    computed(() =>
+      player !== Player.PlayerOne ? this.playerTwoName : this.playerOneName
+    ).get();
 }
