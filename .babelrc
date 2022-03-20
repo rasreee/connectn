@@ -7,5 +7,14 @@
     }],
     "@babel/preset-typescript",
     "@babel/preset-react"
+  ],
+  "plugins": [
+    [
+      "@babel/plugin-proposal-decorators",
+      {
+        "legacy": true
+      }
+    ],
+    "transform-class-properties"
   ]
 }
