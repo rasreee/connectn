@@ -2,7 +2,7 @@ import { action, computed, makeAutoObservable, observable } from 'mobx';
 import { GameStateModel, GameStep, initGameState } from 'models/gameState';
 import { Piece } from 'models/piece';
 
-import { createMatrix, Matrix } from '../models/matrix';
+import { createMatrix } from '../models/matrix';
 import { Player } from '../models/player';
 import { RootStore } from './RootStore';
 
@@ -12,7 +12,7 @@ export class GameStateStore {
   currentPlayer: Player;
   // list of pieces currently placed
   @observable
-  board: Matrix;
+  board: Piece[];
   // next player to go
   @observable
   nextPlayer: Player;
@@ -24,7 +24,7 @@ export class GameStateStore {
   winner: Player;
 
   constructor(private store: RootStore) {
-    this.updateFromJson(initGameState(store.gameInfo));
+    this.updateFromJson(initGameState());
     makeAutoObservable(this, {}, { name: 'GameStateStore' });
   }
 
@@ -50,7 +50,10 @@ export class GameStateStore {
   reset = () => {
     this.currentPlayer = Player.None;
     this.nextPlayer = Player.None;
-    this.board = createMatrix(this.store.gameInfo.dimensions, Piece);
+    this.board = createMatrix(
+      this.store.gameInfo.dimensions,
+      (col, row, player) => new Piece(col, row, player)
+    );
     this.currentStep = GameStep.Onboarding;
     this.winner = Player.None;
   };
@@ -65,20 +68,18 @@ export class GameStateStore {
 
   @action
   placePiece = ({ column: columnIndex }: { column: number }) => {
-    const boardColumn = this.board[columnIndex];
-
     let nextRow = 0;
 
-    while (boardColumn[nextRow] !== null) {
+    while (
+      this.board.find(
+        (item) => item.column === columnIndex && item.row === nextRow
+      ) !== null
+    ) {
       if (nextRow === this.store.gameInfo.dimensions.cols) return;
 
       nextRow += 1;
     }
 
-    this.board[columnIndex][nextRow] = {
-      column: columnIndex,
-      row: nextRow,
-      player: this.currentPlayer,
-    };
+    this.board.push(new Piece(columnIndex, nextRow, this.currentPlayer));
   };
 }

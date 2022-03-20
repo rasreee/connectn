@@ -1,6 +1,3 @@
-import { createMatrix, Matrix } from 'models/matrix';
-
-import { GameInfo } from './gameInfo';
 import { Piece } from './piece';
 import { Player } from './player';
 
@@ -14,7 +11,7 @@ export interface GameStateModel {
   // name of current player to place a piece
   currentPlayer: Player;
   // list of pieces currently placed
-  board: Matrix;
+  board: Piece[];
   // next player to go
   nextPlayer: Player;
   // step in the flow
@@ -23,11 +20,11 @@ export interface GameStateModel {
   winner: Player;
 }
 
-export function initGameState(gameInfo: GameInfo): GameStateModel {
+export function initGameState(): GameStateModel {
   return {
     currentPlayer: Player.None,
     nextPlayer: Player.None,
-    board: createMatrix(gameInfo.dimensions, Piece),
+    board: [],
     currentStep: GameStep.Onboarding,
     winner: Player.None,
   };
