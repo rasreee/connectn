@@ -1,58 +1,85 @@
-import { makeAutoObservable } from 'mobx';
+import { action, computed, makeAutoObservable, observable } from 'mobx';
 
 import { GameStep } from '../lib/gameStep';
-import { createMatrix } from '../lib/matrix';
+import { createMatrix, Matrix } from '../lib/matrix';
 import { Piece } from '../lib/piece';
 import { Player } from '../lib/types';
 import { GameStateModel, initGameState } from './gameState.model';
 import { RootStore } from './rootStore';
 
 export class GameStateStore {
-  model: GameStateModel;
+  // name of current player to place a piece
+  @observable
+  currentPlayer: Player;
+  // list of pieces currently placed
+  @observable
+  board: Matrix;
+  // next player to go
+  @observable
+  nextPlayer: Player;
+  // step in the flow
+  @observable
+  currentStep: GameStep;
+  // winner if any
+  @observable
+  winner: Player;
 
-  constructor(private root: RootStore) {
-    this.model = initGameState(root.gameInfo.model);
+  constructor(private store: RootStore) {
+    this.updateFromJson(initGameState(store.gameInfo));
     makeAutoObservable(this, {}, { name: 'GameStateStore' });
   }
 
+  updateFromJson = (data: GameStateModel) => {
+    this.currentPlayer = data.currentPlayer;
+    this.nextPlayer = data.nextPlayer;
+    this.board = data.board;
+    this.currentStep = data.currentStep;
+    this.winner = data.winner;
+  };
+
+  @computed
   get isDraw(): boolean {
     return false;
   }
 
+  @computed
   get isComplete(): boolean {
-    return this.isDraw || this.model.winner !== Player.None;
+    return this.isDraw || this.winner !== Player.None;
   }
 
+  @action
   reset = () => {
-    this.model.currentPlayer = Player.None;
-    this.model.nextPlayer = Player.None;
-    this.model.board = createMatrix(this.root.gameInfo.model.dimensions, Piece);
-    this.model.currentStep = GameStep.Onboarding;
-    this.model.winner = Player.None;
+    this.currentPlayer = Player.None;
+    this.nextPlayer = Player.None;
+    this.board = createMatrix(this.store.gameInfo.dimensions, Piece);
+    this.currentStep = GameStep.Onboarding;
+    this.winner = Player.None;
   };
 
+  @action
   play = () => {
     this.reset();
-    this.model.currentPlayer = Player.PlayerOne;
-    this.model.nextPlayer = Player.PlayerTwo;
-    this.model.currentStep = GameStep.Playing;
+    this.currentPlayer = Player.PlayerOne;
+    this.nextPlayer = Player.PlayerTwo;
+    this.currentStep = GameStep.Playing;
   };
 
+  @action
   placePiece = ({ column: columnIndex }: { column: number }) => {
-    const boardColumn = this.model.board[columnIndex];
+    const boardColumn = this.board[columnIndex];
 
     let nextRow = 0;
 
     while (boardColumn[nextRow] !== null) {
-      if (nextRow === this.root.gameInfo.model.dimensions.cols) return;
+      if (nextRow === this.store.gameInfo.dimensions.cols) return;
 
       nextRow += 1;
     }
 
-    this.model.board[columnIndex][nextRow] = {
+    this.board[columnIndex][nextRow] = {
       column: columnIndex,
       row: nextRow,
-      player: this.model.currentPlayer,
+      player: this.currentPlayer,
     };
   };
 }

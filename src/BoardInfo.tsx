@@ -9,15 +9,15 @@ export const BoardInfo = observer(() => {
 
   const getPlayerName = (playerIndex: number | undefined) =>
     // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    [gameInfo.model.playerOneName, gameInfo.model.playerTwoName][playerIndex!];
+    [gameInfo.playerOneName, gameInfo.playerTwoName][playerIndex!];
 
   const text = computed(() => {
-    if (gameState.model.winner !== Player.None)
-      return `${getPlayerName(gameState.model.winner)} is Winner!`;
+    if (gameState.winner !== Player.None)
+      return `${getPlayerName(gameState.winner)} is Winner!`;
 
     if (gameState.isDraw) return 'Draw';
 
-    return `${getPlayerName(gameState.model.currentPlayer)}'s turn`;
+    return `${getPlayerName(gameState.currentPlayer)}'s turn`;
   }).get();
 
   return (

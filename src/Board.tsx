@@ -24,20 +24,17 @@ export const Board = observer(() => {
   const gameInfo = useGameInfo();
 
   const getIsSlotDisabled = (slot: Slot) =>
-    Boolean(gameState.model.winner) ||
+    Boolean(gameState.winner) ||
     slotUtils.isTaken(
       slotUtils.normalize(
         slot,
-        gameInfo.model.dimensions.cols
+        gameInfo.dimensions.cols
       ) /* todo shouldn't have to pass in width */,
-      gameState.model.board.flat()
+      gameState.board.flat()
     );
 
   const renderSlotText = (slotIndices: Slot) => {
-    const slot = slotUtils.normalize(
-      slotIndices,
-      gameInfo.model.dimensions.rows
-    );
+    const slot = slotUtils.normalize(slotIndices, gameInfo.dimensions.rows);
 
     return `(${slot.column}, ${slot.row})`;
   };
@@ -50,14 +47,14 @@ export const Board = observer(() => {
       <div
         className='Board'
         style={{
-          width: gameInfo.model.dimensions.cols * 50,
-          height: gameInfo.model.dimensions.cols * 50,
+          width: gameInfo.dimensions.cols * 50,
+          height: gameInfo.dimensions.cols * 50,
         }}
       >
         {/** TODO(2): placing game pieces
          * - how do utilize the provided board piece component to visualize the game state?
          */}
-        {gameState.model.board
+        {gameState.board
           .flat()
           .map(
             (piece, i) =>
@@ -66,13 +63,13 @@ export const Board = observer(() => {
                   key={i}
                   column={piece.column}
                   row={piece.row}
-                  color={getPieceColor(piece, gameInfo.model)}
+                  color={getPieceColor(piece, gameInfo)}
                 />
               )
           )}
-        {Array.from(Array(gameInfo.model.dimensions.rows), (_, row) => (
+        {Array.from(Array(gameInfo.dimensions.rows), (_, row) => (
           <div key={`row-${row}`} className='Board-Row'>
-            {Array.from(Array(gameInfo.model.dimensions.cols), (_, column) => (
+            {Array.from(Array(gameInfo.dimensions.cols), (_, column) => (
               <button
                 key={`slot-${column}-${row}`}
                 className='Board-Slot'

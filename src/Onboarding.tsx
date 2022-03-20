@@ -23,12 +23,12 @@ const PlayerSetup = observer(() => {
       <div className='Onboarding_inputRow'>
         <input
           type='text'
-          defaultValue={gameInfo.model.playerOneName}
+          defaultValue={gameInfo.playerOneName}
           onBlur={(e) =>
             runInAction(
               () =>
-                (gameInfo.model.dimensions = {
-                  ...gameInfo.model.dimensions,
+                (gameInfo.dimensions = {
+                  ...gameInfo.dimensions,
                   column: parseInt(e.currentTarget.value),
                 } as Dimensions)
             )
@@ -36,12 +36,12 @@ const PlayerSetup = observer(() => {
         />
         <input
           type='text'
-          defaultValue={gameInfo.model.playerTwoName}
+          defaultValue={gameInfo.playerTwoName}
           onBlur={(e) =>
             runInAction(
               () =>
-                (gameInfo.model.dimensions = {
-                  ...gameInfo.model.dimensions,
+                (gameInfo.dimensions = {
+                  ...gameInfo.dimensions,
                   row: parseInt(e.currentTarget.value),
                 } as Dimensions)
             )
@@ -63,12 +63,12 @@ const BoardSetup = observer(() => {
         <div className='Onboarding_inputRow'>
           <input
             type='number'
-            defaultValue={gameInfo.model.dimensions.cols}
+            defaultValue={gameInfo.dimensions.cols}
             onBlur={(e) =>
               runInAction(
                 () =>
-                  (gameInfo.model.dimensions = {
-                    ...gameInfo.model.dimensions,
+                  (gameInfo.dimensions = {
+                    ...gameInfo.dimensions,
                     row: parseInt(e.currentTarget.value),
                   } as Dimensions)
               )
@@ -77,12 +77,12 @@ const BoardSetup = observer(() => {
           <div className='Onboarding_board_x'>x</div>
           <input
             type='number'
-            defaultValue={gameInfo.model.dimensions.cols}
+            defaultValue={gameInfo.dimensions.cols}
             onBlur={(e) =>
               runInAction(
                 () =>
-                  (gameInfo.model.dimensions = {
-                    ...gameInfo.model.dimensions,
+                  (gameInfo.dimensions = {
+                    ...gameInfo.dimensions,
                     column: parseInt(e.currentTarget.value),
                   } as Dimensions)
               )
@@ -94,10 +94,10 @@ const BoardSetup = observer(() => {
       <div className='Onboarding_inputRow'>
         <input
           type='number'
-          defaultValue={gameInfo.model.winNumber}
+          defaultValue={gameInfo.winNumber}
           onBlur={(e) =>
             runInAction(
-              () => (gameInfo.model.winNumber = parseInt(e.currentTarget.value))
+              () => (gameInfo.winNumber = parseInt(e.currentTarget.value))
             )
           }
         />

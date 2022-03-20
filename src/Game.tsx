@@ -1,5 +1,6 @@
 import './Game.css';
 
+import { toJS } from 'mobx';
 import { useGameInfo, useGameState } from 'stores/hooks';
 
 import { Board } from './Board';
@@ -19,7 +20,7 @@ export const Game = () => {
   };
 
   const maybeRenderBoard = () => {
-    if (gameState.model.currentStep === GameStep.Onboarding) {
+    if (gameState.currentStep === GameStep.Onboarding) {
       return null;
     }
 
@@ -28,7 +29,7 @@ export const Game = () => {
 
   return (
     <div className='Game'>
-      <h1>Let's Play Connect {gameInfo.model.winNumber}!</h1>
+      <h1>Let's Play Connect {gameInfo.winNumber}!</h1>
       {renderOnboarding()}
       {maybeRenderBoard()}
       <div className='Game_placeholder'>
@@ -41,16 +42,14 @@ export const Game = () => {
         <div className='Game_placeholder_debugger'>
           <label>Debugging Info (remove):</label>
           <div>
-            currentStep: <em>{gameState.model.currentStep}</em>
+            currentStep: <em>{gameState.currentStep}</em>
           </div>
-          {Object.keys(gameInfo.model).map((key) => {
+          {Object.keys(toJS(gameInfo)).map((key) => {
             return (
               <div key={key}>
                 gameInfo.{key}:{' '}
                 <em>
-                  {JSON.stringify(
-                    gameInfo.model[key as keyof typeof gameInfo.model]
-                  )}
+                  {JSON.stringify(gameInfo[key as keyof typeof gameInfo])}
                 </em>
               </div>
             );
