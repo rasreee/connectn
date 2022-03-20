@@ -12,7 +12,7 @@ configure({
   disableErrorBoundaries: false,
 });
 
-export class RootStore {
+export class GlobalStore {
   gameInfo = new GameInfoStore(this);
   gameState = new GameStateStore(this);
 }

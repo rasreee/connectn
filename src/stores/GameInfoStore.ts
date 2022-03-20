@@ -3,7 +3,7 @@ import { Dimensions } from 'models/dimensions';
 import { GameInfo, initGameInfo } from 'models/gameInfo';
 import { Player } from 'models/player';
 
-import { RootStore } from './RootStore';
+import { GlobalStore } from './GlobalStore';
 
 export class GameInfoStore {
   // name of one player
@@ -19,7 +19,7 @@ export class GameInfoStore {
   @observable
   winNumber: number;
 
-  constructor(private store: RootStore) {
+  constructor(private store: GlobalStore) {
     this.updateFromJson(initGameInfo());
     makeObservable(this);
   }

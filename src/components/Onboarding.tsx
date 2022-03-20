@@ -2,10 +2,9 @@ import './Onboarding.css';
 
 import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
+import { Dimensions } from 'models/dimensions';
 import { useEffect, useState } from 'react';
 import { useGameInfo, useGameState } from 'stores/hooks';
-
-import { Dimensions } from './models/dimensions';
 
 enum OnboardingStep {
   Players = 'Players',

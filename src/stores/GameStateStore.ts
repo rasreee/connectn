@@ -3,7 +3,7 @@ import { GameStateModel, GameStep, initGameState } from 'models/gameState';
 import { Piece } from 'models/piece';
 
 import { Player } from '../models/player';
-import { RootStore } from './RootStore';
+import { GlobalStore } from './GlobalStore';
 
 export enum GameOutcome {
   Win,
@@ -24,7 +24,7 @@ export class GameStateStore {
   @observable
   winner: Player;
 
-  constructor(private store: RootStore) {
+  constructor(private store: GlobalStore) {
     this.updateFromJson(initGameState());
     makeObservable(this);
   }

@@ -1,8 +1,8 @@
 import { useStore } from 'lib/mobx/store-context';
 
-import { RootStore } from './RootStore';
+import { GlobalStore } from './GlobalStore';
 
-const useRootStore = () => useStore<RootStore>();
+const useGlobalStore = () => useStore<GlobalStore>();
 
-export const useGameState = () => useRootStore().gameState;
-export const useGameInfo = () => useRootStore().gameInfo;
+export const useGameState = () => useGlobalStore().gameState;
+export const useGameInfo = () => useGlobalStore().gameInfo;

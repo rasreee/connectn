@@ -3,11 +3,11 @@ import './Board.css';
 import times from 'lodash.times';
 import { observer } from 'mobx-react-lite';
 import { getPlayerColor } from 'models/player';
-import { SlotButton } from 'SlotButton';
 import { useGameInfo, useGameState } from 'stores/hooks';
 
 import { BoardInfo } from './BoardInfo';
 import { BoardPiece } from './BoardPiece';
+import { SlotButton } from './SlotButton';
 
 export const Board = observer(function Board() {
   const gameInfo = useGameInfo();

@@ -1,14 +1,13 @@
 import './styles/index.css';
 
-import React from 'react';
 import ReactDOM from 'react-dom';
 
-import { App } from './App';
-import { RootStoreProvider } from './RootStoreProvider';
+import { App } from './components/App';
+import { GlobalStoreProvider } from './components/GlobalStoreProvider';
 
 ReactDOM.render(
-  <RootStoreProvider>
+  <GlobalStoreProvider>
     <App />
-  </RootStoreProvider>,
+  </GlobalStoreProvider>,
   document.getElementById('root')
 );
