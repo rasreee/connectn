@@ -1,10 +1,8 @@
 import './Board.css';
 
-import { computed } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { Piece } from 'models/piece';
 import { Player } from 'models/player';
-import { Slot, slotUtils } from 'models/slot';
 import { useGameInfo, useGameState } from 'stores/hooks';
 
 import { BoardInfo } from './BoardInfo';
@@ -72,20 +70,19 @@ export const SlotButton = observer(({ column, row }: SlotButtonProps) => {
   const gameInfo = useGameInfo();
 
   const isDisabled =
-    Boolean(gameState.winner) ||
-    slotUtils.isTaken(
-      slotUtils.normalize(
-        { column, row },
-        gameInfo.dimensions.cols
-      ) /* todo shouldn't have to pass in width */,
-      gameState.board
-    );
+    gameState.winner !== Player.None ||
+    gameState.board.some((piece) => {
+      const slot = { column, row: gameInfo.dimensions.rows - row - 1 };
+      return piece.isAt(slot);
+    }); /* todo shouldn't have to pass in width */
+
+  const handleClick = () => gameState.placePiece({ column });
 
   return (
     <button
       className='Board-Slot'
       disabled={isDisabled}
-      onClick={() => gameState.placePiece({ column })}
+      onClick={handleClick}
     />
   );
 });

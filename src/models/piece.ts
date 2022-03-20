@@ -36,7 +36,7 @@ export class Piece implements PieceData {
   isEqualTo = (point: Piece): boolean =>
     this.slot.row === point.slot.row && this.slot.column === point.slot.column;
 
-  isAt = (target: Piece): boolean => {
+  isAt = (target: Slot): boolean => {
     return this.column === target.column && this.row === target.row;
   };
 }

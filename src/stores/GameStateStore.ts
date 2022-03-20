@@ -1,4 +1,4 @@
-import { action, computed, makeAutoObservable, observable } from 'mobx';
+import { makeAutoObservable } from 'mobx';
 import { GameStateModel, GameStep, initGameState } from 'models/gameState';
 import { Piece } from 'models/piece';
 
@@ -7,19 +7,14 @@ import { RootStore } from './RootStore';
 
 export class GameStateStore {
   // name of current player to place a piece
-  @observable
   currentPlayer: Player;
   // list of pieces currently placed
-  @observable
   board: Piece[];
   // next player to go
-  @observable
   nextPlayer: Player;
   // step in the flow
-  @observable
   currentStep: GameStep;
   // winner if any
-  @observable
   winner: Player;
 
   constructor(private store: RootStore) {
@@ -27,7 +22,7 @@ export class GameStateStore {
     makeAutoObservable(this, {}, { name: 'GameStateStore' });
   }
 
-  private updateFromJson = (data: GameStateModel) => {
+  updateFromJson = (data: GameStateModel) => {
     this.currentPlayer = data.currentPlayer;
     this.nextPlayer = data.nextPlayer;
     this.board = data.board;
@@ -35,17 +30,14 @@ export class GameStateStore {
     this.winner = data.winner;
   };
 
-  @computed
   get isDraw(): boolean {
     return false;
   }
 
-  @computed
   get isComplete(): boolean {
     return this.isDraw || this.winner !== Player.None;
   }
 
-  @action
   reset = () => {
     this.currentPlayer = Player.None;
     this.nextPlayer = Player.None;
@@ -54,7 +46,6 @@ export class GameStateStore {
     this.winner = Player.None;
   };
 
-  @action
   play = () => {
     this.reset();
     this.currentPlayer = Player.PlayerOne;
@@ -62,20 +53,24 @@ export class GameStateStore {
     this.currentStep = GameStep.Playing;
   };
 
-  @action
   placePiece = ({ column: columnIndex }: { column: number }) => {
+    const currentPlayer = this.currentPlayer;
+    const board = [...this.board];
+
     let nextRow = 0;
 
     while (
-      this.board.find(
+      board.find(
         (item) => item.column === columnIndex && item.row === nextRow
       ) !== null
     ) {
-      if (nextRow === this.store.gameInfo.dimensions.cols) return;
+      if (nextRow === this.store.gameInfo.dimensions.cols - 1) return;
 
       nextRow += 1;
     }
 
-    this.board.push(new Piece(columnIndex, nextRow, this.currentPlayer));
+    board.push(new Piece(columnIndex, nextRow, currentPlayer));
+
+    this.board = board;
   };
 }
