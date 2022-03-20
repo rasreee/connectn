@@ -1,5 +1,6 @@
 import './Board.css';
 
+import { computed } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { Piece } from 'models/piece';
 import { Player } from 'models/player';
@@ -24,20 +25,17 @@ export const Board = observer(() => {
   const gameInfo = useGameInfo();
 
   const getIsSlotDisabled = (slot: Slot) =>
-    Boolean(gameState.winner) ||
-    slotUtils.isTaken(
-      slotUtils.normalize(
-        slot,
-        gameInfo.dimensions.cols
-      ) /* todo shouldn't have to pass in width */,
-      gameState.board.flat()
-    );
-
-  const renderSlotText = (slotIndices: Slot) => {
-    const slot = slotUtils.normalize(slotIndices, gameInfo.dimensions.rows);
-
-    return `(${slot.column}, ${slot.row})`;
-  };
+    computed(
+      () =>
+        Boolean(gameState.winner) ||
+        slotUtils.isTaken(
+          slotUtils.normalize(
+            slot,
+            gameInfo.dimensions.cols
+          ) /* todo shouldn't have to pass in width */,
+          gameState.board.flat()
+        )
+    ).get();
 
   return (
     <>
@@ -75,9 +73,7 @@ export const Board = observer(() => {
                 className='Board-Slot'
                 disabled={getIsSlotDisabled({ column, row })}
                 onClick={() => gameState.placePiece({ column })}
-              >
-                {renderSlotText({ column, row })}
-              </button>
+              />
             ))}
           </div>
         ))}

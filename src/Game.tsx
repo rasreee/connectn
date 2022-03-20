@@ -13,22 +13,6 @@ export const Game = observer(() => {
   const gameInfo = useGameInfo();
   const gameState = useGameState();
 
-  const renderOnboarding = () => {
-    return (
-      <div className='Game_onboarding'>
-        <Onboarding />
-      </div>
-    );
-  };
-
-  const maybeRenderBoard = () => {
-    if (gameState.currentStep === GameStep.Onboarding) {
-      return null;
-    }
-
-    return <Board />;
-  };
-
   const stringify = (
     value: GameInfoStore[keyof GameInfoStore]
   ): string | number => {
@@ -40,8 +24,10 @@ export const Game = observer(() => {
   return (
     <div className='Game'>
       <h1>Let's Play Connect {gameInfo.winNumber}!</h1>
-      {renderOnboarding()}
-      {maybeRenderBoard()}
+      <div className='Game_onboarding'>
+        <Onboarding />
+      </div>
+      {gameState.currentStep === GameStep.Onboarding && <Board />}
       <div className='Game_placeholder'>
         <div className='Game_placeholder_top'>
           <p>
