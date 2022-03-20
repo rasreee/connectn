@@ -1,6 +1,7 @@
 import './Game.css';
 
 import { toJS } from 'mobx';
+import { observer } from 'mobx-react-lite';
 import { GameStep } from 'models/gameState';
 import { GameInfoStore } from 'stores/GameInfoStore';
 import { useGameInfo, useGameState } from 'stores/hooks';
@@ -8,7 +9,7 @@ import { useGameInfo, useGameState } from 'stores/hooks';
 import { Board } from './Board';
 import { Onboarding } from './Onboarding';
 
-export const Game = () => {
+export const Game = observer(() => {
   const gameInfo = useGameInfo();
   const gameState = useGameState();
 
@@ -65,4 +66,4 @@ export const Game = () => {
       </div>
     </div>
   );
-};
+});
