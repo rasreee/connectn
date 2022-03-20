@@ -12,21 +12,20 @@ import { SlotButton } from './SlotButton';
 export const Board = observer(function Board() {
   const gameInfo = useGameInfo();
 
+  const { cols, rows } = gameInfo.dimensions;
+
   return (
     <>
       <BoardInfo />
       <div
         className='Board'
         style={{
-          width: gameInfo.dimensions.cols * 50,
-          height: gameInfo.dimensions.cols * 50,
+          width: cols * 50,
+          height: cols * 50,
         }}
       >
         <PiecesOverlay />
-        <GridBackdrop
-          cols={gameInfo.dimensions.cols}
-          rows={gameInfo.dimensions.rows}
-        />
+        <GridBackdrop cols={cols} rows={rows} />
       </div>
     </>
   );
