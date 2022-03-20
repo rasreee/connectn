@@ -1,5 +1,6 @@
 import './Board.css';
 
+import { runInAction } from 'mobx';
 import { observer } from 'mobx-react-lite';
 import { Piece } from 'models/piece';
 import { Player } from 'models/player';
@@ -65,18 +66,21 @@ export interface SlotButtonProps {
   row: number;
 }
 
-export const SlotButton = observer(({ column, row }: SlotButtonProps) => {
+export const SlotButton = observer(function SlotButton({
+  column,
+  row: rowIndex,
+}: SlotButtonProps) {
   const gameState = useGameState();
   const gameInfo = useGameInfo();
 
   const isDisabled =
     gameState.winner !== Player.None ||
     gameState.board.some((piece) => {
-      const slot = { column, row: gameInfo.dimensions.rows - row - 1 };
-      return piece.isAt(slot);
+      const row = gameInfo.dimensions.rows - rowIndex - 1;
+      return piece.column === column && piece.row === row;
     }); /* todo shouldn't have to pass in width */
 
-  const handleClick = () => gameState.placePiece({ column });
+  const handleClick = () => runInAction(() => gameState.placePiece({ column }));
 
   return (
     <button

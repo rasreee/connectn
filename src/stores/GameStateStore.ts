@@ -55,22 +55,22 @@ export class GameStateStore {
 
   placePiece = ({ column: columnIndex }: { column: number }) => {
     const currentPlayer = this.currentPlayer;
-    const board = [...this.board];
+    const cols = this.store.gameInfo.dimensions.cols;
+
+    const board = this.board;
 
     let nextRow = 0;
 
     while (
+      nextRow < cols &&
       board.find(
         (item) => item.column === columnIndex && item.row === nextRow
       ) !== null
     ) {
-      if (nextRow === this.store.gameInfo.dimensions.cols - 1) return;
-
       nextRow += 1;
     }
+    if (nextRow >= cols - 1) return;
 
-    board.push(new Piece(columnIndex, nextRow, currentPlayer));
-
-    this.board = board;
+    this.board = [...board, new Piece(columnIndex, nextRow, currentPlayer)];
   };
 }
