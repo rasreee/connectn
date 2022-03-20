@@ -2,7 +2,7 @@ import { action, computed, makeAutoObservable, observable } from 'mobx';
 import { GameStateModel, GameStep, initGameState } from 'models/gameState';
 import { Piece } from 'models/piece';
 
-import { createMatrix, Matrix } from '../lib/matrix';
+import { createMatrix, Matrix } from '../models/matrix';
 import { Player } from '../models/player';
 import { RootStore } from './rootStore';
 

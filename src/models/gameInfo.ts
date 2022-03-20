@@ -1,4 +1,4 @@
-import { Dimensions } from '../lib/matrix';
+import { Dimensions } from './matrix';
 
 export interface GameInfo {
   // name of one player

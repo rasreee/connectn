@@ -1,4 +1,4 @@
-import { createMatrix, Dimensions, Matrix } from 'lib/matrix';
+import { createMatrix, Dimensions, Matrix } from 'models/matrix';
 
 export class Grid<D = any> {
   data: Matrix<D>;

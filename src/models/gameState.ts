@@ -1,4 +1,4 @@
-import { createMatrix, Matrix } from 'lib/matrix';
+import { createMatrix, Matrix } from 'models/matrix';
 
 import { GameInfo } from './gameInfo';
 import { Piece } from './piece';
