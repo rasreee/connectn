@@ -47,7 +47,11 @@ export const Game = () => {
             return (
               <div key={key}>
                 gameInfo.{key}:{' '}
-                <em>{gameInfo.model[key as keyof typeof gameInfo.model]}</em>
+                <em>
+                  {JSON.stringify(
+                    gameInfo.model[key as keyof typeof gameInfo.model]
+                  )}
+                </em>
               </div>
             );
           })}
