@@ -1,21 +1,20 @@
 .container {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.625rem;
+  justify-content: space-between;
+  gap: 0.5rem;
   border-radius: var(--rounded-md);
-  padding: .5rem 1.5rem;
-  background: var(--bg-surface);
 }
 
 .circle {
   border-radius: var(--rounded-full);
   background: var(--color-primary);
-  height: 1.5rem;
-  width: 1.5rem;
+  height: 1.25rem;
+  width: 1.25rem;
 }
 
 .text {
   font-size: var(--text-base);
   font-weight: var(--font-medium);
+  line-height: var(--leading-none);
 }
