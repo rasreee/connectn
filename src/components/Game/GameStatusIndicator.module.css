@@ -1,10 +1,4 @@
-.GameTopBar {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-.statusIndicator {
+.container {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -21,7 +15,7 @@
   width: 1.5rem;
 }
 
-.statusIndicator_text {
+.text {
   font-size: var(--text-base);
-  font-weight: var(--font-semibold);
+  font-weight: var(--font-medium);
 }

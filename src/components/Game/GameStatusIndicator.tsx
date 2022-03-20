@@ -25,9 +25,9 @@ export const GameStatusIndicator = observer(function GameStatusIndicator() {
   }).get();
 
   return (
-    <div className={styles.statusIndicator}>
+    <div className={styles.container}>
       <div className={styles.circle} />
-      <span className={styles.statusIndicator_text}>{text}</span>
+      <span className={styles.text}>{text}</span>
     </div>
   );
 });
