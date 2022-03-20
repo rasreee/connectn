@@ -1,22 +1,20 @@
 import './Board.css';
 
-import { runInAction } from 'mobx';
+import times from 'lodash.times';
 import { observer } from 'mobx-react-lite';
-import { Player } from 'models/player';
+import { getPlayerColor } from 'models/player';
+import { SlotButton } from 'SlotButton';
 import { useGameInfo, useGameState } from 'stores/hooks';
 
 import { BoardInfo } from './BoardInfo';
 import { BoardPiece } from './BoardPiece';
 
 export const Board = observer(function Board() {
-  const gameState = useGameState();
   const gameInfo = useGameInfo();
 
   return (
     <>
-      <div className='flex'>
-        <BoardInfo />
-      </div>
+      <BoardInfo />
       <div
         className='Board'
         style={{
@@ -24,53 +22,68 @@ export const Board = observer(function Board() {
           height: gameInfo.dimensions.cols * 50,
         }}
       >
-        {/** TODO(2): placing game pieces
-         * - how do utilize the provided board piece component to visualize the game state?
-         */}
-        {gameState.board.map((piece, i) => (
-          <BoardPiece
-            key={i}
-            column={piece.column}
-            row={piece.row}
-            color={piece.player === Player.PlayerOne ? 'red' : 'black'}
-          />
-        ))}
-        {Array.from(Array(gameInfo.dimensions.rows), (_, row) => (
-          <div key={`row-${row}`} className='Board-Row'>
-            {Array.from(Array(gameInfo.dimensions.cols), (_, column) => (
-              <SlotButton
-                key={`slot-${column}-${row}`}
-                column={column}
-                row={row}
-              />
-            ))}
-          </div>
-        ))}
+        <PiecesOverlay />
+        <GridBackdrop
+          cols={gameInfo.dimensions.cols}
+          rows={gameInfo.dimensions.rows}
+        />
       </div>
     </>
   );
 });
 
-export interface SlotButtonProps {
-  column: number;
-  row: number;
-}
-
-export const SlotButton = observer(function SlotButton({
-  column,
-  row: rowIndex,
-}: SlotButtonProps) {
+export const PiecesOverlay = observer(function BoardGrid() {
   const gameState = useGameState();
-  const gameInfo = useGameInfo();
-
-  const isDisabled = gameState.winner !== Player.None;
-  const handleClick = () => runInAction(() => gameState.placePiece({ column }));
 
   return (
-    <button
-      className='Board-Slot'
-      disabled={isDisabled}
-      onClick={handleClick}
-    />
+    <>
+      {/** TODO(2): placing game pieces
+       * - how do utilize the provided board piece component to visualize the game state?
+       */}
+      {/* Pieces overlay */}
+      {gameState.board.map((piece, i) => (
+        <BoardPiece
+          key={i}
+          column={piece.column}
+          row={piece.row}
+          color={getPlayerColor(piece.player)}
+        />
+      ))}
+    </>
   );
 });
+
+export const GridBackdrop = function GridBackdrop({
+  rows,
+  cols,
+}: {
+  rows: number;
+  cols: number;
+}) {
+  return (
+    <>
+      {/* Grid backdrop */}
+      {times(rows, (row) => (
+        <div key={`row-${row}`} className='Board-Row'>
+          <GridRow row={row} cols={cols} />
+        </div>
+      ))}
+    </>
+  );
+};
+
+export const GridRow = function GridRow({
+  row,
+  cols,
+}: {
+  row: number;
+  cols: number;
+}) {
+  return (
+    <>
+      {times(cols, (column) => (
+        <SlotButton key={`slot-${column}-${row}`} column={column} row={row} />
+      ))}
+    </>
+  );
+};

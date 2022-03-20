@@ -1,4 +1,4 @@
-import { computed, makeAutoObservable, observable } from 'mobx';
+import { computed, makeObservable, observable } from 'mobx';
 import { Dimensions } from 'models/dimensions';
 import { GameInfo, initGameInfo } from 'models/gameInfo';
 import { Player } from 'models/player';
@@ -21,7 +21,7 @@ export class GameInfoStore {
 
   constructor(private store: RootStore) {
     this.updateFromJson(initGameInfo());
-    makeAutoObservable(this, {}, { name: 'GameInfoStore' });
+    makeObservable(this);
   }
 
   private updateFromJson = (data: GameInfo) => {

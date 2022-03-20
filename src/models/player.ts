@@ -3,3 +3,6 @@ export enum Player {
   PlayerTwo,
   None,
 }
+
+export const getPlayerColor = (player: Player) =>
+  player === Player.PlayerOne ? 'red' : 'black';

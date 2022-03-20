@@ -1,6 +1,6 @@
 import { computed } from 'mobx';
 import { observer } from 'mobx-react-lite';
-import { Player } from 'models/player';
+import { GameOutcome } from 'stores/GameStateStore';
 import { useGameInfo, useGameState } from 'stores/hooks';
 
 export const BoardInfo = observer(() => {
@@ -12,20 +12,20 @@ export const BoardInfo = observer(() => {
     [gameInfo.playerOneName, gameInfo.playerTwoName][playerIndex!];
 
   const text = computed(() => {
-    if (gameState.winner !== Player.None)
-      return `${getPlayerName(gameState.winner)} is Winner!`;
-
-    if (gameState.isDraw) return 'Draw';
-
-    return `${getPlayerName(gameState.currentPlayer)}'s turn`;
+    switch (gameState.outcome) {
+      case GameOutcome.Draw:
+        return 'Draw';
+      case GameOutcome.Win:
+        return `${getPlayerName(gameState.winner)} is Winner!`;
+      default:
+        return `${getPlayerName(gameState.currentPlayer)}'s turn`;
+    }
   }).get();
 
   return (
     <div>
       <div>{text}</div>
-      {gameState.isComplete && (
-        <button onClick={gameState.reset}>New Game</button>
-      )}
+      {gameState.winner && <button onClick={gameState.reset}>New Game</button>}
     </div>
   );
 });

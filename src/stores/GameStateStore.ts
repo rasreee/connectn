@@ -1,23 +1,32 @@
-import { makeAutoObservable } from 'mobx';
+import { action, computed, makeObservable, observable } from 'mobx';
 import { GameStateModel, GameStep, initGameState } from 'models/gameState';
 import { Piece } from 'models/piece';
 
 import { Player } from '../models/player';
 import { RootStore } from './RootStore';
 
+export enum GameOutcome {
+  Win,
+  Draw,
+  None,
+}
 export class GameStateStore {
   // name of current player to place a piece
+  @observable
   currentPlayer: Player;
   // list of pieces currently placed
+  @observable
   board: Piece[];
   // step in the flow
+  @observable
   currentStep: GameStep;
   // winner if any
+  @observable
   winner: Player;
 
   constructor(private store: RootStore) {
     this.updateFromJson(initGameState());
-    makeAutoObservable(this, {}, { name: 'GameStateStore' });
+    makeObservable(this);
   }
 
   updateFromJson = (data: GameStateModel) => {
@@ -27,14 +36,20 @@ export class GameStateStore {
     this.winner = data.winner;
   };
 
-  get isDraw(): boolean {
-    return false;
+  @computed
+  get outcome(): GameOutcome {
+    if (this.winner) return GameOutcome.Win;
+
+    const dimensions = this.store.gameInfo.dimensions;
+    const { cols, rows } = dimensions;
+    const isDraw = this.board.length === cols * rows;
+
+    if (isDraw) return GameOutcome.Draw;
+
+    return GameOutcome.None;
   }
 
-  get isComplete(): boolean {
-    return this.isDraw || this.winner !== Player.None;
-  }
-
+  @action
   reset = () => {
     this.currentPlayer = Player.None;
     this.board = [];
@@ -42,12 +57,14 @@ export class GameStateStore {
     this.winner = Player.None;
   };
 
+  @action
   play = () => {
     this.reset();
     this.currentPlayer = Player.PlayerOne;
     this.currentStep = GameStep.Playing;
   };
 
+  @action
   placePiece = ({ column: columnIndex }: { column: number }) => {
     const currentPlayer = this.currentPlayer;
     const rows = this.store.gameInfo.dimensions.rows;

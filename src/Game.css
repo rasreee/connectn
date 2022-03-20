@@ -6,6 +6,22 @@
   width: 100%;
 }
 
+.Game_heading {
+  font-weight: var(--cw-font-black);
+  text-transform: uppercase;
+}
+
+.Game_heading > .prefix {
+  opacity: 0.7;
+  -webkit-text-fill-color: var(--cw-color-white);
+  -webkit-text-stroke: 1.25px #000;
+}
+
+.Game_heading > .winNumber {
+  opacity: 1 !important;
+  color: var(--cw-color-blue);
+}
+
 .Game_onboarding {
   margin-top: 20px;
 }
