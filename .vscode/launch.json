@@ -1,18 +1,14 @@
 {
   "version": "0.2.0",
-  "configurations": [{
+  "configurations": [
+    {
       "name": "Yarn Test",
       "request": "launch",
-      "runtimeArgs": [
-        "test:watch"
-      ],
+      "runtimeArgs": ["test:watch"],
       "runtimeExecutable": "yarn",
-      "skipFiles": [
-        "<node_internals>/**"
-      ],
+      "skipFiles": ["<node_internals>/**"],
       "type": "pwa-node"
     }
     // To debug, make sure a *.spec.ts file is active in the editor, then run a configuration
-
   ]
 }

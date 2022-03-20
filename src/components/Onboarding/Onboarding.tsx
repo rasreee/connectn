@@ -41,6 +41,7 @@ const PlayerSetup = observer(() => {
 // form for board setup
 const BoardSetup = observer(() => {
   const gameInfo = useGameInfo();
+  const { cols, rows } = gameInfo.dimensions;
 
   return (
     <div className='Onboarding_board'>
@@ -49,7 +50,7 @@ const BoardSetup = observer(() => {
         <div className='Onboarding_inputRow'>
           <input
             type='number'
-            defaultValue={gameInfo.dimensions.cols}
+            defaultValue={cols}
             onBlur={(e) =>
               gameInfo.updateDimensions('cols', parseInt(e.currentTarget.value))
             }
@@ -57,7 +58,7 @@ const BoardSetup = observer(() => {
           <div className='Onboarding_board_x'>x</div>
           <input
             type='number'
-            defaultValue={gameInfo.dimensions.rows}
+            defaultValue={rows}
             onBlur={(e) =>
               gameInfo.updateDimensions('rows', parseInt(e.currentTarget.value))
             }

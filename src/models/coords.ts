@@ -1,4 +1,4 @@
-import { invariant } from 'lib/invariant';
+import { invariant } from 'utils/invariant';
 
 export type CoordObject = { x: number; y: number };
 

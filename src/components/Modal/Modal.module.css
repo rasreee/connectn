@@ -1,0 +1,35 @@
+.overlay {
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 9999;
+  height: 100vh;
+  width: 100vw;
+  background: rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  --modal-padding: 0.75rem 1.25rem;
+  background: var(--bg-surface);
+  border-radius: var(--rounded-lg);
+  margin: 15vh auto;
+  min-height: 0px;
+  max-width: 90vw;
+  @media screen and (min-width: var(--breakpoint-sm)) {
+    max-width: 46rem;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--modal-padding);
+  padding-left: 1.5rem;
+}

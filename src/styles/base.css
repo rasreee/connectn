@@ -7,24 +7,14 @@ html {
   font-size: 16px;
 }
 
-body {
-  height: 100%;
-  width: 100%;
-  box-sizing: border-box;
-  line-height: var(--leading-snug);
+html, body, .root {
+  min-height: 100vh;
+  width: 100vw;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.heading {
-  font-weight: var(--font-weight-bold);
-  line-height: var(--leading-normal);
-  font-family: var(--font-primary);
-  color: var(--color-gray-800);
+body {
+  box-sizing: border-box;
+  line-height: var(--leading-snug);
 }
 
 body,
@@ -36,6 +26,7 @@ textarea {
   font-family: var(--font-primary);
 }
 
-ul, li {
+ul,
+li {
   list-style-type: none;
 }

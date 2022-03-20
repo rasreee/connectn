@@ -4,7 +4,7 @@ import { Piece } from './piece';
  * @group lib
  * @group piece
  */
-describe('lib/piece', () => {
+describe('utils/piece', () => {
   const a = new Piece(0, 0);
   const b = new Piece(0, 0);
   const c = new Piece(1, 1);

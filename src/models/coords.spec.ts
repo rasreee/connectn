@@ -10,7 +10,7 @@ import {
   toCoordsObject,
 } from './coords';
 
-describe('lib/coords', () => {
+describe('utils/coords', () => {
   it('isCoordsString()', () => {
     expect(isCoordsString('(0,0)')).toBeTruthy();
     expect(isCoordsString('(11,0)')).toBeTruthy();

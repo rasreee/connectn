@@ -1,12 +1,9 @@
 .container {
+  position: relative;
   text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: stretch;
   width: 100%;
   min-height: 100vh;
   background: var(--bg-app);
-  gap: 0.5rem;
 }
 
 .header {

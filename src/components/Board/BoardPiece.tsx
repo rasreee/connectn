@@ -17,20 +17,21 @@ export interface BoardPieceProps {
 export const BoardPiece = observer(function BoardPiece(props: BoardPieceProps) {
   const { color, column, row } = props;
   const gameInfo = useGameInfo();
+  const { cols } = gameInfo.dimensions;
 
   const [isDropped, setIsDropped] = useState(false);
 
   const baseStyle = {
     color,
     top: 0,
-    left: `${(column / gameInfo.dimensions.cols) * 100}%`,
-    height: `${(1 / gameInfo.dimensions.cols) * 100}%`,
-    width: `${(1 / gameInfo.dimensions.cols) * 100}%`,
+    left: `${(column / cols) * 100}%`,
+    height: `${(1 / cols) * 100}%`,
+    width: `${(1 / cols) * 100}%`,
   };
 
   const droppedStyle = {
     ...baseStyle,
-    top: `${100 - ((row + 1) / gameInfo.dimensions.cols) * 100}%`,
+    top: `${100 - ((row + 1) / cols) * 100}%`,
   };
 
   // change the style chosen after it initially renders

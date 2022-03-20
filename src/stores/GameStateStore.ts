@@ -1,6 +1,11 @@
 import { action, computed, makeObservable, observable } from 'mobx';
-import { initGameInfo } from 'models/gameInfo';
-import { GameOutcome, GameStep, initGameState } from 'models/gameState';
+import { GameInfo, initGameInfo } from 'models/gameInfo';
+import {
+  GameOutcome,
+  GameState,
+  GameStep,
+  initGameState,
+} from 'models/gameState';
 import { cloneMatrix, Matrix } from 'models/matrix';
 
 import { Player } from '../models/player';
@@ -22,10 +27,7 @@ export class GameStateStore {
 
   constructor(private store: GlobalStore) {
     const data = initGameState(initGameInfo());
-    this.currentPlayer = data.currentPlayer;
-    this.board = data.board;
-    this.currentStep = data.currentStep;
-    this.winner = data.winner;
+    this.updateWithJson(data);
     makeObservable(this);
   }
 
@@ -43,24 +45,29 @@ export class GameStateStore {
   }
 
   @action
-  reset = () => {
-    this.currentPlayer = Player.PlayerOne;
-    this.board = [];
-    this.currentStep = GameStep.Onboarding;
-    this.winner = Player.None;
+  updateWithJson = (data: GameState) => {
+    this.currentPlayer = data.currentPlayer;
+    this.board = data.board;
+    this.currentStep = data.currentStep;
+    this.winner = data.winner;
   };
 
   @action
-  play = () => {
-    this.reset();
-    this.currentPlayer = Player.PlayerOne;
-    this.currentStep = GameStep.Playing;
+  reset = () => {
+    const data = initGameState(initGameInfo());
+    this.updateWithJson(data);
+  };
+
+  @action
+  play = (gameInfo: GameInfo = initGameInfo()) => {
+    const data = initGameState(gameInfo);
+    this.updateWithJson(data);
   };
 
   @action
   placePiece = ({ column }: { column: number }) => {
     const player = this.currentPlayer;
-    const rows = this.store.gameInfo.dimensions.rows;
+    const { rows } = this.store.gameInfo.dimensions;
 
     const board = this.board;
 

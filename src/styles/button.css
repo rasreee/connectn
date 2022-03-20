@@ -23,6 +23,12 @@ button[disabled], button[aria-disabled=true], button[data-disabled] {
   padding: .625rem 1.25rem;
 }
 
+.button-primary {
+  background: var(--color-classic-blue);
+  color: #fff;
+  font-weight: var(--font-semibold);
+}
+
 .button-circular {
   font-size: var(--text-sm);
   line-height: var(--leading-none);

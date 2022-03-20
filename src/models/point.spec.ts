@@ -4,7 +4,7 @@ import { Point } from './point';
  * @group lib
  * @group point
  */
-describe('lib/point', () => {
+describe('utils/point', () => {
   const a = new Point(0, 0);
   const b = new Point(0, 0);
   const c = new Point(1, 1);

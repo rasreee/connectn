@@ -30,3 +30,5 @@ export function initGameInfo(): GameInfoModel {
     winNumber: 4,
   };
 }
+
+export const initialGameInfo = initGameInfo();
