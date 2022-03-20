@@ -1,11 +1,10 @@
 import './Game.css';
 
+import { Board } from 'components/Board';
+import { Onboarding } from 'components/Onboarding';
 import { observer } from 'mobx-react-lite';
 import { GameStep } from 'models/gameState';
 import { useGameInfo, useGameState } from 'stores/hooks';
-
-import { Board } from './Board';
-import { Onboarding } from './Onboarding';
 
 export const Game = observer(() => {
   const gameInfo = useGameInfo();
