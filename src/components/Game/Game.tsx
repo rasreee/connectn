@@ -1,11 +1,11 @@
 import './Game.css';
 
 import { Board } from 'components/Board';
+import { Logo } from 'components/Logo';
 import { observer } from 'mobx-react-lite';
 import { useGameInfo } from 'stores/hooks';
 
 import { GameTopBar } from './GameTopBar';
-import { Logo } from './Logo';
 
 export const Game = observer(function Game() {
   const gameInfo = useGameInfo();

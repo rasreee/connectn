@@ -1,0 +1,8 @@
+/*
+  Theme
+*/
+:root {
+  --bg-app: var(--color-white);
+  --bg-surface: var(--color-white);
+  --color-primary: var(--color-indigo-500);
+}
