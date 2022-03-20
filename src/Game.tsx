@@ -1,11 +1,11 @@
 import './Game.css';
 
 import { toJS } from 'mobx';
+import { GameStep } from 'models/gameState';
 import { GameInfoStore } from 'stores/gameInfo.store';
 import { useGameInfo, useGameState } from 'stores/hooks';
 
 import { Board } from './Board';
-import { GameStep } from './lib/gameStep';
 import { Onboarding } from './Onboarding';
 
 export const Game = () => {

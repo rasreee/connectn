@@ -1,28 +1,8 @@
-import { GameInfo } from 'lib/gameInfo';
 import { Dimensions } from 'lib/matrix';
 import { makeAutoObservable, observable } from 'mobx';
+import { GameInfo, initGameInfo } from 'models/gameInfo';
 
 import { RootStore } from './rootStore';
-
-export interface GameInfoModel {
-  // name of one player
-  playerOneName: string;
-  // name of other player
-  playerTwoName: string;
-  // dimensions of the board
-  dimensions: Dimensions;
-  // number of dots in a row required to win
-  winNumber: number;
-}
-
-export function initGameInfo(): GameInfoModel {
-  return {
-    playerOneName: 'Player One',
-    playerTwoName: 'Player Two',
-    dimensions: { cols: 7, rows: 6 },
-    winNumber: 4,
-  };
-}
 
 export class GameInfoStore {
   // name of one player

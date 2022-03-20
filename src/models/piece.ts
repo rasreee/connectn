@@ -1,5 +1,5 @@
+import { Player } from './player';
 import { Slot } from './slot';
-import { Player } from './types';
 
 export interface PieceData {
   column: number;

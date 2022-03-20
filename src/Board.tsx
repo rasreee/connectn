@@ -1,14 +1,14 @@
 import './Board.css';
 
-import { Player } from 'lib/types';
 import { observer } from 'mobx-react-lite';
+import { Piece } from 'models/piece';
+import { Player } from 'models/player';
+import { Slot, slotUtils } from 'models/slot';
 import { useGameInfo, useGameState } from 'stores/hooks';
 
 import { BoardInfo } from './BoardInfo';
 import { BoardPiece } from './BoardPiece';
-import { GameInfo } from './lib/gameInfo';
-import { Piece } from './lib/piece';
-import { Slot, slotUtils } from './lib/slot';
+import { GameInfo } from './models/gameInfo';
 
 const getPlayerName = (player: Player, info: GameInfo) =>
   player === Player.PlayerOne ? info.playerOneName : info.playerTwoName;

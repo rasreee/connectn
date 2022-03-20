@@ -1,10 +1,9 @@
 import { action, computed, makeAutoObservable, observable } from 'mobx';
+import { GameStateModel, GameStep, initGameState } from 'models/gameState';
+import { Piece } from 'models/piece';
 
-import { GameStep } from '../lib/gameStep';
 import { createMatrix, Matrix } from '../lib/matrix';
-import { Piece } from '../lib/piece';
-import { Player } from '../lib/types';
-import { GameStateModel, initGameState } from './gameState.model';
+import { Player } from '../models/player';
 import { RootStore } from './rootStore';
 
 export class GameStateStore {

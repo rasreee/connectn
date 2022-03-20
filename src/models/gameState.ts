@@ -1,8 +1,14 @@
-import { GameInfo } from 'lib/gameInfo';
-import { GameStep } from 'lib/gameStep';
 import { createMatrix, Matrix } from 'lib/matrix';
-import { Piece } from 'lib/piece';
-import { Player } from 'lib/types';
+
+import { GameInfo } from './gameInfo';
+import { Piece } from './piece';
+import { Player } from './player';
+
+export enum GameStep {
+  Onboarding = 'Onboarding',
+  Playing = 'Playing',
+  Complete = 'Complete',
+}
 
 export interface GameStateModel {
   // name of current player to place a piece
