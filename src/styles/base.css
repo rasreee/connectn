@@ -8,6 +8,7 @@ body {
   height: 100%;
   width: 100%;
   box-sizing: border-box;
+  line-height: var(--leading-snug);
 }
 
 h1,
@@ -15,10 +16,9 @@ h2,
 h3,
 h4,
 h5,
-h6,
-.heading {
+h6 {
   font-weight: var(--font-weight-bold);
-  line-height: 1.25;
+  line-height: var(--leading-normal);
   font-family: var(--font-primary);
 }
 
@@ -29,15 +29,4 @@ optgroup,
 select,
 textarea {
   font-family: var(--font-primary);
-}
-
-button, a {
-  background: unset;
-  border: unset;
-  cursor: pointer;
-  font-weight: var(--font-medium);
-}
-
-button[disabled], button[aria-disabled=true], button[data-disabled], a[disabled], a[aria-disabled=true], a[data-disabled] {
-  cursor: default;
 }

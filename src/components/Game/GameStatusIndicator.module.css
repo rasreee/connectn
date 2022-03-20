@@ -1,0 +1,27 @@
+.GameTopBar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.statusIndicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  border-radius: var(--rounded-md);
+  padding: .5rem 1.5rem;
+  background: var(--bg-surface);
+}
+
+.circle {
+  border-radius: var(--rounded-full);
+  background: var(--color-primary);
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.statusIndicator_text {
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+}

@@ -1,0 +1,18 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 0.75rem;
+}
+
+.button {
+  border-radius: var(--rounded-md);
+  background: var(--color-indigo-50);
+  color: var(--color-indigo-700);
+  font-weight: var(--font-semibold);
+}
+
+.button:hover {
+  background: var(--color-indigo-100);
+}

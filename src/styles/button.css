@@ -1,0 +1,28 @@
+button, a {
+  background: unset;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-weight: var(--font-semibold);
+  line-height: var(--leading-none);
+  padding: .625rem 1.25rem;
+  transition-property: all;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}
+
+button[disabled], button[aria-disabled=true], button[data-disabled], a[disabled], a[aria-disabled=true], a[data-disabled] {
+  cursor: default;
+}
+
+button:focus, button[data-focus] {
+  --ring-inset: ;
+  --ring-offset-color: #fff;
+
+  --ring-offset-width: 2px;
+  --ring-opacity: 1;
+  --ring-color: var(--color-indigo-500);
+  --ring-offset-shadow: var(--ring-inset) 0 0 0 var(--ring-offset-width) var(--ring-offset-color);
+  --ring-shadow: var(--ring-inset) 0 0 0 calc(2px + var(--ring-offset-width)) var(--ring-color);
+  box-shadow: var(--ring-offset-shadow),var(--ring-shadow), var(--shadow,0 0 #0000);
+}
