@@ -44,7 +44,7 @@ export class GameStateStore {
 
   @action
   reset = () => {
-    this.currentPlayer = Player.None;
+    this.currentPlayer = Player.PlayerOne;
     this.board = [];
     this.currentStep = GameStep.Onboarding;
     this.winner = Player.None;

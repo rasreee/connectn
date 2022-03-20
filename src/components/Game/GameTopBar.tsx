@@ -1,4 +1,5 @@
 import { observer } from 'mobx-react-lite';
+import { Player } from 'models/player';
 import { useGameState } from 'stores/hooks';
 
 import { GameStatusIndicator } from './GameStatusIndicator';
@@ -10,7 +11,7 @@ export const GameTopBar = observer(() => {
   return (
     <div className={styles.container}>
       <GameStatusIndicator />
-      {gameState.winner && (
+      {gameState.winner !== Player.None && (
         <button className='button button-secondary' onClick={gameState.reset}>
           New Game
         </button>
