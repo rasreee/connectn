@@ -2,7 +2,7 @@ import { makeAutoObservable, observable } from 'mobx';
 import { GameInfo, initGameInfo } from 'models/gameInfo';
 import { Dimensions } from 'models/matrix';
 
-import { RootStore } from './rootStore';
+import { RootStore } from './RootStore';
 
 export class GameInfoStore {
   // name of one player

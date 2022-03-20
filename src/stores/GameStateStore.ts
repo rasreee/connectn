@@ -4,7 +4,7 @@ import { Piece } from 'models/piece';
 
 import { createMatrix, Matrix } from '../models/matrix';
 import { Player } from '../models/player';
-import { RootStore } from './rootStore';
+import { RootStore } from './RootStore';
 
 export class GameStateStore {
   // name of current player to place a piece

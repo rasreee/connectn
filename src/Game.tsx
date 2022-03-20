@@ -2,7 +2,7 @@ import './Game.css';
 
 import { toJS } from 'mobx';
 import { GameStep } from 'models/gameState';
-import { GameInfoStore } from 'stores/gameInfo.store';
+import { GameInfoStore } from 'stores/GameInfoStore';
 import { useGameInfo, useGameState } from 'stores/hooks';
 
 import { Board } from './Board';

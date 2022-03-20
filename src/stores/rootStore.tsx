@@ -1,5 +1,5 @@
-import { GameInfoStore } from './gameInfo.store';
-import { GameStateStore } from './gameState.store';
+import { GameInfoStore } from './GameInfoStore';
+import { GameStateStore } from './GameStateStore';
 
 export class RootStore {
   gameInfo = new GameInfoStore(this);

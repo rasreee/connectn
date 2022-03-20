@@ -1,6 +1,6 @@
 import { useStore } from 'lib/mobx/store-context';
 
-import { RootStore } from './rootStore';
+import { RootStore } from './RootStore';
 
 const useRootStore = () => useStore<RootStore>();
 
