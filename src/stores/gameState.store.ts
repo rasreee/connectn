@@ -4,14 +4,14 @@ import { GameStep } from '../lib/gameStep';
 import { createMatrix } from '../lib/matrix';
 import { Piece } from '../lib/piece';
 import { Player } from '../lib/types';
-import { GameStateModel } from './gameState.model';
+import { GameStateModel, initGameState } from './gameState.model';
 import { RootStore } from './rootStore';
 
 export class GameStateStore {
   model: GameStateModel;
 
   constructor(private root: RootStore) {
-    this.model = new GameStateModel(root.gameInfo.model);
+    this.model = initGameState(root.gameInfo.model);
     makeAutoObservable(this, {}, { name: 'GameStateStore' });
   }
 
