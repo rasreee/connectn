@@ -24,7 +24,7 @@ export const Game = observer(() => {
       <div className='Game_onboarding'>
         <Onboarding />
       </div>
-      {gameState.currentStep === GameStep.Onboarding && <Board />}
+      {gameState.currentStep !== GameStep.Onboarding && <Board />}
       <div className='Game_placeholder'>
         <div className='Game_placeholder_top'>
           <p>
