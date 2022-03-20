@@ -1,6 +1,7 @@
 import './Game.css';
 
 import { toJS } from 'mobx';
+import { GameInfoStore } from 'stores/gameInfo.store';
 import { useGameInfo, useGameState } from 'stores/hooks';
 
 import { Board } from './Board';
@@ -27,6 +28,14 @@ export const Game = () => {
     return <Board />;
   };
 
+  const stringify = (
+    value: GameInfoStore[keyof GameInfoStore]
+  ): string | number => {
+    if (typeof value === 'string' || typeof value === 'number') return value;
+
+    return `(${value.cols},${value.rows})`;
+  };
+
   return (
     <div className='Game'>
       <h1>Let's Play Connect {gameInfo.winNumber}!</h1>
@@ -48,9 +57,7 @@ export const Game = () => {
             return (
               <div key={key}>
                 gameInfo.{key}:{' '}
-                <em>
-                  {JSON.stringify(gameInfo[key as keyof typeof gameInfo])}
-                </em>
+                <em>{stringify(gameInfo[key as keyof typeof gameInfo])}</em>
               </div>
             );
           })}

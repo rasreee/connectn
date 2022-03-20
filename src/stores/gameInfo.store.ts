@@ -43,7 +43,7 @@ export class GameInfoStore {
     makeAutoObservable(this, {}, { name: 'GameInfoStore' });
   }
 
-  updateFromJson = (data: GameInfo) => {
+  private updateFromJson = (data: GameInfo) => {
     this.playerOneName = data.playerOneName;
     this.playerTwoName = data.playerTwoName;
     this.dimensions = data.dimensions;
