@@ -20,19 +20,6 @@ export const Board = observer(() => {
     return isPlayerOne ? 'red' : 'black';
   };
 
-  const getIsSlotDisabled = (slot: Slot) =>
-    computed(
-      () =>
-        Boolean(gameState.winner) ||
-        slotUtils.isTaken(
-          slotUtils.normalize(
-            slot,
-            gameInfo.dimensions.cols
-          ) /* todo shouldn't have to pass in width */,
-          gameState.board.flat()
-        )
-    ).get();
-
   return (
     <>
       <div className='flex'>
@@ -48,32 +35,60 @@ export const Board = observer(() => {
         {/** TODO(2): placing game pieces
          * - how do utilize the provided board piece component to visualize the game state?
          */}
-        {gameState.board
-          .flat()
-          .map(
-            (piece, i) =>
-              piece && (
-                <BoardPiece
-                  key={i}
-                  column={piece.column}
-                  row={piece.row}
-                  color={getPieceColor(piece)}
-                />
-              )
-          )}
+        {gameState.board.map(
+          (piece, i) =>
+            piece && (
+              <BoardPiece
+                key={i}
+                column={piece.column}
+                row={piece.row}
+                color={getPieceColor(piece)}
+              />
+            )
+        )}
         {Array.from(Array(gameInfo.dimensions.rows), (_, row) => (
           <div key={`row-${row}`} className='Board-Row'>
             {Array.from(Array(gameInfo.dimensions.cols), (_, column) => (
-              <button
+              <SlotButton
                 key={`slot-${column}-${row}`}
-                className='Board-Slot'
-                disabled={getIsSlotDisabled({ column, row })}
-                onClick={() => gameState.placePiece({ column })}
+                column={column}
+                row={row}
               />
             ))}
           </div>
         ))}
       </div>
     </>
+  );
+});
+
+export interface SlotButtonProps {
+  column: number;
+  row: number;
+}
+
+export const SlotButton = observer(({ column, row }: SlotButtonProps) => {
+  const gameState = useGameState();
+  const gameInfo = useGameInfo();
+
+  const getIsSlotDisabled = (slot: Slot) =>
+    computed(
+      () =>
+        Boolean(gameState.winner) ||
+        slotUtils.isTaken(
+          slotUtils.normalize(
+            slot,
+            gameInfo.dimensions.cols
+          ) /* todo shouldn't have to pass in width */,
+          gameState.board
+        )
+    ).get();
+
+  return (
+    <button
+      className='Board-Slot'
+      disabled={getIsSlotDisabled({ column, row })}
+      onClick={() => gameState.placePiece({ column })}
+    />
   );
 });
