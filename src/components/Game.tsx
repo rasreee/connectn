@@ -1,18 +1,16 @@
-import './Game.css';
+import { GameInfo, GameState, GameStep } from 'lib/game.types'
+import { initializeGameInfo, initializeGameState } from 'lib/game.utils'
+import { Component } from 'react'
 
-import { GameInfo, GameState, GameStep } from 'lib/game.types';
-import { initializeGameInfo, initializeGameState } from 'lib/game.utils';
-import { Component } from 'react';
-
-import { Board } from './Board';
-import { Onboarding } from './Onboarding';
+import { Board } from './Board'
+import { Onboarding } from './Onboarding'
 
 interface GameComponentProps {}
 
 interface GameComponentState {
-  gameInfo: GameInfo;
-  gameState: GameState;
-  currentStep: GameStep;
+  gameInfo: GameInfo
+  gameState: GameState
+  currentStep: GameStep
 }
 
 // Component that holds the structure of the game
@@ -21,48 +19,48 @@ export class Game extends Component<GameComponentProps, GameComponentState> {
     Setup
     ~~~~~~~~~~~~~~~~~ */
   constructor(props: GameComponentProps) {
-    super(props);
-    const gameInfo = initializeGameInfo();
-    const gameState = initializeGameState(gameInfo);
+    super(props)
+    const gameInfo = initializeGameInfo()
+    const gameState = initializeGameState(gameInfo)
     this.state = {
       currentStep: GameStep.Onboarding,
       gameInfo,
       gameState,
-    };
+    }
   }
 
   // TODO(1): game state
   // - what needs to happen to the game state if game info changes?
   updateGameInfo = (gameInfo: GameInfo) => {
-    this.setState({ gameInfo });
-  };
+    this.setState({ gameInfo })
+  }
 
   // returns to blank state
   resetGame = () => {
-    const gameInfo = initializeGameInfo();
-    this.setState({ gameInfo, currentStep: GameStep.Onboarding });
-  };
+    const gameInfo = initializeGameInfo()
+    this.setState({ gameInfo, currentStep: GameStep.Onboarding })
+  }
 
   // TODO(1): game state
   // - what needs to happen when the game is started?
   playGame = () => {
-    this.setState({ currentStep: GameStep.Playing });
-  };
+    this.setState({ currentStep: GameStep.Playing })
+  }
 
   // TODO(2): place piece & check winner
   // - how does the game state change when a piece is placed?
   // - how do you know if a player has won?
   // - you might need to break some of this out into multiple methods or helpers
   placePiece = (column: number, row: number) => {
-    console.log(`Request piece at (${column}, ${row})`);
-  };
+    console.log(`Request piece at (${column}, ${row})`)
+  }
 
   /* ~~~~~~~~~~~~~~~~
     Rendering
     ~~~~~~~~~~~~~~~~~ */
 
   renderOnboarding() {
-    const { gameInfo } = this.state;
+    const { gameInfo } = this.state
 
     return (
       <div className='Game_onboarding'>
@@ -73,14 +71,14 @@ export class Game extends Component<GameComponentProps, GameComponentState> {
           gameInfo={gameInfo}
         />
       </div>
-    );
+    )
   }
 
   maybeRenderBoard() {
-    const { currentStep, gameInfo, gameState } = this.state;
+    const { currentStep, gameInfo, gameState } = this.state
 
     if (currentStep === GameStep.Onboarding) {
-      return null;
+      return null
     }
 
     return (
@@ -89,11 +87,11 @@ export class Game extends Component<GameComponentProps, GameComponentState> {
         gameState={gameState}
         placePiece={this.placePiece}
       />
-    );
+    )
   }
 
   render() {
-    const { gameInfo, currentStep } = this.state;
+    const { gameInfo, currentStep } = this.state
 
     return (
       <div className='Game'>
@@ -118,11 +116,11 @@ export class Game extends Component<GameComponentProps, GameComponentState> {
                   gameInfo.{key}:{' '}
                   <em>{gameInfo[key as keyof typeof gameInfo]}</em>
                 </div>
-              );
+              )
             })}
           </div>
         </div>
       </div>
-    );
+    )
   }
 }

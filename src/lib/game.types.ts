@@ -1,17 +1,17 @@
-import { Matrix } from './matrix';
-import { MaybePlayer,Player } from './player';
+import { Matrix } from './matrix'
+import { MaybePlayer, Player } from './player'
 
 export interface GameInfo {
   // name of one player
-  playerOneName: string;
+  playerOneName: string
   // name of other player
-  playerTwoName: string;
+  playerTwoName: string
   // number of columns
-  columnCount: number;
+  columnCount: number
   // number of rows
-  rowCount: number;
+  rowCount: number
   // number of dots in a row required to win
-  winNumber: number;
+  winNumber: number
 }
 
 export enum GameStep {
@@ -20,13 +20,13 @@ export enum GameStep {
   Complete = 'Complete',
 }
 
-export interface GameState  {
+export interface GameState {
   // name of current player to place a piece
-  currentPlayer: Player;
+  currentPlayer: Player
   // list of pieces currently placed
-  board: Matrix;
+  board: Matrix
   // step in the flow
-  currentStep: GameStep;
+  currentStep: GameStep
   // winner if any
-  winner: MaybePlayer;
+  winner: MaybePlayer
 }

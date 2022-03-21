@@ -3,18 +3,14 @@ module.exports = {
   verbose: true,
   preset: 'ts-jest',
   moduleNameMapper: {
-    '\\.(png|svg|pdf|jpg|jpeg)$': '<rootDir>/jest/fileMock.js',
-    '\\.(css|scss)$': 'identity-obj-proxy',
+    // Handle absolute import and module path alias,
     // Handle absolute import and module path alias
+    '^app/(.*)$': '<rootDir>/src/app/$1',
+    '^components/(.*)$': '<rootDir>/src/components/$1',
     '^lib/(.*)$': '<rootDir>/src/lib/$1',
   },
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/build/'],
   testEnvironment: 'jsdom',
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
-  transform: {
-    '^.+\\.ts?$': 'ts-jest',
-    '^.+\\.(js|jsx)$': 'babel-jest',
-  },
   runner: 'groups',
-  transformIgnorePatterns: ['\\.css$', '\\.png$'],
-};
+}
