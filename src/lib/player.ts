@@ -5,7 +5,7 @@ export enum Player {
 }
 
 export const isPlayer = (o: any): o is Player => {
-  return typeof o === 'number' && [1, 2].includes(o)
+  return [1, 2].includes(o)
 }
 
 export const getPlayerColor = (player: Player) =>

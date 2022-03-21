@@ -1,64 +1,16 @@
 import { Slot } from 'lib/board'
-import {
-  createGameInfo,
-  createGameState,
-  GameInfo,
-  GameState,
-  getIsGameActive,
-} from 'lib/game'
-import { cloneGrid } from 'lib/grid'
-import { getNextPlayer, Player } from 'lib/player'
-import { useReducer, useState } from 'react'
+import { createGameInfo, GameInfo, getIsGameActive } from 'lib/game'
+import { useState } from 'react'
 
 import { Board } from './Board'
+import { GameActionType } from './gameReducer'
 import { Onboarding } from './Onboarding'
-
-enum GameActionType {
-  RESET = 'Reset',
-  PLAY = 'Play',
-  PLACE_PIECE = 'PlacePiece',
-}
-
-type GameAction =
-  | { type: GameActionType.RESET; payload: { gameInfo: GameInfo } }
-  | { type: GameActionType.PLAY }
-  | {
-      type: GameActionType.PLACE_PIECE
-      payload: Slot
-    }
-
-const gameReducer = (state: GameState, action: GameAction): GameState => {
-  switch (action.type) {
-    case GameActionType.RESET: {
-      const { gameInfo } = action.payload
-      return createGameState(gameInfo)
-    }
-    case GameActionType.PLAY: {
-      return { ...state, currentPlayer: Player.PlayerOne }
-    }
-    case GameActionType.PLACE_PIECE: {
-      const { board, currentPlayer } = state
-      const { column, row } = action.payload
-      console.log(`Request piece at (${column}, ${row})`)
-
-      const newBoard = cloneGrid(board)
-      newBoard[column][row] = currentPlayer
-
-      const nextPlayer = getNextPlayer(currentPlayer)
-
-      return {
-        ...state,
-        currentPlayer: nextPlayer,
-        board: newBoard,
-      }
-    }
-  }
-}
+import { useGameReducer } from './useGameReducer'
 
 // Component that holds the structure of the game
 export const Game = () => {
   const [gameInfo, setGameInfo] = useState(createGameInfo())
-  const [state, dispatch] = useReducer(gameReducer, createGameState(gameInfo))
+  const [state, dispatch] = useGameReducer(gameInfo)
 
   // TODO(1): game state
   // returns to blank state
@@ -72,10 +24,10 @@ export const Game = () => {
   }
 
   // TODO(2): place piece & check winner
-  const placePiece = (slot: Slot) => {
+  const onSlotClick = (slotClicked: Slot) => {
     dispatch({
       type: GameActionType.PLACE_PIECE,
-      payload: slot,
+      payload: slotClicked,
     })
   }
 
@@ -96,7 +48,11 @@ export const Game = () => {
         />
       </div>
       {getIsGameActive(state) && (
-        <Board gameInfo={gameInfo} gameState={state} placePiece={placePiece} />
+        <Board
+          gameInfo={gameInfo}
+          gameState={state}
+          onSlotClick={onSlotClick}
+        />
       )}
     </div>
   )
