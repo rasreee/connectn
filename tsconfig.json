@@ -2,7 +2,11 @@
   "compilerOptions": {
     "target": "esnext",
     "module": "esnext",
+    "moduleResolution": "node",
     "lib": ["dom", "dom.iterable", "esnext"],
+    "jsx": "react-jsx",
+    "types": ["@types/jest", "@types/node", "@emotion/react/types/css-prop"],
+    "jsxImportSource": "@emotion/react",
     "allowJs": true,
     "composite": false,
     "esModuleInterop": true,
@@ -11,8 +15,6 @@
     "emitDecoratorMetadata": true,
     "incremental": true,
     "isolatedModules": true,
-    "jsx": "react-jsx",
-    "moduleResolution": "node",
     "noEmit": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
@@ -23,7 +25,6 @@
     "noImplicitReturns": true,
     "noImplicitThis": false,
     "alwaysStrict": true,
-    "types": ["@types/jest", "@types/node"],
     "baseUrl": "./src",
     "paths": {}
   },
