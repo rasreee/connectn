@@ -1,126 +1,102 @@
-import { GameInfo, GameState, GameStep } from 'lib/game.types'
-import { initializeGameInfo, initializeGameState } from 'lib/game.utils'
-import { Component } from 'react'
+import {
+  createGameInfo,
+  createGameState,
+  GameInfo,
+  GameState,
+  getIsGameActive,
+} from 'lib/game'
+import { cloneGrid } from 'lib/grid'
+import { getNextPlayer, Player } from 'lib/player'
+import { useReducer, useState } from 'react'
 
 import { Board } from './Board'
 import { Onboarding } from './Onboarding'
 
-interface GameComponentProps {}
+enum GameActionType {
+  RESET = 'Reset',
+  PLAY = 'Play',
+  PLACE_PIECE = 'PlacePiece',
+}
 
-interface GameComponentState {
-  gameInfo: GameInfo
-  gameState: GameState
-  currentStep: GameStep
+type GameAction =
+  | { type: GameActionType.RESET; payload: { gameInfo: GameInfo } }
+  | { type: GameActionType.PLAY }
+  | {
+      type: GameActionType.PLACE_PIECE
+      payload: { column: number; row: number }
+    }
+
+const gameReducer = (state: GameState, action: GameAction): GameState => {
+  switch (action.type) {
+    case GameActionType.RESET: {
+      const { gameInfo } = action.payload
+      return createGameState(gameInfo)
+    }
+    case GameActionType.PLAY: {
+      return { ...state, currentPlayer: Player.PlayerOne }
+    }
+    case GameActionType.PLACE_PIECE: {
+      const { column, row } = action.payload
+      const { board, currentPlayer } = state
+
+      const newBoard = cloneGrid(board)
+      newBoard[column][row] = currentPlayer
+
+      const nextPlayer = getNextPlayer(currentPlayer)
+
+      return {
+        ...state,
+        currentPlayer: nextPlayer,
+        board: newBoard,
+      }
+    }
+  }
 }
 
 // Component that holds the structure of the game
-export class Game extends Component<GameComponentProps, GameComponentState> {
-  /* ~~~~~~~~~~~~~~~~
-    Setup
-    ~~~~~~~~~~~~~~~~~ */
-  constructor(props: GameComponentProps) {
-    super(props)
-    const gameInfo = initializeGameInfo()
-    const gameState = initializeGameState(gameInfo)
-    this.state = {
-      currentStep: GameStep.Onboarding,
-      gameInfo,
-      gameState,
-    }
-  }
+export const Game = () => {
+  const [gameInfo, setGameInfo] = useState(createGameInfo())
+  const [state, dispatch] = useReducer(gameReducer, createGameState(gameInfo))
 
   // TODO(1): game state
-  // - what needs to happen to the game state if game info changes?
-  updateGameInfo = (gameInfo: GameInfo) => {
-    this.setState({ gameInfo })
-  }
-
   // returns to blank state
-  resetGame = () => {
-    const gameInfo = initializeGameInfo()
-    this.setState({ gameInfo, currentStep: GameStep.Onboarding })
-  }
+  const resetGame = () =>
+    dispatch({ type: GameActionType.RESET, payload: { gameInfo } })
 
   // TODO(1): game state
   // - what needs to happen when the game is started?
-  playGame = () => {
-    this.setState({ currentStep: GameStep.Playing })
+  const playGame = () => {
+    dispatch({ type: GameActionType.PLAY })
   }
 
   // TODO(2): place piece & check winner
-  // - how does the game state change when a piece is placed?
-  // - how do you know if a player has won?
-  // - you might need to break some of this out into multiple methods or helpers
-  placePiece = (column: number, row: number) => {
+  const placePiece = (column: number, row: number) => {
     console.log(`Request piece at (${column}, ${row})`)
+    dispatch({
+      type: GameActionType.PLACE_PIECE,
+      payload: { column, row },
+    })
   }
 
-  /* ~~~~~~~~~~~~~~~~
-    Rendering
-    ~~~~~~~~~~~~~~~~~ */
+  const updateGameInfo = (newGameInfo: GameInfo) => {
+    setGameInfo(newGameInfo)
+    playGame()
+  }
 
-  renderOnboarding() {
-    const { gameInfo } = this.state
-
-    return (
+  return (
+    <div className='Game'>
+      <h1>Let's Play Connect {gameInfo.winNumber}!</h1>
       <div className='Game_onboarding'>
         <Onboarding
-          updateGameInfo={(gameInfo: GameInfo) => this.updateGameInfo(gameInfo)}
-          resetGame={this.resetGame}
-          playGame={this.playGame}
+          updateGameInfo={updateGameInfo}
+          resetGame={resetGame}
+          playGame={playGame}
           gameInfo={gameInfo}
         />
       </div>
-    )
-  }
-
-  maybeRenderBoard() {
-    const { currentStep, gameInfo, gameState } = this.state
-
-    if (currentStep === GameStep.Onboarding) {
-      return null
-    }
-
-    return (
-      <Board
-        gameInfo={gameInfo}
-        gameState={gameState}
-        placePiece={this.placePiece}
-      />
-    )
-  }
-
-  render() {
-    const { gameInfo, currentStep } = this.state
-
-    return (
-      <div className='Game'>
-        <h1>Let's Play Connect {gameInfo.winNumber}!</h1>
-        {this.renderOnboarding()}
-        {this.maybeRenderBoard()}
-        <div className='Game_placeholder'>
-          <div className='Game_placeholder_top'>
-            <p>
-              The onboarding steps are setup for you. Use the info collected
-              during onboarding to render a board and then start a game.
-            </p>
-          </div>
-          <div className='Game_placeholder_debugger'>
-            <label>Debugging Info (remove):</label>
-            <div>
-              currentStep: <em>{currentStep}</em>
-            </div>
-            {Object.keys(gameInfo).map((key) => {
-              return (
-                <div key={key}>
-                  gameInfo.{key}:{' '}
-                  <em>{gameInfo[key as keyof typeof gameInfo]}</em>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </div>
-    )
-  }
+      {getIsGameActive(state) && (
+        <Board gameInfo={gameInfo} gameState={state} placePiece={placePiece} />
+      )}
+    </div>
+  )
 }

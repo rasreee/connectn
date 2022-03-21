@@ -1,4 +1,4 @@
-import { GameInfo } from 'lib/game.types'
+import { GameInfo } from 'lib/game'
 import React, { Component } from 'react'
 
 enum OnboardingStep {

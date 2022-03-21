@@ -1,4 +1,4 @@
-import { GameInfo, GameState } from 'lib/game.types'
+import { GameInfo, GameState } from 'lib/game'
 import { getPlayerColor, isPlayer } from 'lib/player'
 import React, { useEffect, useState } from 'react'
 
@@ -69,8 +69,8 @@ export const Board = ({ gameInfo, gameState, placePiece }: BoardProps) => {
         <div key={`row-${row}`} className='Board-Row'>
           {Array.from(Array(gameInfo.columnCount), (e, column) => (
             <div
-              key={`slot-${column}-${row}`}
-              className='Board-Slot'
+              key={`BoardSlot-${column}-${row}`}
+              className='Board-BoardSlot'
               onClick={() => placePiece(column, gameInfo.rowCount - row - 1)}
             />
           ))}

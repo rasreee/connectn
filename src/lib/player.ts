@@ -1,12 +1,7 @@
 export enum Player {
-  PlayerOne,
-  PlayerTwo,
-}
-
-export enum MaybePlayer {
-  None,
-  PlayerOne,
-  PlayerÎATwo,
+  None = 0,
+  PlayerOne = 1,
+  PlayerTwo = 2,
 }
 
 export const isPlayer = (o: any): o is Player => {
@@ -15,3 +10,6 @@ export const isPlayer = (o: any): o is Player => {
 
 export const getPlayerColor = (player: Player) =>
   player === Player.PlayerOne ? 'red' : 'black'
+
+export const getNextPlayer = (currentPlayer: Player): Player =>
+  currentPlayer === Player.PlayerOne ? Player.PlayerTwo : Player.PlayerOne
