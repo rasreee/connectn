@@ -24,6 +24,7 @@ export const BoardGrid = ({
           {Array.from(Array(columnCount), (e, column) => (
             <BoardSlot
               key={`slot-${column}-${row}`}
+              role={`slot-${column}-${row}`}
               onClick={handleSlotClick({ column, row })}
             />
           ))}

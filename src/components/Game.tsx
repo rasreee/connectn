@@ -1,6 +1,6 @@
 import { Slot } from 'lib/board'
 import { createGameInfo, GameInfo, getIsGameActive } from 'lib/game'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { Board } from './Board'
 import { GameActionType } from './gameReducer'
@@ -36,24 +36,14 @@ export const Game = () => {
     playGame()
   }
 
+  useEffect(() => {
+    playGame()
+  }, [])
+
   return (
     <div className='Game'>
       <h1>Let's Play Connect {gameInfo.winNumber}!</h1>
-      <div className='Game_onboarding'>
-        <Onboarding
-          updateGameInfo={updateGameInfo}
-          resetGame={resetGame}
-          playGame={playGame}
-          gameInfo={gameInfo}
-        />
-      </div>
-      {getIsGameActive(state) && (
-        <Board
-          gameInfo={gameInfo}
-          gameState={state}
-          onSlotClick={onSlotClick}
-        />
-      )}
+      <Board gameInfo={gameInfo} gameState={state} onSlotClick={onSlotClick} />
     </div>
   )
 }

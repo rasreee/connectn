@@ -25,9 +25,10 @@
     "noImplicitReturns": true,
     "noImplicitThis": false,
     "alwaysStrict": true,
+    "noUncheckedIndexedAccess": false,
     "baseUrl": "./src",
     "paths": {}
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx"],
+  "include": ["**/*.ts", "**/*.tsx"],
   "exclude": ["node_modules", "build"]
 }
