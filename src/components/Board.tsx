@@ -1,3 +1,4 @@
+import { Slot } from 'lib/board'
 import { GameInfo, GameState } from 'lib/game'
 import { getPlayerColor, isPlayer } from 'lib/player'
 import React, { useEffect, useState } from 'react'
@@ -40,7 +41,7 @@ function BoardPiece(props: any) {
 interface BoardProps {
   gameInfo: GameInfo
   gameState: GameState
-  placePiece: (column: number, row: number) => void
+  placePiece: (slot: Slot) => void
 }
 
 export const Board = ({ gameInfo, gameState, placePiece }: BoardProps) => {
@@ -65,17 +66,46 @@ export const Board = ({ gameInfo, gameState, placePiece }: BoardProps) => {
             ),
         ),
       )}
-      {Array.from(Array(gameInfo.rowCount), (e, row) => (
+      <BoardBackdrop
+        rowCount={gameInfo.rowCount}
+        columnCount={gameInfo.columnCount}
+        placePiece={placePiece}
+      />
+    </div>
+  )
+}
+
+export interface BoardBackdropProps {
+  columnCount: number
+  rowCount: number
+  placePiece: (slot: Slot) => void
+}
+
+export const BoardBackdrop = ({
+  columnCount,
+  rowCount,
+  placePiece,
+}: BoardBackdropProps) => {
+  const handleSlotClick = (slot: Slot) => () => {
+    const { column, row } = slot
+    const normalizedRow = rowCount - row - 1
+
+    placePiece({ column, row: normalizedRow })
+  }
+
+  return (
+    <>
+      {Array.from(Array(rowCount), (e, row) => (
         <div key={`row-${row}`} className='Board-Row'>
-          {Array.from(Array(gameInfo.columnCount), (e, column) => (
+          {Array.from(Array(columnCount), (e, column) => (
             <div
               key={`BoardSlot-${column}-${row}`}
               className='Board-BoardSlot'
-              onClick={() => placePiece(column, gameInfo.rowCount - row - 1)}
+              onClick={handleSlotClick({ column, row })}
             />
           ))}
         </div>
       ))}
-    </div>
+    </>
   )
 }

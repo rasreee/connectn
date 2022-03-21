@@ -1,3 +1,4 @@
+import { Slot } from 'lib/board'
 import {
   createGameInfo,
   createGameState,
@@ -23,7 +24,7 @@ type GameAction =
   | { type: GameActionType.PLAY }
   | {
       type: GameActionType.PLACE_PIECE
-      payload: { column: number; row: number }
+      payload: Slot
     }
 
 const gameReducer = (state: GameState, action: GameAction): GameState => {
@@ -36,8 +37,9 @@ const gameReducer = (state: GameState, action: GameAction): GameState => {
       return { ...state, currentPlayer: Player.PlayerOne }
     }
     case GameActionType.PLACE_PIECE: {
-      const { column, row } = action.payload
       const { board, currentPlayer } = state
+      const { column, row } = action.payload
+      console.log(`Request piece at (${column}, ${row})`)
 
       const newBoard = cloneGrid(board)
       newBoard[column][row] = currentPlayer
@@ -70,11 +72,10 @@ export const Game = () => {
   }
 
   // TODO(2): place piece & check winner
-  const placePiece = (column: number, row: number) => {
-    console.log(`Request piece at (${column}, ${row})`)
+  const placePiece = (slot: Slot) => {
     dispatch({
       type: GameActionType.PLACE_PIECE,
-      payload: { column, row },
+      payload: slot,
     })
   }
 

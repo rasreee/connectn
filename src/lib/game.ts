@@ -1,4 +1,5 @@
-import { createGrid, Grid } from './grid'
+import { Board } from './board'
+import { createGrid } from './grid'
 import { Player } from './player'
 
 export interface GameInfo {
@@ -19,8 +20,6 @@ export enum GameStep {
   Playing = 'Playing',
   Complete = 'Complete',
 }
-
-export type Board = Grid<Player>
 
 export interface GameState {
   // name of current player to place a piece
