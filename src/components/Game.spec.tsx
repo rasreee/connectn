@@ -9,8 +9,7 @@ import { render } from 'testing/react'
 import { Game } from './Game'
 
 /**
- * @group components
- * @group game
+ * @group components/Game
  */
 describe('components/Game', () => {
   beforeEach(() => {
