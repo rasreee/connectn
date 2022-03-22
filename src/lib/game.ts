@@ -35,8 +35,10 @@ export const defaultGameInfo: GameInfo = Object.freeze({
 export const createGameInfo = (): GameInfo => ({ ...defaultGameInfo })
 
 export const createGameState = (
-  gameInfo: GameInfo = defaultGameInfo,
+  initialGameInfo?: Partial<GameInfo>,
 ): GameState => {
+  const gameInfo = { ...defaultGameInfo, ...initialGameInfo }
+
   const { columnCount, rowCount } = gameInfo
 
   return {

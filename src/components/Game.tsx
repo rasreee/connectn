@@ -1,5 +1,5 @@
 import { useGame } from 'game/GameContext'
-import { createBoard, getNextBoard, Slot } from 'lib/board'
+import { createBoard, getNextGameState, Slot } from 'lib/board'
 import { getNextPlayer, isPlayer, Player } from 'lib/player'
 import { useEffect } from 'react'
 
@@ -24,14 +24,7 @@ export const Game = () => {
   // TODO(2): place piece & check winner
   const onSlotClick = (slotClicked: Slot) => {
     setGameState((prevState) => {
-      const { currentPlayer, board } = prevState
-      const { column, row } = slotClicked
-      console.log(`Request player ${currentPlayer} at (${column}, ${row})`)
-      // don't do anything if column is full
-      if (board[column].every((slot) => isPlayer(slot))) return prevState
-      const nextBoard = getNextBoard(board, column, currentPlayer)
-
-      return { board: nextBoard, currentPlayer: getNextPlayer(currentPlayer) }
+      return getNextGameState(prevState, slotClicked.column)
     })
   }
 

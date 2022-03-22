@@ -1,5 +1,6 @@
+import { GameState } from './game'
 import { cloneGrid, createGrid, Grid } from './grid'
-import { isPlayer, Player } from './player'
+import { getNextPlayer, isPlayer, Player } from './player'
 
 export type BoardData = Grid<Player>
 
@@ -50,20 +51,21 @@ export const getNextRow = (column: Player[]): number | null => {
   return row
 }
 
-export const getNextBoard = (
-  initialBoard: BoardData,
+export const getNextGameState = (
+  initialState: GameState,
   column: number,
-  currentPlayer: Player,
-): BoardData => {
+): GameState => {
+  const { board: initialBoard, currentPlayer } = initialState
+
   const nextRow = getNextRow(initialBoard[column])
-  if (nextRow === null) return initialBoard
+  if (nextRow === null) return initialState
 
   const slotToPlacePiece = { column, row: nextRow }
-  console.log(`Placing piece at (${column}, ${nextRow})`)
+  console.log(`Placing player ${currentPlayer} at (${column}, ${nextRow})`)
 
   let nextBoard = cloneGrid<Player>(initialBoard)
-
   nextBoard = markBoard(nextBoard, slotToPlacePiece, currentPlayer)
 
-  return nextBoard
+  const nextPlayer = getNextPlayer(currentPlayer)
+  return { board: nextBoard, currentPlayer: nextPlayer }
 }

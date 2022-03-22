@@ -3,8 +3,8 @@
  * @group board
  */
 
-import { getNextBoard, getNextRow } from './board'
-import { createGrid } from './grid'
+import { getNextGameState, getNextRow } from './board'
+import { createGameState } from './game'
 import { Player } from './player'
 
 describe('lib/board', () => {
@@ -14,35 +14,34 @@ describe('lib/board', () => {
     expect(getNextRow([Player.PlayerOne, Player.PlayerOne])).toEqual(null)
   })
 
-  it('getNextBoard', () => {
-    const startingBoard = createGrid<Player>(2, 2, Player.None)
-    const currentPlayer = Player.PlayerOne
-    let nextBoard = getNextBoard(startingBoard, 0, currentPlayer)
-    expect(nextBoard).toEqual([
+  it('getNextGameState', () => {
+    const startingState = createGameState({ columnCount: 2, rowCount: 2 })
+    let nextGameState = getNextGameState(startingState, 0)
+    expect(nextGameState.board).toEqual([
       [1, 0],
       [0, 0],
     ])
 
-    nextBoard = getNextBoard(nextBoard, 0, currentPlayer)
-    expect(nextBoard).toEqual([
+    nextGameState = getNextGameState(nextGameState, 0)
+    expect(nextGameState.board).toEqual([
       [1, 1],
       [0, 0],
     ])
 
-    nextBoard = getNextBoard(nextBoard, 0, Player.PlayerTwo)
-    expect(nextBoard).toEqual([
+    nextGameState = getNextGameState(nextGameState, 0)
+    expect(nextGameState.board).toEqual([
       [1, 1],
       [0, 0],
     ])
 
-    nextBoard = getNextBoard(nextBoard, 1, currentPlayer)
-    expect(nextBoard).toEqual([
+    nextGameState = getNextGameState(nextGameState, 1)
+    expect(nextGameState.board).toEqual([
       [1, 1],
       [1, 0],
     ])
 
-    nextBoard = getNextBoard(nextBoard, 1, currentPlayer)
-    expect(nextBoard).toEqual([
+    nextGameState = getNextGameState(nextGameState, 1)
+    expect(nextGameState.board).toEqual([
       [1, 1],
       [1, 1],
     ])
