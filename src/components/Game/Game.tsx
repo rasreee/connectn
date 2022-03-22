@@ -7,6 +7,7 @@ import { Player } from 'lib/player'
 import { useState } from 'react'
 
 import { GameInfoProvider } from './GameInfoProvider'
+import { GameStatusBar } from './GameStatusBar'
 
 // Component that holds the structure of the game
 export const Game = ({ gameInfo }: { gameInfo: GameInfo }) => {
@@ -27,8 +28,9 @@ export const Game = ({ gameInfo }: { gameInfo: GameInfo }) => {
 
   return (
     <GameInfoProvider gameInfo={gameInfo}>
-      <Container>
+      <Container role='contentinfo'>
         <h1>Let's Play Connect {gameInfo.winNumber}!</h1>
+        <GameStatusBar />
         <Board
           gameState={gameState}
           gameInfo={gameInfo}

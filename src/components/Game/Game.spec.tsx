@@ -4,7 +4,7 @@ import userEvent from '@testing-library/user-event'
 import { createGameInfo } from 'lib/game'
 import { PlayerColor } from 'lib/player'
 import { muteConsole } from 'test-utils/muteConsole'
-import { render } from 'test-utils/react'
+import { render, screen } from 'test-utils/react'
 
 import { Game } from './Game'
 
@@ -17,39 +17,42 @@ describe('components/Game', () => {
   })
 
   it('renders without crashing', () => {
-    const gameInfo = createGameInfo({ columnCount: 2, rowCount: 2 })
+    const gameInfo = createGameInfo({
+      columnCount: 2,
+      rowCount: 2,
+      winNumber: 2,
+    })
     render(<Game gameInfo={gameInfo} />)
   })
 
   it('places piece', () => {
     const gameInfo = createGameInfo({ columnCount: 2, rowCount: 2 })
-    const result = render(<Game gameInfo={gameInfo} />)
+    const renderResult = render(<Game gameInfo={gameInfo} />)
 
-    let slotEl = result.getByRole(`slot-0-0`)
-    userEvent.click(slotEl)
-    let pieceEl = result.getByRole(`piece-0-0`)
-    expect(pieceEl).toBeVisible()
-    expect(pieceEl).toHaveStyle(`color: ${PlayerColor.PlayerOne};`)
-
-    slotEl = result.getByRole(`slot-0-1`)
-    userEvent.click(slotEl)
-    pieceEl = result.getByRole(`piece-0-1`)
-    expect(pieceEl).toBeVisible()
-    expect(pieceEl).toHaveStyle(`color: ${PlayerColor.PlayerTwo};`)
+    // fill up first column
+    let slotElement = renderResult.getByRole(`slot-0-0`)
+    userEvent.click(slotElement)
+    let pieceElement = renderResult.getByRole(`piece-0-0`)
+    expect(pieceElement).toBeVisible()
+    expect(pieceElement).toHaveStyle(`color: ${PlayerColor.PlayerOne};`)
+    slotElement = renderResult.getByRole(`slot-0-1`)
+    userEvent.click(slotElement)
+    pieceElement = renderResult.getByRole(`piece-0-1`)
+    expect(pieceElement).toBeVisible()
+    expect(pieceElement).toHaveStyle(`color: ${PlayerColor.PlayerTwo};`)
     // click same slot again - should stay the same color
-    userEvent.click(slotEl)
-    expect(pieceEl).toHaveStyle(`color: ${PlayerColor.PlayerTwo};`)
+    userEvent.click(slotElement)
+    expect(pieceElement).toHaveStyle(`color: ${PlayerColor.PlayerTwo};`)
 
     // fill up the rest of the board
-    slotEl = result.getByRole(`slot-1-0`)
-    userEvent.click(slotEl)
-    pieceEl = result.getByRole(`piece-1-0`)
-    expect(pieceEl).toBeVisible()
-    expect(pieceEl).toHaveStyle(`color: ${PlayerColor.PlayerOne};`)
-    slotEl = result.getByRole(`slot-1-1`)
-    userEvent.click(slotEl)
-    pieceEl = result.getByRole(`piece-1-1`)
-    expect(pieceEl).toBeVisible()
-    expect(pieceEl).toHaveStyle(`color: ${PlayerColor.PlayerTwo};`)
+    slotElement = renderResult.getByRole(`slot-1-0`)
+    userEvent.click(slotElement)
+    pieceElement = renderResult.getByRole(`piece-1-0`)
+    expect(pieceElement).toBeVisible()
+    expect(pieceElement).toHaveStyle(`color: ${PlayerColor.PlayerOne};`)
+
+    const gameElement = screen.getByRole('contentinfo')
+    // game ends with Player One as winner
+    expect(gameElement).toHaveTextContent('Player One is winner')
   })
 })
