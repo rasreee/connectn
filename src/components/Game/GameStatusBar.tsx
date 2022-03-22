@@ -2,13 +2,12 @@ import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import { useGameInfo } from 'contexts/GameInfoContext'
 import { GameState } from 'lib/game'
-import { getOutcome } from 'lib/outcome'
-import { getPlayerColor, Player } from 'lib/player'
+import { findWinner, isDrawn } from 'lib/outcome'
+import { getPlayerColor, isPlayer, Player } from 'lib/player'
 
 export const GameStatusBar = ({ gameState }: { gameState: GameState }) => {
-  const { currentPlayer } = gameState
+  const { currentPlayer, board, lastPlacedPiece } = gameState
   const { gameInfo } = useGameInfo()
-  const outcome = getOutcome(gameState.board, gameInfo.winNumber)
 
   const getPlayerName = (player: Player) => {
     return player === Player.PlayerOne
@@ -17,24 +16,23 @@ export const GameStatusBar = ({ gameState }: { gameState: GameState }) => {
   }
 
   const renderContent = () => {
-    switch (outcome.type) {
-      case 'draw':
-        return <>Draw!</>
-      case 'win':
-        return <>{getPlayerName(outcome.winner)} wins!</>
-      default:
-        return (
-          <>
-            <Circle color={getPlayerColor(currentPlayer)} />
-            <span>
-              <Strong color={getPlayerColor(currentPlayer)}>
-                {getPlayerName(currentPlayer)}
-              </Strong>
-              's turn
-            </span>
-          </>
-        )
-    }
+    const winner = findWinner(board, lastPlacedPiece, gameInfo.winNumber)
+
+    if (isPlayer(winner)) return <>{getPlayerName(winner)}</>
+
+    if (isDrawn(board)) return <>Draw!</>
+
+    return (
+      <>
+        <Circle color={getPlayerColor(currentPlayer)} />
+        <span>
+          <Strong color={getPlayerColor(currentPlayer)}>
+            {getPlayerName(currentPlayer)}
+          </Strong>
+          's turn
+        </span>
+      </>
+    )
   }
 
   return <Container>{renderContent()}</Container>

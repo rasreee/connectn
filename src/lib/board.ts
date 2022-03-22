@@ -1,8 +1,13 @@
-import { GameState } from './game'
-import { cloneGrid, createGrid, Grid, setGridSlot } from './grid'
-import { getNextPlayer, isPlayer, Player } from './player'
+import { createGrid, Grid } from './grid'
+import { Player } from './player'
 
 export type BoardData = Grid<Player>
+
+export interface Piece {
+  placedBy: Player
+  column: number
+  row: number
+}
 
 /**
  * Initializes the 2d array representing the game board
@@ -14,32 +19,10 @@ export const createBoard = (
   return createGrid<Player>(columnCount, rowCount, Player.None)
 }
 
-export const getNextRow = (column: Player[]): number | null => {
-  if (column.every((value) => isPlayer(value))) return null
-
-  let row = 0
-
-  while (row < column.length && column[row] !== Player.None) {
-    row += 1
-  }
-
-  return row
-}
-
-export const getNextGameState = (
-  initialState: GameState,
+export const createPiece = (
+  placedBy: Player,
   column: number,
-): GameState => {
-  const { board: initialBoard, currentPlayer } = initialState
-
-  const nextRow = getNextRow(initialBoard[column])
-  if (nextRow === null) return initialState
-
-  console.log(`Placing player ${currentPlayer} at (${column}, ${nextRow})`)
-
-  let nextBoard = cloneGrid<Player>(initialBoard)
-  nextBoard = setGridSlot(nextBoard, column, nextRow, currentPlayer)
-
-  const nextPlayer = getNextPlayer(currentPlayer)
-  return { board: nextBoard, currentPlayer: nextPlayer }
+  row: number,
+): Piece => {
+  return { placedBy, column, row }
 }

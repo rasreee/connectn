@@ -69,72 +69,6 @@ export const createPoint = (x: number, y: number): Coordinates => {
   return [x, y]
 }
 
-export const getAllLinesInRow = (
-  y: number,
-  length: number,
-  columnCount: number,
-): Line[] => {
-  const lines: Line[] = []
-
-  for (let startX = 0; startX <= columnCount - length; startX++) {
-    const line: Line = []
-    for (let dx = 0; dx < length; dx++) {
-      line.push(createPoint(startX + dx, y))
-    }
-
-    lines.push(line)
-  }
-
-  return lines
-}
-
-export const getAllHorizontalLines = (
-  columnCount: number,
-  rowCount: number,
-  length: number,
-): Line[] => {
-  let lines: Line[] = []
-  for (let y = 0; y < rowCount; y++) {
-    const linesInRow = getAllLinesInRow(y, length, columnCount)
-    lines = lines.concat(linesInRow)
-  }
-
-  return lines
-}
-
-export const getAllLinesInColumn = (
-  x: number,
-  length: number,
-  columnCount: number,
-): Line[] => {
-  const lines: Line[] = []
-
-  for (let startY = 0; startY <= columnCount - length; startY++) {
-    const line: Line = []
-    for (let dy = 0; dy < length; dy++) {
-      line.push(createPoint(x, startY + dy))
-    }
-
-    lines.push(line)
-  }
-
-  return lines
-}
-
-export const getAllVerticalLines = (
-  columnCount: number,
-  rowCount: number,
-  length: number,
-): Line[] => {
-  let lines: Line[] = []
-  for (let x = 0; x < columnCount; x++) {
-    const linesInColumn = getAllLinesInColumn(x, length, rowCount)
-    lines = lines.concat(linesInColumn)
-  }
-
-  return lines
-}
-
 export const isOutOfBounds = (
   coords: Coordinates,
   columnCount: number,
@@ -145,11 +79,25 @@ export const isOutOfBounds = (
   return x < 0 || x >= columnCount || y < 0 || y >= rowCount
 }
 
-const delta = { ['diagonal-up']: [1, 1], ['diagonal-down']: [-1, -1] }
+export const directions = {
+  North: 'North',
+  East: 'East',
+  NorthEast: 'NorthEast',
+  SouthEast: 'SouthEast',
+} as const
+
+export type Direction = typeof directions[keyof typeof directions]
+
+const delta = {
+  [directions.NorthEast]: [1, 1],
+  [directions.SouthEast]: [-1, -1],
+  [directions.North]: [0, 1],
+  [directions.East]: [1, 0],
+}
 
 export const getNextCoords = (
   coords: Coordinates,
-  direction: 'diagonal-up' | 'diagonal-down',
+  direction: Direction,
 ): Coordinates => {
   const [x, y] = coords
   const [dx, dy] = delta[direction]
@@ -157,13 +105,19 @@ export const getNextCoords = (
   return createPoint(x + dx, y + dy)
 }
 
-export const getAllLinesInDiagonal = (
-  start: Coordinates,
-  length: number,
-  columnCount: number,
-  rowCount: number,
-  direction: 'diagonal-up' | 'diagonal-down',
-): Line[] => {
+export const getLinesInDirectionStartingAt = ({
+  start,
+  length,
+  columnCount,
+  rowCount,
+  direction,
+}: {
+  start: Coordinates
+  length: number
+  columnCount: number
+  rowCount: number
+  direction: Direction
+}): Line[] => {
   const lines: Line[] = []
 
   let line: Line = []
@@ -173,59 +127,59 @@ export const getAllLinesInDiagonal = (
     if (line.length === length) {
       lines.push(line)
       line = []
-      break
+      const nextCoords = getNextCoords(start, direction)
+      coords = nextCoords
+      continue
     }
     line.push(coords)
-    coords = getNextCoords(coords, direction)
+    const nextCoords = getNextCoords(coords, direction)
+    coords = nextCoords
   }
 
   return lines
 }
 
-export const getAllDiagonalLines = (
+export const getLinesInDirection = ({
+  direction,
+  columnCount,
+  rowCount,
+  length,
+}: {
+  direction: Direction
+  columnCount: number
+  rowCount: number
+  length: number
+}): Line[] => {
+  let lines: Line[] = []
+
+  for (let x = 0; x < columnCount; x++) {
+    for (let y = 0; y < rowCount; y++) {
+      const linesInDirection = getLinesInDirectionStartingAt({
+        start: [x, y],
+        length,
+        columnCount,
+        rowCount,
+        direction,
+      })
+      lines = lines.concat(linesInDirection)
+    }
+  }
+
+  return lines
+}
+
+export const getLinesOfLength = (
   columnCount: number,
   rowCount: number,
   length: number,
 ): Line[] => {
   let lines: Line[] = []
 
-  for (let x = 0; x < columnCount; x++) {
-    for (let y = 0; y < rowCount; y++) {
-      const linesInDiagonal = getAllLinesInDiagonal(
-        [x, y],
-        length,
-        columnCount,
-        rowCount,
-        'diagonal-up',
-      )
-      lines = lines.concat(linesInDiagonal)
-    }
-  }
-
-  for (let x = columnCount - 1; x >= 0; x--) {
-    for (let y = rowCount - 1; y >= 0; y--) {
-      const linesInDiagonal = getAllLinesInDiagonal(
-        [x, y],
-        length,
-        columnCount,
-        rowCount,
-        'diagonal-down',
-      )
-      lines = lines.concat(linesInDiagonal)
-    }
-  }
+  Object.values(directions).forEach((direction) => {
+    lines = lines.concat(
+      getLinesInDirection({ direction, columnCount, rowCount, length }),
+    )
+  })
 
   return lines
-}
-
-export const getAllLinesOfLength = (
-  columnCount: number,
-  rowCount: number,
-  length: number,
-): Line[] => {
-  const horizontalLines = getAllHorizontalLines(columnCount, rowCount, length)
-  const verticalLines = getAllVerticalLines(columnCount, rowCount, length)
-  const diagonalLines = getAllDiagonalLines(columnCount, rowCount, length)
-
-  return [...horizontalLines, ...verticalLines, ...diagonalLines]
 }

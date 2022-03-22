@@ -1,4 +1,4 @@
-import { BoardData } from './board'
+import { BoardData, Piece } from './board'
 import { createGrid, Dimensions } from './grid'
 import { Player } from './player'
 
@@ -22,6 +22,8 @@ export interface GameState {
   currentPlayer: Player
   // list of pieces currently placed
   board: BoardData
+  // last placed piece
+  lastPlacedPiece: Piece | null
 }
 
 export const defaultGameInfo: GameInfo = Object.freeze({
@@ -37,14 +39,18 @@ export const createGameInfo = (
 ): GameInfo => ({ ...defaultGameInfo, ...initialData })
 
 export const createGameState = (
-  initialGameInfo?: Partial<GameInfo>,
+  initialGameInfo: Partial<GameInfo> = {},
+  initialGameState: Partial<GameState> = {},
 ): GameState => {
-  const gameInfo = { ...defaultGameInfo, ...initialGameInfo }
+  const gameInfo: GameInfo = { ...defaultGameInfo, ...initialGameInfo }
 
   const { columnCount, rowCount } = gameInfo
 
-  return {
+  const defaultGameState = {
     currentPlayer: Player.PlayerOne,
     board: createGrid<Player>(columnCount, rowCount, Player.None),
+    lastPlacedPiece: null,
   }
+
+  return { ...defaultGameState, ...initialGameState }
 }

@@ -1,11 +1,11 @@
 import styled from '@emotion/styled'
 import { Board } from 'components/Board'
-import { createBoard, getNextGameState } from 'lib/board'
+import { createBoard } from 'lib/board'
 import { createGameState, GameInfo } from 'lib/game'
 import { Slot } from 'lib/grid'
-import { Player } from 'lib/player'
 import { useState } from 'react'
 
+import { getNextGameState } from './Game.helpers'
 import { GameInfoProvider } from './GameInfoProvider'
 import { GameStatusBar } from './GameStatusBar'
 
@@ -16,13 +16,13 @@ export const Game = ({ gameInfo }: { gameInfo: GameInfo }) => {
   // returns to blank state
   const resetGame = () => {
     const newBoard = createBoard(gameInfo.columnCount, gameInfo.rowCount)
-    setGameState({ board: newBoard, currentPlayer: Player.PlayerOne })
+    setGameState(createGameState(gameInfo, { board: newBoard }))
   }
 
   // TODO(2): place piece & check winner
   const onSlotClick = (slotClicked: Slot) => {
     setGameState((prevState) => {
-      return getNextGameState(prevState, slotClicked.column)
+      return getNextGameState(prevState, gameInfo.winNumber, slotClicked.column)
     })
   }
 

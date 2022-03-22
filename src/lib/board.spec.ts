@@ -3,9 +3,9 @@
  * @group board
  */
 
+import { getNextGameState, getNextRow } from 'components/Game/Game.helpers'
 import { muteConsole } from 'test-utils/muteConsole'
 
-import { getNextGameState, getNextRow } from './board'
 import { createGameState } from './game'
 import { Player } from './player'
 
@@ -21,32 +21,33 @@ describe('lib/board', () => {
   })
 
   it('getNextGameState', () => {
+    const winNumber = 2
     const startingState = createGameState({ columnCount: 2, rowCount: 2 })
-    let nextGameState = getNextGameState(startingState, 0)
+    let nextGameState = getNextGameState(startingState, winNumber, 0)
     expect(nextGameState.board).toEqual([
       [1, 0],
       [0, 0],
     ])
 
-    nextGameState = getNextGameState(nextGameState, 0)
+    nextGameState = getNextGameState(nextGameState, winNumber, 0)
     expect(nextGameState.board).toEqual([
       [1, 2],
       [0, 0],
     ])
 
-    nextGameState = getNextGameState(nextGameState, 0)
+    nextGameState = getNextGameState(nextGameState, winNumber, 0)
     expect(nextGameState.board).toEqual([
       [1, 2],
       [0, 0],
     ])
 
-    nextGameState = getNextGameState(nextGameState, 1)
+    nextGameState = getNextGameState(nextGameState, winNumber, 1)
     expect(nextGameState.board).toEqual([
       [1, 2],
       [1, 0],
     ])
 
-    nextGameState = getNextGameState(nextGameState, 1)
+    nextGameState = getNextGameState(nextGameState, winNumber, 1)
     expect(nextGameState.board).toEqual([
       [1, 2],
       [1, 2],

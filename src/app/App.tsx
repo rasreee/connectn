@@ -14,7 +14,7 @@ export const App = () => {
       {initialGameInfo && <Game gameInfo={initialGameInfo} />}
       <Modal isOpen={!initialGameInfo}>
         <GameSetupForm
-          initialGameInfo={defaultGameInfo}
+          initialGameInfo={initialGameInfo ?? defaultGameInfo}
           onSubmit={setInitialGameInfo}
         />
       </Modal>

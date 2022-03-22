@@ -1,25 +1,27 @@
-import { getOutcome } from './outcome'
+import { createPiece } from './board'
+import { findWinner, isDrawn } from './outcome'
 import { Player } from './player'
 
 /**
- * @group lib/outcome
+ * @group outcome
  */
 describe('lib/outcome', () => {
-  it('draw outcome', () => {
+  it('isDrawn()', () => {
     const board = [
       [1, 1],
       [1, 1],
     ]
-    const outcome = getOutcome(board, 2)
-    expect(outcome).toEqual({ type: 'draw' })
+    expect(isDrawn(board)).toEqual(true)
   })
 
-  it('win outcome', () => {
+  it('findWinner()', () => {
     const board = [
-      [1, 1],
-      [0, 0],
+      [1, 2],
+      [1, 0],
     ]
-    const outcome = getOutcome(board, 2)
+    const lastPlacedPiece = createPiece(Player.PlayerOne, 1, 0)
+    const winNumber = 2
+    const outcome = findWinner(board, lastPlacedPiece, winNumber)
     expect(outcome).toEqual({ type: 'win', player: Player.PlayerOne })
   })
 })

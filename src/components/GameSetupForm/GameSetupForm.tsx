@@ -1,7 +1,7 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import { getFormData } from 'lib/form'
-import { defaultGameInfo, GameInfo } from 'lib/game'
+import { GameInfo } from 'lib/game'
 import { useRef } from 'react'
 
 import { BoardSetup, PlayerSetup } from './GameSetupForm.partials'
@@ -21,7 +21,7 @@ export const GameSetupForm = ({
     if (!formElement)
       throw new Error('failed to submit form because formRef.current was null')
 
-    const data = getFormData(formElement, defaultGameInfo)
+    const data = getFormData(formElement, initialGameInfo)
     onSubmit(data)
   }
 
@@ -36,14 +36,12 @@ export const GameSetupForm = ({
           playerTwoName={initialGameInfo.playerTwoName}
         />
         <BoardSetup
-          {...{
-            columnCount: initialGameInfo.columnCount,
-            rowCount: initialGameInfo.rowCount,
-            winNumber: initialGameInfo.winNumber,
-          }}
+          columnCount={initialGameInfo.columnCount}
+          rowCount={initialGameInfo.rowCount}
+          winNumber={initialGameInfo.winNumber}
         />
         <FormFooter>
-          <button type='submit'>Start Game</button>
+          <SubmitButton type='submit'>Start Game</SubmitButton>
         </FormFooter>
       </form>
     </>
@@ -73,3 +71,11 @@ const FormHeader = styled.div(
 )
 
 const FormFooter = styled.div``
+
+const SubmitButton = styled.button(
+  ({ theme }) =>
+    css`
+      color: #fff;
+      background: ${theme.colors.primary['500']};
+    `,
+)
