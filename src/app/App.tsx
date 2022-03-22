@@ -1,17 +1,16 @@
-import { ThemeProvider } from '@emotion/react'
 import { Game } from 'components/Game'
 import { GameSetupForm } from 'components/GameSetupForm'
 import { Modal } from 'components/Modal'
 import { defaultGameInfo, GameInfo } from 'lib/game'
 import { useState } from 'react'
 
-import { theme } from './theme'
+import { AllTheProviders } from './AllTheProviders'
 
 export const App = () => {
   const [initialGameInfo, setInitialGameInfo] = useState<GameInfo | null>(null)
 
   return (
-    <ThemeProvider theme={theme}>
+    <AllTheProviders>
       {initialGameInfo && <Game gameInfo={initialGameInfo} />}
       <Modal isOpen={!initialGameInfo}>
         <GameSetupForm
@@ -19,6 +18,6 @@ export const App = () => {
           onSubmit={setInitialGameInfo}
         />
       </Modal>
-    </ThemeProvider>
+    </AllTheProviders>
   )
 }

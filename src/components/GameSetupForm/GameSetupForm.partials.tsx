@@ -53,25 +53,21 @@ export const BoardSetup = ({
   winNumber: number
 } & Dimensions) => {
   return (
-    <FormSection>
-      <div>
+    <>
+      <FormSection>
         <div className='form-section-title'>Board dimensions</div>
-        <div>
-          <div className='form-input-row'>
-            <input
-              type='number'
-              name='columnCount'
-              defaultValue={columnCount}
-            />
-            <div>x</div>
-            <input type='number' name='rowCount' defaultValue={rowCount} />
-          </div>
+        <div className='form-input-row'>
+          <input type='number' name='columnCount' defaultValue={columnCount} />
+          <div>x</div>
+          <input type='number' name='rowCount' defaultValue={rowCount} />
         </div>
+      </FormSection>
+      <FormSection>
         <div className='form-section-title'>How many in a row to win?</div>
         <div className='form-input-row'>
           <input type='number' name='winNumber' defaultValue={winNumber} />
         </div>
-      </div>
-    </FormSection>
+      </FormSection>
+    </>
   )
 }

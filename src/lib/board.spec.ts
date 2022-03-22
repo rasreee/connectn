@@ -3,7 +3,7 @@
  * @group board
  */
 
-import { muteConsole } from 'testing/muteConsole'
+import { muteConsole } from 'test-utils/muteConsole'
 
 import { getNextGameState, getNextRow } from './board'
 import { createGameState } from './game'

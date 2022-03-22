@@ -38,7 +38,7 @@ const BoardColumn = ({ column, data }: BoardColumnProps) => {
 
 export const Board = ({ gameInfo, gameState, onSlotClick }: BoardProps) => {
   return (
-    <SBoard columnCount={gameInfo.columnCount} rowCount={gameInfo.rowCount}>
+    <Container columnCount={gameInfo.columnCount} rowCount={gameInfo.rowCount}>
       {gameState.board.map((data, column) => (
         <BoardColumn
           key={`BoardColumn-${column}`}
@@ -51,11 +51,11 @@ export const Board = ({ gameInfo, gameState, onSlotClick }: BoardProps) => {
         columnCount={gameInfo.columnCount}
         onSlotClick={onSlotClick}
       />
-    </SBoard>
+    </Container>
   )
 }
 
-const SBoard = styled.div<Dimensions>(
+const Container = styled.div<Dimensions>(
   css`
     display: flex;
     flex-direction: column;

@@ -3,10 +3,10 @@ import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import { createGameInfo } from 'lib/game'
 import { PlayerColor } from 'lib/player'
-import { muteConsole } from 'testing/muteConsole'
-import { render } from 'testing/react'
+import { muteConsole } from 'test-utils/muteConsole'
+import { render } from 'test-utils/react'
 
-import { Game } from './Game'
+import { Game } from '.'
 
 /**
  * @group components/Game

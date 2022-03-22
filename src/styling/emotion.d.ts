@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
 import { Interpolation } from '@emotion/react'
 import {} from '@emotion/react/types/css-prop' // See https://github.com/emotion-js/emotion/pull/1941
-import { Theme as AppTheme } from 'app/theme'
-import { Styling } from 'lib/styling'
+
+import { Styling } from './styling'
+import { Theme as AppTheme } from './theme'
 
 declare module '@emotion/react' {
   export interface Theme extends AppTheme {}

@@ -1,11 +1,12 @@
-import { GameInfoProvider } from 'contexts/GameInfoContext'
+import styled from '@emotion/styled'
+import { Board } from 'components/Board'
 import { createBoard, getNextGameState } from 'lib/board'
 import { createGameState, GameInfo } from 'lib/game'
 import { Slot } from 'lib/grid'
 import { Player } from 'lib/player'
 import { useState } from 'react'
 
-import { Board } from './Board'
+import { GameInfoProvider } from './GameInfoProvider'
 
 // Component that holds the structure of the game
 export const Game = ({ gameInfo }: { gameInfo: GameInfo }) => {
@@ -26,14 +27,16 @@ export const Game = ({ gameInfo }: { gameInfo: GameInfo }) => {
 
   return (
     <GameInfoProvider gameInfo={gameInfo}>
-      <div className='Game'>
+      <Container>
         <h1>Let's Play Connect {gameInfo.winNumber}!</h1>
         <Board
           gameState={gameState}
           gameInfo={gameInfo}
           onSlotClick={onSlotClick}
         />
-      </div>
+      </Container>
     </GameInfoProvider>
   )
 }
+
+const Container = styled.div``

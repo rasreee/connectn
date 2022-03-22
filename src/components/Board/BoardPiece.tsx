@@ -39,14 +39,14 @@ export const BoardPiece = (props: BoardPieceProps) => {
   }, [isDropped])
 
   return (
-    <SBoardPiece
+    <StyledBoardPiece
       role={`piece-${column}-${row}`}
       style={isDropped ? droppedStyle : baseStyle}
     />
   )
 }
 
-const SBoardPiece = styled.div`
+const StyledBoardPiece = styled.div`
   position: absolute;
   background-color: currentColor;
   pointer-events: none;

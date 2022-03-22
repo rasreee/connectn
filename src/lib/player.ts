@@ -7,7 +7,7 @@ export enum Player {
 export const PlayerColor = {
   PlayerOne: 'red',
   PlayerTwo: 'black',
-}
+} as const
 
 export const isPlayer = (o: any): o is Player => {
   return [1, 2].includes(o)

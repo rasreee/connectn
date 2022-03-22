@@ -1,7 +1,7 @@
 import '@testing-library/jest-dom'
 
 import { createGameInfo, createGameState } from 'lib/game'
-import { render } from 'testing/react'
+import { render } from 'test-utils/react'
 
 import { Board } from './Board'
 

@@ -1,11 +1,5 @@
-import { defaultGameInfo, GameInfo } from 'lib/game'
-import {
-  createContext,
-  Dispatch,
-  SetStateAction,
-  useContext,
-  useState,
-} from 'react'
+import { GameInfo } from 'lib/game'
+import { createContext, Dispatch, SetStateAction, useContext } from 'react'
 
 export interface IGameInfoContext {
   gameInfo: GameInfo
@@ -25,21 +19,4 @@ export const useGameInfo = (): IGameInfoContext => {
     )
 
   return { ...context }
-}
-
-export interface GameInfoProviderProps {
-  gameInfo?: GameInfo
-}
-
-export const GameInfoProvider: React.FC<GameInfoProviderProps> = ({
-  children,
-  gameInfo: initialGameInfo = defaultGameInfo,
-}) => {
-  const [gameInfo, setGameInfo] = useState(initialGameInfo)
-
-  return (
-    <GameInfoContext.Provider value={{ gameInfo, setGameInfo }}>
-      {children}
-    </GameInfoContext.Provider>
-  )
 }

@@ -9,7 +9,21 @@ export interface ModalProps {
   children: ReactNode
 }
 
-const SOverlay = styled.div`
+export function Modal({ isOpen, onClose, children }: ModalProps) {
+  const modalRef = useRef<HTMLDivElement | null>(null)
+
+  useClickOutside(modalRef, () => onClose && onClose())
+
+  if (!isOpen) return null
+
+  return (
+    <Overlay>
+      <Card ref={modalRef}>{children}</Card>
+    </Overlay>
+  )
+}
+
+const Overlay = styled.div`
   position: fixed;
   left: 0;
   right: 0;
@@ -23,7 +37,7 @@ const SOverlay = styled.div`
   flex-direction: column;
 `
 
-const SModal = styled.div(
+const Card = styled.div(
   ({ theme }) => css`
     display: flex;
     flex-direction: column;
@@ -39,17 +53,3 @@ const SModal = styled.div(
     border-radius: ${theme.radii.lg};
   `,
 )
-
-export function Modal({ isOpen, onClose, children }: ModalProps) {
-  const modalRef = useRef<HTMLDivElement | null>(null)
-
-  useClickOutside(modalRef, () => onClose && onClose())
-
-  if (!isOpen) return null
-
-  return (
-    <SOverlay>
-      <SModal ref={modalRef}>{children}</SModal>
-    </SOverlay>
-  )
-}
