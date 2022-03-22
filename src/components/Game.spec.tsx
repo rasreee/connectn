@@ -1,6 +1,7 @@
 import '@testing-library/jest-dom'
 
 import userEvent from '@testing-library/user-event'
+import { createGameInfo } from 'lib/game'
 import { PlayerColor } from 'lib/player'
 import { muteConsole } from 'testing/muteConsole'
 import { render } from 'testing/react'
@@ -17,11 +18,13 @@ describe('components/Game', () => {
   })
 
   it('renders without crashing', () => {
-    render(<Game />)
+    const gameInfo = createGameInfo({ columnCount: 2, rowCount: 2 })
+    render(<Game gameInfo={gameInfo} />)
   })
 
   it('places piece', () => {
-    const result = render(<Game />)
+    const gameInfo = createGameInfo({ columnCount: 2, rowCount: 2 })
+    const result = render(<Game gameInfo={gameInfo} />)
 
     let slotEl = result.getByRole(`slot-0-0`)
     userEvent.click(slotEl)
@@ -50,7 +53,8 @@ describe('components/Game', () => {
 
   describe('given column is full and column is clicked', () => {
     it('should remain the same', () => {
-      const result = render(<Game />)
+      const gameInfo = createGameInfo({ columnCount: 2, rowCount: 2 })
+      const result = render(<Game gameInfo={gameInfo} />)
 
       let slotEl = result.getByRole(`slot-0-0`)
       userEvent.click(slotEl)

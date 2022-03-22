@@ -1,13 +1,13 @@
 import { ThemeProvider } from '@emotion/react'
 import { render, RenderOptions } from '@testing-library/react'
 import { theme } from 'app/theme'
-import { GameProvider } from 'game/GameProvider'
+import { GameInfoProvider } from 'contexts/GameInfoContext'
 import { FC, ReactElement } from 'react'
 
 const AllTheProviders: FC = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
-      <GameProvider>{children}</GameProvider>
+      <GameInfoProvider>{children}</GameInfoProvider>
     </ThemeProvider>
   )
 }

@@ -1,0 +1,38 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  padding: var(--modal-padding);
+  padding-left: 1.75rem;
+  padding-right: 1.75rem;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.sectionTitle {
+  font-weight: var(--font-medium);
+  font-size: var(--text-sm);
+  line-height: var(--leading-none);
+  text-align: left;
+}
+
+.inputRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 5px 0 10px;
+}
+
+.footer {
+  padding: var(--modal-padding);
+}
+
+.submitButton {
+  width: 100%;
+  margin: 0 auto;
+}

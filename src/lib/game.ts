@@ -32,7 +32,9 @@ export const defaultGameInfo: GameInfo = Object.freeze({
   winNumber: 4,
 })
 
-export const createGameInfo = (): GameInfo => ({ ...defaultGameInfo })
+export const createGameInfo = (
+  initialData: Partial<GameInfo> = {},
+): GameInfo => ({ ...defaultGameInfo, ...initialData })
 
 export const createGameState = (
   initialGameInfo?: Partial<GameInfo>,

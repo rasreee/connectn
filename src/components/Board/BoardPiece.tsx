@@ -4,7 +4,7 @@
 // - how does the distance dropped affect the time it takes to land?
 
 import styled from '@emotion/styled'
-import { useGame } from 'game/GameContext'
+import { useGameInfo } from 'contexts/GameInfoContext'
 import { Slot } from 'lib/board'
 import { useEffect, useState } from 'react'
 
@@ -15,7 +15,7 @@ export interface BoardPieceProps extends Slot {
 // - there is some boiler plate here to help, but feel free to go with a different approach if you are more comfortable
 export const BoardPiece = (props: BoardPieceProps) => {
   const { color, column, row } = props
-  const { gameInfo } = useGame()
+  const { gameInfo } = useGameInfo()
   const [isDropped, setIsDropped] = useState(false)
 
   const baseStyle = {

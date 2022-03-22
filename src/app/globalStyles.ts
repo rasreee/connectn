@@ -10,4 +10,20 @@ export const globalStyles = css`
     padding: 0;
     font-family: sans-serif;
   }
+
+  button {
+    background: unset;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  button[disabled],
+  button[aria-disabled='true'],
+  button[data-disabled] {
+    cursor: default;
+  }
 `

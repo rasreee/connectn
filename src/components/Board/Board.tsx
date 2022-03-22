@@ -1,7 +1,7 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import { Dimensions, Slot } from 'lib/board'
-import { GameInfo, GameState, getDimensions } from 'lib/game'
+import { GameInfo, GameState } from 'lib/game'
 import { getPlayerColor, isPlayer, Player } from 'lib/player'
 
 import { BoardGrid } from './BoardGrid'
@@ -38,16 +38,14 @@ const BoardColumn = ({ column, data }: BoardColumnProps) => {
 
 export const Board = ({ gameInfo, gameState, onSlotClick }: BoardProps) => {
   return (
-    <SBoard {...getDimensions(gameInfo)}>
-      <>
-        {gameState.board.map((data, column) => (
-          <BoardColumn
-            key={`BoardColumn-${column}`}
-            column={column}
-            data={data}
-          />
-        ))}
-      </>
+    <SBoard columnCount={gameInfo.columnCount} rowCount={gameInfo.rowCount}>
+      {gameState.board.map((data, column) => (
+        <BoardColumn
+          key={`BoardColumn-${column}`}
+          column={column}
+          data={data}
+        />
+      ))}
       <BoardGrid
         rowCount={gameInfo.rowCount}
         columnCount={gameInfo.columnCount}
