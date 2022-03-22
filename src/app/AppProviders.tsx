@@ -4,7 +4,7 @@ import { theme } from 'styling/theme'
 
 import { globalStyles } from './globalStyles'
 
-export const AllTheProviders: FC = ({ children }) => {
+export const AppProviders: FC = ({ children }) => {
   return (
     <ThemeProvider theme={theme}>
       <Global styles={globalStyles} />
