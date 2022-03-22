@@ -48,12 +48,3 @@ export const createGameState = (
     board: createGrid<Player>(columnCount, rowCount, Player.None),
   }
 }
-
-export const getIsGameActive = (state: GameState): boolean => {
-  return state.currentPlayer !== Player.None
-}
-
-export const getDimensions = (gameInfo: GameInfo): Dimensions => ({
-  columnCount: gameInfo.columnCount,
-  rowCount: gameInfo.rowCount,
-})
