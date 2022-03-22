@@ -2,7 +2,7 @@ import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import { Dimensions, Slot } from 'lib/board'
 import { GameInfo, GameState, getDimensions } from 'lib/game'
-import { getPlayerColor, isPlayer } from 'lib/player'
+import { getPlayerColor, isPlayer, Player } from 'lib/player'
 
 import { BoardGrid } from './BoardGrid'
 import { BoardPiece } from './BoardPiece'
@@ -13,27 +13,41 @@ interface BoardProps {
   onSlotClick: (slot: Slot) => void
 }
 
-export const Board = ({ gameInfo, gameState, onSlotClick }: BoardProps) => {
-  const renderPieces = () => {
-    return gameState.board.map((column, columnIndex) =>
-      column.map(
+interface BoardColumnProps {
+  column: number
+  data: Player[]
+}
+
+const BoardColumn = ({ column, data }: BoardColumnProps) => {
+  return (
+    <>
+      {data.map(
         (value, rowIndex) =>
           isPlayer(value) && (
             <BoardPiece
-              key={`col${columnIndex}-row${rowIndex}`}
-              gameInfo={gameInfo}
-              column={columnIndex}
-              row={columnIndex}
+              key={`col${column}-row${rowIndex}`}
+              column={column}
+              row={rowIndex}
               color={getPlayerColor(value)}
             />
           ),
-      ),
-    )
-  }
+      )}
+    </>
+  )
+}
 
+export const Board = ({ gameInfo, gameState, onSlotClick }: BoardProps) => {
   return (
     <SBoard {...getDimensions(gameInfo)}>
-      {renderPieces()}
+      <>
+        {gameState.board.map((data, column) => (
+          <BoardColumn
+            key={`BoardColumn-${column}`}
+            column={column}
+            data={data}
+          />
+        ))}
+      </>
       <BoardGrid
         rowCount={gameInfo.rowCount}
         columnCount={gameInfo.columnCount}

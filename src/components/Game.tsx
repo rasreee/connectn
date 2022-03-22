@@ -1,39 +1,38 @@
-import { Slot } from 'lib/board'
-import { createGameInfo, GameInfo, getIsGameActive } from 'lib/game'
-import { useEffect, useState } from 'react'
+import { useGame } from 'game/GameContext'
+import { createBoard, getNextBoard, Slot } from 'lib/board'
+import { getNextPlayer, isPlayer, Player } from 'lib/player'
+import { useEffect } from 'react'
 
 import { Board } from './Board'
-import { GameActionType } from './gameReducer'
-import { Onboarding } from './Onboarding'
-import { useGameReducer } from './useGameReducer'
 
 // Component that holds the structure of the game
 export const Game = () => {
-  const [gameInfo, setGameInfo] = useState(createGameInfo())
-  const [state, dispatch] = useGameReducer(gameInfo)
+  const { gameState, setGameState, gameInfo } = useGame()
 
-  // TODO(1): game state
   // returns to blank state
-  const resetGame = () =>
-    dispatch({ type: GameActionType.RESET, payload: { gameInfo } })
+  const resetGame = () => {
+    const newBoard = createBoard(gameInfo.columnCount, gameInfo.rowCount)
+    setGameState({ board: newBoard, currentPlayer: Player.PlayerOne })
+  }
 
   // TODO(1): game state
   // - what needs to happen when the game is started?
   const playGame = () => {
-    dispatch({ type: GameActionType.PLAY })
+    resetGame()
   }
 
   // TODO(2): place piece & check winner
   const onSlotClick = (slotClicked: Slot) => {
-    dispatch({
-      type: GameActionType.PLACE_PIECE,
-      payload: slotClicked,
-    })
-  }
+    setGameState((prevState) => {
+      const { currentPlayer, board } = prevState
+      const { column, row } = slotClicked
+      console.log(`Request player ${currentPlayer} at (${column}, ${row})`)
+      // don't do anything if column is full
+      if (board[column].every((slot) => isPlayer(slot))) return prevState
+      const nextBoard = getNextBoard(board, column, currentPlayer)
 
-  const updateGameInfo = (newGameInfo: GameInfo) => {
-    setGameInfo(newGameInfo)
-    playGame()
+      return { board: nextBoard, currentPlayer: getNextPlayer(currentPlayer) }
+    })
   }
 
   useEffect(() => {
@@ -43,7 +42,11 @@ export const Game = () => {
   return (
     <div className='Game'>
       <h1>Let's Play Connect {gameInfo.winNumber}!</h1>
-      <Board gameInfo={gameInfo} gameState={state} onSlotClick={onSlotClick} />
+      <Board
+        gameState={gameState}
+        gameInfo={gameInfo}
+        onSlotClick={onSlotClick}
+      />
     </div>
   )
 }

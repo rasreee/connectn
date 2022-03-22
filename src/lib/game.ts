@@ -1,4 +1,4 @@
-import { Board, Dimensions } from './board'
+import { BoardData, Dimensions } from './board'
 import { createGrid } from './grid'
 import { Player } from './player'
 
@@ -21,7 +21,7 @@ export interface GameState {
   // name of current player to place a piece
   currentPlayer: Player
   // list of pieces currently placed
-  board: Board
+  board: BoardData
 }
 
 const defaultGameInfo: GameInfo = {
@@ -40,7 +40,7 @@ export const createGameState = (
   const { columnCount, rowCount } = gameInfo
 
   return {
-    currentPlayer: Player.None,
+    currentPlayer: Player.PlayerOne,
     board: createGrid<Player>(columnCount, rowCount, Player.None),
   }
 }

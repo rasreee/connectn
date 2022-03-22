@@ -1,8 +1,13 @@
-import { render, screen } from '@testing-library/react'
+import '@testing-library/jest-dom'
+
 import userEvent from '@testing-library/user-event'
 import { muteConsole } from 'testing/muteConsole'
+import { render } from 'testing/react'
 
 import { Game } from './Game'
+
+const PLAYER_ONE_COLOR = 'color: red;'
+const PLAYER_TWO_COLOR = 'color: black;'
 
 /**
  * @group components
@@ -20,10 +25,18 @@ describe('components/Game', () => {
   it('places piece', () => {
     const result = render(<Game />)
 
-    const slot = { column: 0, row: 0 }
-    const slotEl = result.getByRole('slot-0-0')
+    let slotEl = result.getByRole(`slot-0-0`)
     userEvent.click(slotEl)
 
-    // const pieceEl = result.queryByTestId('piece-0-0')
+    let pieceEl = result.getByRole(`piece-0-0`)
+    expect(pieceEl).toBeVisible()
+    expect(pieceEl).toHaveStyle(PLAYER_ONE_COLOR)
+
+    slotEl = result.getByRole(`slot-1-0`)
+    userEvent.click(slotEl)
+
+    pieceEl = result.getByRole(`piece-1-0`)
+    expect(pieceEl).toBeVisible()
+    expect(pieceEl).toHaveStyle(PLAYER_TWO_COLOR)
   })
 })

@@ -32,7 +32,7 @@ export const gameReducer = (
     case GameActionType.PLACE_PIECE: {
       const { board, currentPlayer } = state
       const { column, row } = action.payload
-      console.log(`Request piece at (${column}, ${row})`)
+      console.log(`Request player ${currentPlayer} at (${column}, ${row})`)
       // don't do anything if column is full
       if (state.board[column].every((slot) => isPlayer(slot))) return state
 
