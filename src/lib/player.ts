@@ -14,7 +14,7 @@ export const isPlayer = (o: any): o is Player => {
 }
 
 export const getPlayerColor = (player: Player) =>
-  player === Player.PlayerOne ? 'red' : 'black'
+  player === Player.PlayerOne ? PlayerColor.PlayerOne : PlayerColor.PlayerTwo
 
 export const getNextPlayer = (currentPlayer: Player): Player =>
   currentPlayer === Player.PlayerOne ? Player.PlayerTwo : Player.PlayerOne
