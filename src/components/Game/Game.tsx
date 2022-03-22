@@ -30,7 +30,7 @@ export const Game = ({ gameInfo }: { gameInfo: GameInfo }) => {
     <GameInfoProvider gameInfo={gameInfo}>
       <Container role='contentinfo'>
         <h1>Let's Play Connect {gameInfo.winNumber}!</h1>
-        <GameStatusBar />
+        <GameStatusBar gameState={gameState} />
         <Board
           gameState={gameState}
           gameInfo={gameInfo}
