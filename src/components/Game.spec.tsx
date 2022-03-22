@@ -1,13 +1,11 @@
 import '@testing-library/jest-dom'
 
 import userEvent from '@testing-library/user-event'
+import { PlayerColor } from 'lib/player'
 import { muteConsole } from 'testing/muteConsole'
 import { render } from 'testing/react'
 
 import { Game } from './Game'
-
-const PLAYER_ONE_COLOR = 'color: red;'
-const PLAYER_TWO_COLOR = 'color: black;'
 
 /**
  * @group components
@@ -30,13 +28,13 @@ describe('components/Game', () => {
 
     let pieceEl = result.getByRole(`piece-0-0`)
     expect(pieceEl).toBeVisible()
-    expect(pieceEl).toHaveStyle(PLAYER_ONE_COLOR)
+    expect(pieceEl).toHaveStyle(`color: ${PlayerColor.PlayerOne};`)
 
     slotEl = result.getByRole(`slot-1-0`)
     userEvent.click(slotEl)
 
     pieceEl = result.getByRole(`piece-1-0`)
     expect(pieceEl).toBeVisible()
-    expect(pieceEl).toHaveStyle(PLAYER_TWO_COLOR)
+    expect(pieceEl).toHaveStyle(`color: ${PlayerColor.PlayerTwo};`)
   })
 })

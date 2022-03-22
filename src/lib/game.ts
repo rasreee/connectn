@@ -24,13 +24,13 @@ export interface GameState {
   board: BoardData
 }
 
-const defaultGameInfo: GameInfo = {
+export const defaultGameInfo: GameInfo = Object.freeze({
   playerOneName: 'Player One',
   playerTwoName: 'Player Two',
   columnCount: 7,
   rowCount: 6,
   winNumber: 4,
-}
+})
 
 export const createGameInfo = (): GameInfo => ({ ...defaultGameInfo })
 
