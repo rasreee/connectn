@@ -1,6 +1,12 @@
 import { css } from '@emotion/react'
+import { theme } from 'styling/theme'
 
 export const globalStyles = css`
+  * {
+    line-height: ${theme.lineHeights.none};
+    text-align: left;
+  }
+
   html {
     height: -webkit-fill-available;
   }
@@ -25,5 +31,10 @@ export const globalStyles = css`
   button[aria-disabled='true'],
   button[data-disabled] {
     cursor: default;
+  }
+
+  input[type='number'] {
+    width: max-content;
+    max-width: max-content !important;
   }
 `

@@ -1,5 +1,17 @@
 export const theme = {
   colors: {
+    gray: {
+      50: '#f9fafb',
+      100: '#f3f4f6',
+      200: '#e5e7eb',
+      300: '#d1d5db',
+      400: '#9ca3af',
+      500: '#6b7280',
+      600: '#4b5563',
+      700: '#374151',
+      800: '#1f2937',
+      900: '#111827',
+    },
     primary: {
       50: '#eff6ff',
       100: '#dbeafe',
@@ -37,7 +49,7 @@ export const theme = {
     bold: 700,
     extrabold: 800,
   },
-  lineHeights: { none: '1' },
+  lineHeights: { none: '1', normal: '1.25' },
   breakpoints: { sm: '30rem', md: '48rem', lg: '62rem' },
   radii: {
     sm: '0.125rem',

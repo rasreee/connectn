@@ -1,10 +1,17 @@
-import { css } from '@emotion/react'
-import styled from '@emotion/styled'
 import { getFormData } from 'lib/form'
 import { GameInfo } from 'lib/game'
 import { useRef } from 'react'
 
 import { BoardSetup, PlayerSetup } from './GameSetupForm.partials'
+import {
+  Form,
+  FormBody,
+  FormContainer,
+  FormFooter,
+  FormHeader,
+  FormTitle,
+  SubmitButton,
+} from './styles'
 
 export const GameSetupForm = ({
   initialGameInfo,
@@ -26,56 +33,26 @@ export const GameSetupForm = ({
   }
 
   return (
-    <>
-      <FormHeader>
-        <div className='form-title'>Game Setup</div>
-      </FormHeader>
-      <form ref={formRef} onSubmit={handleSubmit}>
-        <PlayerSetup
-          playerOneName={initialGameInfo.playerOneName}
-          playerTwoName={initialGameInfo.playerTwoName}
-        />
-        <BoardSetup
-          columnCount={initialGameInfo.columnCount}
-          rowCount={initialGameInfo.rowCount}
-          winNumber={initialGameInfo.winNumber}
-        />
+    <FormContainer>
+      <Form ref={formRef} onSubmit={handleSubmit}>
+        <FormHeader>
+          <FormTitle>Game Setup</FormTitle>
+        </FormHeader>
+        <FormBody>
+          <PlayerSetup
+            playerOneName={initialGameInfo.playerOneName}
+            playerTwoName={initialGameInfo.playerTwoName}
+          />
+          <BoardSetup
+            columnCount={initialGameInfo.columnCount}
+            rowCount={initialGameInfo.rowCount}
+            winNumber={initialGameInfo.winNumber}
+          />
+        </FormBody>
         <FormFooter>
           <SubmitButton type='submit'>Start Game</SubmitButton>
         </FormFooter>
-      </form>
-    </>
+      </Form>
+    </FormContainer>
   )
 }
-
-const sharedPadding = css`
-  padding: 0.75rem 1.25rem;
-`
-
-const FormHeader = styled.div(
-  css`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  `,
-  css`
-    ${sharedPadding}
-    padding-left: 1.5rem;
-  `,
-  ({ theme }) => css`
-    &.form-title {
-      font-size: ${theme.fontSizes['2xl']};
-      font-weight: ${theme.fontWeights.semibold};
-    }
-  `,
-)
-
-const FormFooter = styled.div``
-
-const SubmitButton = styled.button(
-  ({ theme }) =>
-    css`
-      color: #fff;
-      background: ${theme.colors.primary['500']};
-    `,
-)

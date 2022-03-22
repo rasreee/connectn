@@ -1,8 +1,7 @@
 import { Global, ThemeProvider } from '@emotion/react'
 import { FC } from 'react'
+import { globalStyles } from 'styling/globalStyles'
 import { theme } from 'styling/theme'
-
-import { globalStyles } from './globalStyles'
 
 export const AppProviders: FC = ({ children }) => {
   return (

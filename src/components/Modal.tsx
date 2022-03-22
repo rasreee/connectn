@@ -41,15 +41,15 @@ const Card = styled.div(
   ({ theme }) => css`
     display: flex;
     flex-direction: column;
-    margin: 15vh auto;
+    margin: 18vh auto;
     min-height: 0px;
     max-width: 90vw;
     @media screen and (min-width: ${theme.breakpoints.sm}) {
-      max-width: 46rem;
+      max-width: 40rem;
     }
   `,
   ({ theme }) => css`
     background: ${theme.bg.surface};
-    border-radius: ${theme.radii.lg};
+    border-radius: ${theme.radii['2xl']};
   `,
 )
