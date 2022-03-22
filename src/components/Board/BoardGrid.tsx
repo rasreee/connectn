@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { Dimensions, Slot } from 'lib/grid'
+import times from 'lodash.times'
 
 export interface BoardGridProps extends Dimensions {
   onSlotClick: (slot: Slot) => void
@@ -19,9 +20,9 @@ export const BoardGrid = ({
 
   return (
     <>
-      {Array.from(Array(rowCount), (e, row) => (
-        <BoardRow key={`row-${row}`}>
-          {Array.from(Array(columnCount), (e, column) => (
+      {times(rowCount, (row) => (
+        <BoardRow key={`BoardRow-${row}`}>
+          {times(columnCount, (column) => (
             <BoardSlot
               key={`slot-${column}-${row}`}
               role={`slot-${column}-${row}`}

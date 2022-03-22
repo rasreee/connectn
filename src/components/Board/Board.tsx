@@ -25,7 +25,7 @@ const BoardColumn = ({ column, data }: BoardColumnProps) => {
         (value, rowIndex) =>
           isPlayer(value) && (
             <BoardPiece
-              key={`col${column}-row${rowIndex}`}
+              key={`BoardPiece-${column}-${rowIndex}`}
               column={column}
               row={rowIndex}
               color={getPlayerColor(value)}
