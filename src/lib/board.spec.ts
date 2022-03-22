@@ -3,11 +3,17 @@
  * @group board
  */
 
+import { muteConsole } from 'testing/muteConsole'
+
 import { getNextGameState, getNextRow } from './board'
 import { createGameState } from './game'
 import { Player } from './player'
 
 describe('lib/board', () => {
+  beforeEach(() => {
+    muteConsole()
+  })
+
   it('getNextRow', () => {
     expect(getNextRow([Player.None, Player.None])).toEqual(0)
     expect(getNextRow([Player.PlayerOne, Player.None])).toEqual(1)
@@ -24,26 +30,26 @@ describe('lib/board', () => {
 
     nextGameState = getNextGameState(nextGameState, 0)
     expect(nextGameState.board).toEqual([
-      [1, 1],
+      [1, 2],
       [0, 0],
     ])
 
     nextGameState = getNextGameState(nextGameState, 0)
     expect(nextGameState.board).toEqual([
-      [1, 1],
+      [1, 2],
       [0, 0],
     ])
 
     nextGameState = getNextGameState(nextGameState, 1)
     expect(nextGameState.board).toEqual([
-      [1, 1],
+      [1, 2],
       [1, 0],
     ])
 
     nextGameState = getNextGameState(nextGameState, 1)
     expect(nextGameState.board).toEqual([
-      [1, 1],
-      [1, 1],
+      [1, 2],
+      [1, 2],
     ])
   })
 })

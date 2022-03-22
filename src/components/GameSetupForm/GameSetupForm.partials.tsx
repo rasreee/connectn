@@ -1,6 +1,6 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import { Dimensions } from 'lib/board'
+import { Dimensions } from 'lib/grid'
 
 const FormSection = styled.div(
   css`

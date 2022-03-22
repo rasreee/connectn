@@ -1,5 +1,5 @@
-import { BoardData, Dimensions } from './board'
-import { createGrid } from './grid'
+import { BoardData } from './board'
+import { createGrid, Dimensions } from './grid'
 import { Player } from './player'
 
 export interface GameInfo extends Dimensions {

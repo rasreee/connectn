@@ -1,5 +1,15 @@
 import times from 'lodash.times'
 
+export interface Slot {
+  column: number
+  row: number
+}
+
+export interface Dimensions {
+  columnCount: number
+  rowCount: number
+}
+
 export type Grid<T = any> = T[][]
 
 export const cloneGrid = <T = any>(initialGrid: Grid<T>): Grid<T> => {
@@ -38,4 +48,15 @@ export const resetGrid = <T = any>(
   const rowCount = initialGrid[0].length
 
   return createGrid<T>(columnCount, rowCount, initialValue)
+}
+
+export const setGridSlot = <T = any>(
+  grid: Grid<T>,
+  column: number,
+  row: number,
+  value: T,
+): Grid<T> => {
+  const newBoard = cloneGrid(grid)
+  newBoard[column][row] = value
+  return newBoard
 }

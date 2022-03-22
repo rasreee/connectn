@@ -1,7 +1,7 @@
 import { css } from '@emotion/react'
 import styled from '@emotion/styled'
-import { Dimensions, Slot } from 'lib/board'
 import { GameInfo, GameState } from 'lib/game'
+import { Dimensions, Slot } from 'lib/grid'
 import { getPlayerColor, isPlayer, Player } from 'lib/player'
 
 import { BoardGrid } from './BoardGrid'

@@ -5,7 +5,7 @@ module.exports = {
   moduleNameMapper: {
     // Handle absolute import and module path alias,
     '^app/(.*)$': '<rootDir>/src/app/$1',
-    '^game/(.*)$': '<rootDir>/src/game/$1',
+    '^contexts/(.*)$': '<rootDir>/src/contexts/$1',
     '^components/(.*)$': '<rootDir>/src/components/$1',
     '^lib/(.*)$': '<rootDir>/src/lib/$1',
     '^testing/(.*)$': '<rootDir>/src/testing/$1',

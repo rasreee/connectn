@@ -1,6 +1,7 @@
 import { GameInfoProvider } from 'contexts/GameInfoContext'
-import { createBoard, getNextGameState, Slot } from 'lib/board'
+import { createBoard, getNextGameState } from 'lib/board'
 import { createGameState, GameInfo } from 'lib/game'
+import { Slot } from 'lib/grid'
 import { Player } from 'lib/player'
 import { useState } from 'react'
 

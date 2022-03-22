@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { Dimensions, Slot } from 'lib/board'
+import { Dimensions, Slot } from 'lib/grid'
 
 export interface BoardGridProps extends Dimensions {
   onSlotClick: (slot: Slot) => void

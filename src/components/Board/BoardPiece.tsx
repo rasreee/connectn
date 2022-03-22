@@ -5,7 +5,7 @@
 
 import styled from '@emotion/styled'
 import { useGameInfo } from 'contexts/GameInfoContext'
-import { Slot } from 'lib/board'
+import { Slot } from 'lib/grid'
 import { useEffect, useState } from 'react'
 
 export interface BoardPieceProps extends Slot {
