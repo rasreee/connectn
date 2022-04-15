@@ -1,0 +1,18 @@
+{
+  "winNumber": 2,
+  "lastPlacedPiece": {
+    "value": 1,
+    "x": 3,
+    "y": 3
+  },
+  "columns": [
+    [
+      2,
+      1
+    ],
+    [
+      1
+    ],
+    []
+  ]
+}

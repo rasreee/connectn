@@ -1,0 +1,131 @@
+[{
+    "winNumber": 2,
+    "rows": [
+      [2, 1],
+      [null, 1]
+    ],
+    "lastPlacedAt": {
+      "x": 1,
+      "y": 1
+    },
+    "winner": 1
+  },
+  {
+    "winNumber": 3,
+    "rows": [
+      [2, 1, 1],
+      [1, 2, 2],
+      [1, 2, 1],
+      [null, 2, null]
+    ],
+    "lastPlacedAt": {
+      "x": 1,
+      "y": 3
+    },
+    "winner": 2
+  },
+  {
+    "winNumber": 2,
+    "rows": [
+      [1, 2],
+      [null, 1]
+    ],
+    "lastPlacedAt": {
+      "x": 1,
+      "y": 1
+    },
+    "winner": 1
+  },
+  {
+    "winNumber": 3,
+    "rows": [
+      [2, 1, 1, 1],
+      [null, 2, null, null],
+      [null, null, null, null],
+      [null, null, null, null]
+    ],
+    "lastPlacedAt": {
+      "x": 2,
+      "y": 0
+    },
+    "winner": 1
+  },
+  {
+    "winNumber": 3,
+    "rows": [
+      [1, 2, 2, 1],
+      [null, 2, 1, null],
+      [null, 1, null, null],
+      [null, null, null, null]
+    ],
+    "lastPlacedAt": {
+      "x": 1,
+      "y": 2
+    },
+    "winner": 1
+  },
+  {
+    "winNumber": 4,
+    "rows": [
+      [2, null, 2, null, 1, 2, 1],
+      [null, null, null, null, null, 2, 1],
+      [null, null, null, null, null, null, 1],
+      [null, null, null, null, null, null, 1],
+      [null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null]
+    ],
+    "lastPlacedAt": {
+      "x": 6,
+      "y": 3
+    },
+    "winner": 1
+  },
+  {
+    "winNumber": 4,
+    "rows": [
+      [2, 1, 1, 1, 1, null, null],
+      [2, 2, null, null, null, null, null],
+      [null, 2, null, null, null, null, null],
+      [null, 1, null, null, null, null, null],
+      [null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null]
+    ],
+    "lastPlacedAt": {
+      "x": 4,
+      "y": 0
+    },
+    "winner": 1
+  },
+  {
+    "winNumber": 4,
+    "rows": [
+      [1, 1, 2, 2, 1, null, 1],
+      [1, 2, 2, null, null, null, null],
+      [1, 2, null, null, null, null, null],
+      [2, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null]
+    ],
+    "lastPlacedAt": {
+      "x": 0,
+      "y": 3
+    },
+    "winner": 2
+  },
+  {
+    "winNumber": 4,
+    "rows": [
+      [1, 1, 1, 1, 2, 2, null],
+      [null, null, null, 2, 1, null, null],
+      [null, null, null, 2, null, null, null],
+      [null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null],
+      [null, null, null, null, null, null, null]
+    ],
+    "lastPlacedAt": {
+      "x": 1,
+      "y": 0
+    },
+    "winner": 1
+  }
+]
