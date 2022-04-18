@@ -1,7 +1,13 @@
 import { isTruthy } from './types'
 
 export const maybeParse = (value: any) => {
+  if (value === 'null') return null
+
   return typeof value === 'object' ? JSON.parse(value) : value
+}
+
+export const maybeStringify = (value: any) => {
+  return typeof value === 'object' ? JSON.stringify(value) : value
 }
 
 export const getLocalStorageItem = <S>(key: string, defaultValue: S) => {
@@ -15,5 +21,5 @@ export const getLocalStorageItem = <S>(key: string, defaultValue: S) => {
 }
 
 export const setLocalStorageJSON = (key: string, value: any) => {
-  window.localStorage.setItem(key, maybeParse(value))
+  window.localStorage.setItem(key, maybeStringify(value))
 }

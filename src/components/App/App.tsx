@@ -44,12 +44,8 @@ export const App = observer(function App() {
   }, settings)
 
   const onSubmitGameSettings = (data: GameSettings) => {
-    if (data.rememberSettings) {
-      setPersistedSettings(data)
-    } else if (persistedSettings) {
-      setPersistedSettings(null)
-    }
-    setSettings(data)
+    const newPersistedSettings = data.rememberSettings ? data : null
+    setPersistedSettings(newPersistedSettings)
     ui.closeModal()
   }
 

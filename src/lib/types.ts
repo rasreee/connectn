@@ -7,8 +7,8 @@ export type Dict<T = any> = Record<string, T>
 
 export type Subtract<T, U> = T & Exclude<T, U>
 
-export function isNull(o: any): o is null {
-  return o === null
+export function isNullType(o: any): o is null | 'null' {
+  return o === null || o === 'null'
 }
 
 export type Falsy = null | 'undefined' | undefined
@@ -29,7 +29,7 @@ export function isUndefinedType<V, T extends MaybeUndefined<V>>(
 }
 
 export function isFalsy(o: any): o is Falsy {
-  return isNull(o) || isUndefinedType(o)
+  return isNullType(o) || isUndefinedType(o)
 }
 
 export function isTruthy<V = any, T extends MaybeFalsy<V> = MaybeFalsy<V>>(
