@@ -9,10 +9,9 @@ import {
   GameSettings,
   SETTINGS_LOCAL_STORAGE_KEY,
 } from 'lib/game'
-import { getLocalStorageItem } from 'lib/localStorage'
 import { Maybe } from 'lib/types'
 import { observer } from 'mobx-react-lite'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ModalKey } from 'stores/ui.store'
 
 import { SetupModal } from './SetupModal'
@@ -28,12 +27,6 @@ export const App = observer(function App() {
 
   const [settings, setSettings] =
     useState<Maybe<GameSettings>>(persistedSettings)
-
-  useEffect(() => {
-    setSettings(
-      getLocalStorageItem(SETTINGS_LOCAL_STORAGE_KEY, persistedSettings),
-    )
-  }, [])
 
   const shouldUpdateSettings = isInitialized && persistedSettings && !settings
   useIfTruthy(() => {
