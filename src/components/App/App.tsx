@@ -2,12 +2,12 @@ import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import { GameComponent } from 'components/Game'
 import { useRootStore } from 'components/RootStoreContext'
+import useStickyState from 'hooks/useStickyState'
 import {
   defaultSettings,
   GameSettings,
   SETTINGS_LOCAL_STORAGE_KEY,
 } from 'lib/game'
-import { useStickyState } from 'lib/localStorage'
 import { Maybe } from 'lib/types'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useState } from 'react'
@@ -42,8 +42,7 @@ export const App = observer(function App() {
   }
 
   const onRequestCloseSetupModal = () => {
-    if (!initialSettings) return
-    ui.closeModal()
+    initialSettings && ui.closeModal()
   }
 
   return (

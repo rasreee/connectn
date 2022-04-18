@@ -1,13 +1,12 @@
 {
-  "name": "clockwise-coding-challenge",
+  "name": "connect-n-react",
   "version": "1.0.0",
-  "description": "A front-end coding challenge for potential clockwise engineers",
   "main": "src/index.tsx",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rasreee/clockwise-challenge-solution.git"
+    "url": "git+https://github.com/rasreee/connect-n-react.git"
   },
-  "author": "voxmatt",
+  "author": "rasreee",
   "license": "MIT",
   "scripts": {
     "start": "react-scripts start",
@@ -30,6 +29,8 @@
   "dependencies": {
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
+    "lodash.isnull": "^3.0.0",
+    "lodash.isundefined": "^3.0.1",
     "lodash.times": "^4.3.2",
     "mobx": "^6.5.0",
     "mobx-react-lite": "^3.3.0",
@@ -46,6 +47,8 @@
     "@testing-library/react": "^12.1.4",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.4.1",
+    "@types/lodash.isnull": "^3.0.6",
+    "@types/lodash.isundefined": "^3.0.6",
     "@types/lodash.times": "^4.3.6",
     "@types/node": "^17.0.21",
     "@types/react": "^17.0.40",

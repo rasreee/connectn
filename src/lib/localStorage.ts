@@ -1,21 +1,18 @@
-import React from 'react'
+import { isTruthy } from './types'
 
-export const getLocalStorageItem = <S>(key: string, defaultValue: S) => {
+export function getLocalStorageItem<S>(key: string, defaultValue: S) {
   const stickyValue = window.localStorage.getItem(key)
-  return stickyValue !== null ? JSON.parse(stickyValue) : defaultValue
+
+  if (isTruthy(stickyValue)) {
+    return JSON.parse(stickyValue)
+  }
+
+  return defaultValue
 }
 
-export function useStickyState<S>(
-  defaultValue: S,
-  key: string,
-): [S, React.Dispatch<React.SetStateAction<S>>] {
-  const [value, setValue] = React.useState<S>(() =>
-    getLocalStorageItem<S>(key, defaultValue),
+export function setLocalStorageJSON(key: string, value: any) {
+  window.localStorage.setItem(
+    key,
+    typeof value === 'object' ? JSON.stringify(value) : value,
   )
-
-  React.useEffect(() => {
-    window.localStorage.setItem(key, JSON.stringify(value))
-  }, [key, value])
-
-  return [value, setValue]
 }
