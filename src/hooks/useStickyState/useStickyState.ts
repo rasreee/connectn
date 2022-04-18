@@ -1,7 +1,7 @@
 import { useMountedEffect } from 'hooks/useMountedEffect'
 import { getLocalStorageItem, setLocalStorageJSON } from 'lib/localStorage'
 import { isUndefinedString } from 'lib/types'
-import React, { useMemo } from 'react'
+import React, { useEffect } from 'react'
 
 import { useDebugStickyStateHook } from './helpers'
 
@@ -19,11 +19,15 @@ export function useStickyState<S>(
     getLocalStorageItem<S>(key, defaultValue),
   )
 
+  // useEffect(() => {}, [])
+
   useMountedEffect(() => {
-    setLocalStorageJSON(key, value)
+    if (!isUndefinedString(value)) {
+      setLocalStorageJSON(key, value)
+    }
   }, [value])
 
-  const isInitialized = useMemo(() => !isUndefinedString(value), [value])
+  const isInitialized = !isUndefinedString(value)
 
   useDebugStickyStateHook({ key, value })
 

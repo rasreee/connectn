@@ -9,6 +9,7 @@ import {
   GameSettings,
   SETTINGS_LOCAL_STORAGE_KEY,
 } from 'lib/game'
+import { getLocalStorageItem } from 'lib/localStorage'
 import { Maybe } from 'lib/types'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useState } from 'react'
@@ -25,21 +26,29 @@ export const App = observer(function App() {
     isInitialized,
   } = useStickyState<Maybe<GameSettings>>(null, SETTINGS_LOCAL_STORAGE_KEY)
 
-  const [initialSettings, setInitialSettings] =
+  const [settings, setSettings] =
     useState<Maybe<GameSettings>>(persistedSettings)
 
-  useIfTruthy((initialSettings) => {
-    game.initializeWithSettings(initialSettings)
-    game.play()
-  }, initialSettings)
-
   useEffect(() => {
-    if (isInitialized && persistedSettings && !initialSettings) {
-      return setInitialSettings(persistedSettings)
-    }
+    setSettings(
+      getLocalStorageItem(SETTINGS_LOCAL_STORAGE_KEY, persistedSettings),
+    )
+  }, [])
 
+  const shouldUpdateSettings = isInitialized && persistedSettings && !settings
+  useIfTruthy(() => {
+    setSettings(persistedSettings)
+  }, shouldUpdateSettings)
+
+  const shouldSetupGame = isInitialized && settings === null
+  useIfTruthy(() => {
     ui.openModal(ModalKey.NewGame)
-  }, [isInitialized])
+  }, shouldSetupGame)
+
+  useIfTruthy((settings) => {
+    game.initializeWithSettings(settings)
+    game.play()
+  }, settings)
 
   const onSubmitGameSettings = (data: GameSettings) => {
     if (data.rememberSettings) {
@@ -47,11 +56,12 @@ export const App = observer(function App() {
     } else if (persistedSettings) {
       setPersistedSettings(null)
     }
+    setSettings(data)
     ui.closeModal()
   }
 
   const onRequestCloseSetupModal = () => {
-    initialSettings && ui.closeModal()
+    settings && ui.closeModal()
   }
 
   return (
@@ -59,11 +69,11 @@ export const App = observer(function App() {
       <Heading>
         Connect <span className='winNumber'>{game.settings.winNumber}</span>
       </Heading>
-      {initialSettings && <GameComponent />}
+      {settings && <GameComponent />}
       <SetupModal
         modalToShow={ui.modalToShow}
         onRequestClose={onRequestCloseSetupModal}
-        initialSettings={initialSettings ?? defaultSettings}
+        initialSettings={settings ?? defaultSettings}
         onSubmitGameSettings={onSubmitGameSettings}
       />
     </Container>
