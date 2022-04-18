@@ -1,19 +1,19 @@
 import { useMountedEffect } from 'hooks/useMountedEffect'
+import { isUndefinedString } from 'lib/types'
 
 export function useDebugStickyStateHook<S>({
-  isInitialized,
   key,
   value,
 }: {
-  isInitialized: boolean
   key: string
   value: S
 }) {
   useMountedEffect(() => {
-    console.log('INITIALIZED:\n', { key, value })
-  }, [isInitialized])
+    const isInitialized = !isUndefinedString(value)
+    isInitialized && console.log('INITIALIZED:\n', { key, value })
+  }, [value])
 
   useMountedEffect(() => {
-    isInitialized && console.log('UPDATED:\n', { key, value })
-  }, [value, isInitialized])
+    console.log('UPDATED:\n', { key, value })
+  }, [value])
 }

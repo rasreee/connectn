@@ -2,6 +2,7 @@ import { css } from '@emotion/react'
 import styled from '@emotion/styled'
 import { GameComponent } from 'components/Game'
 import { useRootStore } from 'components/RootStoreContext'
+import { useIfTruthy } from 'hooks/useIfTruthy'
 import useStickyState from 'hooks/useStickyState'
 import {
   defaultSettings,
@@ -18,16 +19,27 @@ import { SetupModal } from './SetupModal'
 export const App = observer(function App() {
   const { ui, game } = useRootStore()
 
-  const [initialSettings, setInitialSettings] =
-    useState<Maybe<GameSettings>>(null)
+  const {
+    value: persistedSettings,
+    set: setPersistedSettings,
+    isInitialized,
+  } = useStickyState<Maybe<GameSettings>>(null, SETTINGS_LOCAL_STORAGE_KEY)
 
-  const [persistedSettings, setPersistedSettings] = useStickyState<
-    Maybe<GameSettings>
-  >(null, SETTINGS_LOCAL_STORAGE_KEY)
+  const [initialSettings, setInitialSettings] =
+    useState<Maybe<GameSettings>>(persistedSettings)
+
+  useIfTruthy((initialSettings) => {
+    game.initializeWithSettings(initialSettings)
+    game.play()
+  }, initialSettings)
 
   useEffect(() => {
+    if (isInitialized && persistedSettings && !initialSettings) {
+      return setInitialSettings(persistedSettings)
+    }
+
     ui.openModal(ModalKey.NewGame)
-  }, [])
+  }, [isInitialized])
 
   const onSubmitGameSettings = (data: GameSettings) => {
     if (data.rememberSettings) {
@@ -35,9 +47,6 @@ export const App = observer(function App() {
     } else if (persistedSettings) {
       setPersistedSettings(null)
     }
-    setInitialSettings(data)
-    game.initializeWithSettings(data)
-    game.play()
     ui.closeModal()
   }
 

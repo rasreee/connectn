@@ -5,18 +5,19 @@ export type AnySingleArgFunction<T = any> = (arg: T) => any
 
 export type Dict<T = any> = Record<string, T>
 
-type Subtract<T, U> = T & Exclude<T, U>
+export type Subtract<T, U> = T & Exclude<T, U>
 
 export function isNull(o: any): o is null {
   return o === null
 }
 
-type Falsy = null | 'undefined' | undefined
-type MaybeFalsy<T> = T | Falsy
+export type Falsy = null | 'undefined' | undefined
 
-type Undefined = undefined | 'undefined'
+export type MaybeFalsy<T> = T | Falsy
 
-type MaybeUndefined<T> = T | Undefined
+export type Undefined = undefined | 'undefined'
+
+export type MaybeUndefined<T> = T | Undefined
 
 export function isUndefinedString(o: any): o is 'undefined' {
   return typeof o === 'string' && o === 'undefined'
