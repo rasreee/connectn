@@ -8,7 +8,7 @@ import {
 import { Dimensions } from 'lib/grid'
 import { Dispatch, SetStateAction, useEffect, useRef } from 'react'
 
-import { FormInputRow, FormSection, InputCaption } from './styles'
+import { FormInputRow, FormSection, InputCaption } from './SetupForm.styles'
 
 // form for player setup
 export const PlayerSetup = ({

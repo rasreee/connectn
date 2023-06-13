@@ -9,22 +9,21 @@
   "author": "rasreee",
   "license": "MIT",
   "scripts": {
+    "build": "react-scripts build",
     "start": "react-scripts start",
     "dev": "yarn clean && yarn start",
     "clean": "rm -rf ./dist ./tsconfig.tsbuildinfo ./node_modules/.cache",
-    "build": "yarn clean && react-scripts build",
+    "fix": "yarn lint && yarn format",
+    "format": "prettier --write '**/*.{json,md,mdx}'",
+    "lint": "eslint '**/*.{js,jsx,cjs,mjs,ts,tsx}' --fix",
     "test": "jest --clearCache && jest",
     "test:watch": "yarn test --watch",
     "test:components": "yarn test:watch --group=components --group=-models",
     "test:models": "yarn test:watch --group=models --group=-components",
     "test:models:grid": "yarn test:models --group=grid --group=-game",
     "test:models:game": "yarn test:models --group=game --group=-grid",
-    "test:all": "yarn test:types && yarn build && yarn test",
-    "eject": "react-scripts eject",
-    "lint": "eslint src",
-    "test:types": "tsc --noEmit --incremental false",
-    "format:prettier": "prettier -w .",
-    "format": "yarn format:prettier && yarn lint --fix"
+    "quality-check": "yarn type-check && yarn build && yarn test",
+    "type-check": "tsc --noEmit --incremental false"
   },
   "dependencies": {
     "@emotion/react": "^11.8.2",

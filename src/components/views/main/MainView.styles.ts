@@ -15,16 +15,3 @@ export const Container = styled.div(
     padding: 2rem 0;
   `,
 )
-
-export const Heading = styled.h1(
-  ({ theme }) => css`
-    text-transform: uppercase;
-    color: ${theme.colors.primary[600]};
-    font-weight: ${theme.fontWeights.extrabold};
-
-    & span.winNumber {
-      color: ${theme.colors.red[500]};
-      font-weight: ${theme.fontWeights.extrabold};
-    }
-  `,
-)

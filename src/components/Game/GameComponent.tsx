@@ -1,12 +1,11 @@
 import styled from '@emotion/styled'
-import { Board } from 'components/Board'
-import { HoveredColumnIndicator } from 'components/Board/HoveredColumnIndicator'
+import { Board, HoveredColumnIndicator } from 'components/Board'
 import { GameTopBar } from 'components/GameTopBar'
+import { Modals } from 'components/modals'
 import { useRootStore } from 'components/RootStoreContext'
 import { when } from 'mobx'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useState } from 'react'
-import { ModalKey } from 'stores/ui.store'
 
 // Component that holds the structure of the game
 export const GameComponent = observer(function GameComponent() {
@@ -26,7 +25,7 @@ export const GameComponent = observer(function GameComponent() {
     <Container role='contentinfo'>
       <GameTopBar
         onResetClick={game.restart}
-        onSettingsClick={() => ui.openModal(ModalKey.Settings)}
+        onSettingsClick={() => ui.openModal(Modals.Settings)}
       />
       <BoardContainer>
         <HoveredColumnIndicator

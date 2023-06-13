@@ -1,13 +1,13 @@
 import { ThemeProvider } from '@emotion/react'
 import { RootStoreProvider } from 'components/RootStoreContext'
 import { GameModelInit } from 'models/game.model'
+import { FC, PropsWithChildren } from 'react'
 import { GlobalStyles } from 'styles/GlobalStyles'
 import { theme } from 'styles/theme'
 
-export const Providers: React.FC<{ gameInit?: GameModelInit }> = ({
-  gameInit = {},
-  children,
-}) => {
+type ProvidersProps = PropsWithChildren<{ gameInit?: GameModelInit }>
+
+export const Providers: FC<ProvidersProps> = ({ gameInit = {}, children }) => {
   return (
     <RootStoreProvider gameInit={gameInit}>
       <ThemeProvider theme={theme}>

@@ -12,7 +12,7 @@ import {
   FormHeader,
   FormTitle,
   SubmitButton,
-} from './styles'
+} from './SetupForm.styles'
 
 export const SetupForm = ({
   initialData,

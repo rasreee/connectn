@@ -1,10 +1,10 @@
 import userEvent from '@testing-library/user-event'
-import { Providers } from 'components/App/Providers'
+import { Providers } from 'components/app/Providers'
 import { GameInfo, GameStatus, PlayerColor } from 'lib/game'
 import { GameModelInit } from 'models/game.model'
 import { defaultRender, screen } from 'test-utils/react'
 
-import { GameComponent } from './Game.component'
+import { GameComponent } from './GameComponent'
 
 const renderGame = (
   gameInfo: Partial<GameInfo> = {},

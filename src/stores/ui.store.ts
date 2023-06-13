@@ -1,25 +1,18 @@
-import { Maybe } from 'lib/types'
+import { Modals } from 'components/modals'
 import { makeAutoObservable } from 'mobx'
 
-export const ModalKey = {
-  NewGame: 'NewGame',
-  Settings: 'Settings',
-} as const
-
-export type ModalKeyType = keyof typeof ModalKey
-
 export class UiStore {
-  modalToShow: Maybe<ModalKeyType> = null
+  modal: Modals | null = null
 
   constructor() {
     makeAutoObservable(this)
   }
 
-  openModal = (modalToShow: ModalKeyType) => {
-    this.modalToShow = modalToShow
+  openModal = (modal: Modals) => {
+    this.modal = modal
   }
 
   closeModal = () => {
-    this.modalToShow = null
+    this.modal = null
   }
 }

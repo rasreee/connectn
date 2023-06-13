@@ -1,5 +1,4 @@
-import App from 'components/App'
-import { Providers } from 'components/App/Providers'
+import { App } from 'components/app/App'
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 
@@ -10,8 +9,6 @@ const root = createRoot(container!)
 
 root.render(
   <StrictMode>
-    <Providers>
-      <App />
-    </Providers>
+    <App />
   </StrictMode>,
 )

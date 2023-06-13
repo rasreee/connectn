@@ -1,5 +1,5 @@
 import { render, RenderOptions } from '@testing-library/react'
-import { Providers } from 'components/App/Providers'
+import { Providers } from 'components/app/Providers'
 import { ReactElement } from 'react'
 
 const customRender = (
