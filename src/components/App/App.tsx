@@ -28,11 +28,12 @@ export const App = observer(function App() {
     useState<Maybe<GameSettings>>(persistedSettings)
 
   const shouldUpdateSettings = isInitialized && persistedSettings && !settings
+  const shouldSetupGame = isInitialized && settings === null
+
   useIfTruthy(() => {
     setSettings(persistedSettings)
   }, shouldUpdateSettings)
 
-  const shouldSetupGame = isInitialized && settings === null
   useIfTruthy(() => {
     ui.openModal(ModalKey.NewGame)
   }, shouldSetupGame)
@@ -49,7 +50,8 @@ export const App = observer(function App() {
   }
 
   const onRequestCloseSetupModal = () => {
-    settings && ui.closeModal()
+    if (!settings) return
+    ui.closeModal()
   }
 
   return (
