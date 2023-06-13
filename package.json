@@ -1,17 +1,17 @@
 {
-  "name": "connect-n-react",
+  "name": "connectn",
   "version": "1.0.0",
   "main": "src/index.tsx",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/rasreee/connect-n-react.git"
+    "url": "https://github.com/rasreee/connectn.git"
   },
   "author": "rasreee",
   "license": "MIT",
   "scripts": {
     "start": "react-scripts start",
-    "dev": "yarn start",
-    "clean": "rm -rf ./dist ./tsconfig.tsbuildinfo",
+    "dev": "yarn clean && yarn start",
+    "clean": "rm -rf ./dist ./tsconfig.tsbuildinfo ./node_modules/.cache",
     "build": "yarn clean && react-scripts build",
     "test": "jest --clearCache && jest",
     "test:watch": "yarn test --watch",

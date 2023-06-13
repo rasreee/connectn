@@ -57,7 +57,8 @@ export const App = observer(function App() {
   return (
     <S.Container>
       <S.Heading>
-        Connect <span className='winNumber'>{game.settings.winNumber}</span>
+        <span>Connect-</span>
+        <span className='winNumber'>{game.settings.winNumber}</span>
       </S.Heading>
       {settings && <GameComponent />}
       <SetupModal

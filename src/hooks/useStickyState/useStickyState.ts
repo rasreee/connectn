@@ -1,7 +1,7 @@
 import { useMountedEffect } from 'hooks/useMountedEffect'
 import { getLocalStorageItem, setLocalStorageJSON } from 'lib/localStorage'
 import { isUndefinedString } from 'lib/types'
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import { useDebugStickyStateHook } from './helpers'
 
@@ -18,8 +18,6 @@ export function useStickyState<S>(
   const [value, set] = React.useState<S>(() =>
     getLocalStorageItem<S>(key, defaultValue),
   )
-
-  // useEffect(() => {}, [])
 
   useMountedEffect(() => {
     if (!isUndefinedString(value)) {
