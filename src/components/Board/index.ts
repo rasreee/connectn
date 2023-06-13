@@ -1,2 +1,2 @@
 export * from './Board'
-export * from './HoveredColumnIndicator'
+export * from './HoverIndicator'

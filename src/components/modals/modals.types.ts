@@ -1,4 +1,4 @@
-export enum Modals {
+export enum ModalName {
   NewGame = 'NewGame',
   Settings = 'Settings',
 }

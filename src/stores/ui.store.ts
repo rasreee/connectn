@@ -1,18 +1,21 @@
-import { Modals } from 'components/modals'
+import { ModalName } from 'components/modals'
 import { makeAutoObservable } from 'mobx'
 
 export class UiStore {
-  modal: Modals | null = null
+  modal: ModalName | null = null
 
   constructor() {
-    makeAutoObservable(this)
+    makeAutoObservable(this, undefined, {
+      name: 'UiStore',
+      autoBind: true,
+    })
   }
 
-  openModal = (modal: Modals) => {
+  showModal = (modal: ModalName) => {
     this.modal = modal
   }
 
-  closeModal = () => {
+  hideModal = () => {
     this.modal = null
   }
 }

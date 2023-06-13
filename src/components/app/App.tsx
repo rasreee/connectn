@@ -1,4 +1,4 @@
-import { Modals } from 'components/modals'
+import { ModalName } from 'components/modals'
 import { useRootStore } from 'components/RootStoreContext'
 import { MainView } from 'components/views/main'
 import { useIfTruthy } from 'hooks/useIfTruthy'
@@ -10,24 +10,12 @@ import { useSettings } from './useSettings'
 export const App: FC = () => {
   const { ui, game } = useRootStore()
 
-  const {
-    settings,
-    setSettings,
-    persistedSettings,
-    isPersistedSettingsInitialized,
-  } = useSettings()
+  const { settings, persistedSettings } = useSettings()
 
-  const shouldUpdateSettings =
-    isPersistedSettingsInitialized && persistedSettings && !settings
-  const shouldSetupGame = isPersistedSettingsInitialized && !settings
-
+  // Show "New Game" view
   useIfTruthy(() => {
-    setSettings(persistedSettings)
-  }, shouldUpdateSettings)
-
-  useIfTruthy(() => {
-    ui.openModal(Modals.NewGame)
-  }, shouldSetupGame)
+    ui.showModal(ModalName.NewGame)
+  }, persistedSettings.isInitialized && !settings)
 
   useIfTruthy((settings) => {
     game.initializeWithSettings(settings)

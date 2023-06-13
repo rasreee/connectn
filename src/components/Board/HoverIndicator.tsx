@@ -7,24 +7,26 @@ import times from 'lodash.times'
 import { DROP_DURATION } from './DropAnimation'
 import { Slot } from './Slot'
 
-export const HoveredColumnIndicator = ({
-  hoveredColumn,
-  columnCount,
-  currentPlayer,
-}: {
-  hoveredColumn: number
+type HoverIndicatorProps = {
+  hoveredCol: number
   columnCount: number
   currentPlayer: Maybe<Player>
-}) => {
+}
+
+export const HoverIndicator = ({
+  hoveredCol,
+  columnCount,
+  currentPlayer,
+}: HoverIndicatorProps) => {
   return (
     <Container>
       {times(columnCount, (col) => (
-        <Slot key={`HoveredColumnIndicator-Slot-col${col}`}>
+        <Slot key={`HoverIndicator-Slot-col${col}`}>
           {currentPlayer && (
             <Piece
               player={currentPlayer}
               style={{
-                opacity: hoveredColumn !== col ? 0 : 1,
+                opacity: hoveredCol !== col ? 0 : 1,
                 transition: `transform ${DROP_DURATION}ms ease-in`,
               }}
             />

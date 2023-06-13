@@ -5,18 +5,14 @@ import { ReactNode, useRef } from 'react'
 
 export interface ModalProps {
   isOpen: boolean
-  onRequestClose?: () => void
+  onClose?: () => void
   children: ReactNode
 }
 
-export const Modal: React.FC<ModalProps> = ({
-  isOpen,
-  onRequestClose,
-  children,
-}) => {
+export const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
   const modalRef = useRef<HTMLDivElement | null>(null)
 
-  useClickOutside(modalRef, () => onRequestClose && onRequestClose())
+  useClickOutside(modalRef, () => onClose && onClose())
 
   if (!isOpen) return null
 

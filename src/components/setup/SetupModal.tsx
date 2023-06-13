@@ -1,11 +1,11 @@
-import { Modals } from 'components/modals'
+import { ModalName } from 'components/modals'
 import { Modal } from 'components/ui/Modal'
 import { GameSettings } from 'lib/game'
 import { FC } from 'react'
 
 import { SetupForm } from './SetupForm'
 
-const SetupCopy = {
+const Copy = {
   NewGame: {
     title: 'New Game',
     submitText: 'Start',
@@ -18,34 +18,27 @@ const SetupCopy = {
 
 interface SetupModalProps {
   initialSettings: GameSettings
-  saveSettings: (data: GameSettings) => void
-  onRequestClose: () => void
-  modal: Modals | null
+  onSubmit: (data: GameSettings) => void
+  onClose: () => void
+  modal: ModalName | null
 }
 
 export const SetupModal: FC<SetupModalProps> = ({
-  onRequestClose,
+  onClose,
   modal,
   initialSettings,
-  saveSettings,
+  onSubmit,
 }) => {
   const isOpen = !!modal
+  const copy = modal === ModalName.NewGame ? Copy.NewGame : Copy.Settings
 
   return (
-    <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
+    <Modal isOpen={isOpen} onClose={onClose}>
       <SetupForm
-        title={
-          modal === Modals.NewGame
-            ? SetupCopy.NewGame.title
-            : SetupCopy.Settings.title
-        }
-        submitButtonText={
-          modal === Modals.NewGame
-            ? SetupCopy.NewGame.submitText
-            : SetupCopy.Settings.submitText
-        }
+        title={copy.title}
+        submitButtonText={copy.submitText}
         initialData={initialSettings}
-        onSubmit={saveSettings}
+        onSubmit={onSubmit}
       />
     </Modal>
   )

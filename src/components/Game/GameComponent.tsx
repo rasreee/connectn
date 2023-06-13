@@ -1,54 +1,50 @@
-import styled from '@emotion/styled'
-import { Board, HoveredColumnIndicator } from 'components/Board'
+import { Board, HoverIndicator } from 'components/Board'
 import { GameTopBar } from 'components/GameTopBar'
-import { Modals } from 'components/modals'
+import { ModalName } from 'components/modals'
 import { useRootStore } from 'components/RootStoreContext'
 import { when } from 'mobx'
 import { observer } from 'mobx-react-lite'
-import { useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
+
+import * as S from './GameComponent.styles'
 
 // Component that holds the structure of the game
-export const GameComponent = observer(function GameComponent() {
+export const GameComponent: FC = observer(() => {
   const { game, ui } = useRootStore()
 
-  const [hoveredColumn, setHoveredColumn] = useState<number>(-1)
+  const [hoveredCol, setHoveredCol] = useState<number>(-1)
 
-  const hideHoveredColumnIndicator = () => {
-    setHoveredColumn(-1)
+  const hideHoverIndicator = () => {
+    setHoveredCol(-1)
   }
 
   useEffect(() => {
-    return when(() => game.lastPlacedPiece !== null, hideHoveredColumnIndicator)
+    return when(
+      () => !!game.lastPlacedPiece,
+      () => hideHoverIndicator(),
+    )
   }, [])
 
+  const showSettings = () => {
+    ui.showModal(ModalName.Settings)
+  }
+
   return (
-    <Container role='contentinfo'>
-      <GameTopBar
-        onResetClick={game.restart}
-        onSettingsClick={() => ui.openModal(Modals.Settings)}
-      />
-      <BoardContainer>
-        <HoveredColumnIndicator
-          hoveredColumn={hoveredColumn}
+    <S.Container role='contentinfo'>
+      <GameTopBar onResetClick={game.restart} onSettingsClick={showSettings} />
+      <S.BoardContainer>
+        <HoverIndicator
+          hoveredCol={hoveredCol}
           columnCount={game.settings.columnCount}
           currentPlayer={game.currentPlayer}
         />
         <Board
           grid={game.grid}
-          onMouseLeave={hideHoveredColumnIndicator}
-          onColumnHover={setHoveredColumn}
+          onMouseLeave={hideHoverIndicator}
+          onColumnHover={setHoveredCol}
           onColumnClick={game.placeChip}
         />
-      </BoardContainer>
-    </Container>
+      </S.BoardContainer>
+    </S.Container>
   )
 })
-
-const Container = styled.div`
-  text-align: center;
-`
-
-const BoardContainer = styled.div`
-  display: inline-block;
-  position: relative;
-`

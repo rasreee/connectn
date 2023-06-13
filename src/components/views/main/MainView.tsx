@@ -1,38 +1,19 @@
 import { useSettings } from 'components/app/useSettings'
 import { GameComponent } from 'components/Game'
-import { Modals } from 'components/modals'
 import { useRootStore } from 'components/RootStoreContext'
 import { SetupModal } from 'components/setup'
 import { useIfTruthy } from 'hooks/useIfTruthy'
 import { defaultSettings } from 'lib/game'
-import { Observer } from 'mobx-react-lite'
+import { observer } from 'mobx-react-lite'
 import { FC } from 'react'
 
 import { MainHeader } from './header'
 import * as S from './MainView.styles'
 
-export const MainView: FC = () => {
+export const MainView: FC = observer(() => {
   const { ui, game } = useRootStore()
 
-  const {
-    settings,
-    setSettings,
-    persistedSettings,
-    isPersistedSettingsInitialized,
-    saveSettings,
-  } = useSettings()
-
-  const shouldUpdateSettings =
-    isPersistedSettingsInitialized && persistedSettings && !settings
-  const shouldSetupGame = isPersistedSettingsInitialized && !settings
-
-  useIfTruthy(() => {
-    setSettings(persistedSettings)
-  }, shouldUpdateSettings)
-
-  useIfTruthy(() => {
-    ui.openModal(Modals.NewGame)
-  }, shouldSetupGame)
+  const { settings, saveSettings } = useSettings()
 
   useIfTruthy((settings) => {
     game.initializeWithSettings(settings)
@@ -41,23 +22,19 @@ export const MainView: FC = () => {
 
   const closeSetupModal = () => {
     if (!settings) return
-    ui.closeModal()
+    ui.hideModal()
   }
 
   return (
     <S.Container>
       <MainHeader />
       {settings && <GameComponent />}
-      <Observer>
-        {() => (
-          <SetupModal
-            modal={ui.modal}
-            onRequestClose={closeSetupModal}
-            initialSettings={settings ?? defaultSettings}
-            saveSettings={saveSettings}
-          />
-        )}
-      </Observer>
+      <SetupModal
+        modal={ui.modal}
+        onClose={closeSetupModal}
+        initialSettings={settings ?? defaultSettings}
+        onSubmit={saveSettings}
+      />
     </S.Container>
   )
-}
+})
